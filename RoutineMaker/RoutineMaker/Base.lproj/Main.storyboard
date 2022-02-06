@@ -1,24 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bLe-Rj-RRe">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Tab Bar Controller-->
+        <scene sceneID="adp-HN-YD7">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tabBarController id="bLe-Rj-RRe" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="8zR-fs-2Bq"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IHN-Xh-EaL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="itR-Rw-oSQ" kind="relationship" relationship="viewControllers" id="m4a-gf-LeG"/>
+                        <segue destination="3bc-uo-tCW" kind="relationship" relationship="viewControllers" id="7WC-4D-Mgb"/>
+                        <segue destination="qAf-sa-ErX" kind="relationship" relationship="viewControllers" id="LCi-PE-GbM"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LHu-BX-lMR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-633" y="37"/>
+        </scene>
+        <!--홈-->
+        <scene sceneID="EGn-Jc-ft1">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wvt-NS-7w9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController id="itR-Rw-oSQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="홈" image="house.fill" catalog="system" id="fbb-ci-ceb"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ggu-JM-j6Q">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="fsH-0K-lqh" kind="relationship" relationship="rootViewController" id="PDL-cK-326"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-2128" y="753"/>
+        </scene>
+        <!--홈-->
+        <scene sceneID="VkU-yP-fPh">
+            <objects>
+                <viewController id="fsH-0K-lqh" customClass="MainViewController" customModule="RoutineMaker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="k8Z-8R-0f6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IwZ-36-Daj">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lUe-lc-UYC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lUe-lc-UYC" firstAttribute="trailing" secondItem="IwZ-36-Daj" secondAttribute="trailing" id="QSz-lL-jtR"/>
+                            <constraint firstItem="IwZ-36-Daj" firstAttribute="top" secondItem="lUe-lc-UYC" secondAttribute="top" id="iwi-8u-a2z"/>
+                            <constraint firstItem="lUe-lc-UYC" firstAttribute="bottom" secondItem="IwZ-36-Daj" secondAttribute="bottom" id="rbl-pd-WWb"/>
+                            <constraint firstItem="IwZ-36-Daj" firstAttribute="leading" secondItem="lUe-lc-UYC" secondAttribute="leading" id="yRq-Zt-Hig"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="홈" id="LDl-aL-JwX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="upI-PL-gil" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1322" y="753"/>
+        </scene>
+        <!--설정-->
+        <scene sceneID="xPY-gD-0Hx">
+            <objects>
+                <navigationController id="qAf-sa-ErX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="설정" image="gearshape.fill" catalog="system" id="Y2g-cD-HgR"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ctG-cW-oYd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cZM-xA-uj0" kind="relationship" relationship="rootViewController" id="I7e-tW-HAb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IGT-o2-gds" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444" y="759"/>
+        </scene>
+        <!--설정-->
+        <scene sceneID="tHr-kI-yoN">
+            <objects>
+                <viewController id="cZM-xA-uj0" customClass="SettingViewController" customModule="RoutineMaker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YLk-wo-UcR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="pjq-oK-CTO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="설정" id="TNO-cv-jib"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="baR-tD-mZM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2175" y="759"/>
+        </scene>
+        <!--성취도-->
+        <scene sceneID="Waw-PC-hMw">
+            <objects>
+                <navigationController id="3bc-uo-tCW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="성취도" image="chart.bar.fill" catalog="system" id="Kwm-bL-WTm"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rXl-ES-Nvu">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="eU5-Ji-OH8" kind="relationship" relationship="rootViewController" id="RZo-aB-Oqb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xQZ-XT-bTz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-412" y="752"/>
+        </scene>
+        <!--성취도-->
+        <scene sceneID="zbI-OZ-ZHD">
+            <objects>
+                <viewController id="eU5-Ji-OH8" customClass="AchievmentViewController" customModule="RoutineMaker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7oC-nL-mFy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fOM-4i-muK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="성취도" id="XvD-L8-64N"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MRE-W0-jWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="346" y="753"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="chart.bar.fill" catalog="system" width="128" height="92"/>
+        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
