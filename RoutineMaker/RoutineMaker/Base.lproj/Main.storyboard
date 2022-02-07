@@ -33,7 +33,6 @@
         <!--홈-->
         <scene sceneID="EGn-Jc-ft1">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wvt-NS-7w9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="itR-Rw-oSQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="홈" image="house.fill" catalog="system" id="fbb-ci-ceb"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ggu-JM-j6Q">
@@ -44,6 +43,7 @@
                         <segue destination="fsH-0K-lqh" kind="relationship" relationship="rootViewController" id="PDL-cK-326"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wvt-NS-7w9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2128" y="753"/>
         </scene>
@@ -175,11 +175,49 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y5y-s8-zXN">
+                                <rect key="frame" x="12" y="86" width="390" height="173"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="제목" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bx7-p4-4mo">
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="9em-M5-dSV"/>
+                                            <constraint firstAttribute="width" constant="390" id="gk4-5h-rw3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdd-B4-iBm">
+                                        <rect key="frame" x="12" y="51" width="378" height="1"/>
+                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="S2x-db-lRx"/>
+                                            <constraint firstAttribute="width" constant="378" id="tvS-Il-9xo"/>
+                                        </constraints>
+                                    </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zIt-h4-t3c">
+                                        <rect key="frame" x="0.0" y="53" width="390" height="120"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="0Ov-uM-9My"/>
+                                            <constraint firstAttribute="width" constant="390" id="d35-Tn-TnJ"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="A4r-Yb-L7y"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
+                            <constraint firstItem="Y5y-s8-zXN" firstAttribute="top" secondItem="mqj-m8-iBD" secondAttribute="bottom" constant="30" id="4jM-Q3-VtH"/>
+                            <constraint firstItem="Y5y-s8-zXN" firstAttribute="leading" secondItem="A4r-Yb-L7y" secondAttribute="leading" constant="12" id="JOB-jE-kZy"/>
                             <constraint firstItem="mqj-m8-iBD" firstAttribute="leading" secondItem="A4r-Yb-L7y" secondAttribute="leading" id="Vrm-8W-hMR"/>
+                            <constraint firstItem="A4r-Yb-L7y" firstAttribute="trailing" secondItem="Y5y-s8-zXN" secondAttribute="trailing" constant="12" id="e2B-fn-4LA"/>
                             <constraint firstItem="mqj-m8-iBD" firstAttribute="trailing" secondItem="A4r-Yb-L7y" secondAttribute="trailing" id="qQm-yH-PcJ"/>
                             <constraint firstItem="mqj-m8-iBD" firstAttribute="top" secondItem="A4r-Yb-L7y" secondAttribute="top" id="t4x-zp-yb0"/>
                         </constraints>
@@ -187,7 +225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hK4-Bg-inO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1323" y="1546"/>
+            <point key="canvasLocation" x="-1323.1884057971015" y="1545.5357142857142"/>
         </scene>
     </scenes>
     <resources>
@@ -196,8 +234,17 @@
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
