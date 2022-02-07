@@ -8,9 +8,13 @@
 import UIKit
 
 class AddEventViewController: UIViewController {
-
+    @IBOutlet weak var eventInputStackView: UIStackView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLayout()
     }
     
     @IBAction func tappedCancelBarButton(_ sender: UIBarButtonItem) {
@@ -19,5 +23,8 @@ class AddEventViewController: UIViewController {
 }
 
 private extension AddEventViewController {
-
+    func setLayout() {
+        eventInputStackView.layer.cornerRadius = 15
+        titleTextField.addLeftPadding(12)
+    }
 }

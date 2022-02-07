@@ -222,6 +222,11 @@
                             <constraint firstItem="mqj-m8-iBD" firstAttribute="top" secondItem="A4r-Yb-L7y" secondAttribute="top" id="t4x-zp-yb0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="descriptionTextView" destination="zIt-h4-t3c" id="dci-Wn-Qn1"/>
+                        <outlet property="eventInputStackView" destination="Y5y-s8-zXN" id="O9w-e0-41m"/>
+                        <outlet property="titleTextField" destination="Bx7-p4-4mo" id="IfH-sz-O1f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hK4-Bg-inO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
