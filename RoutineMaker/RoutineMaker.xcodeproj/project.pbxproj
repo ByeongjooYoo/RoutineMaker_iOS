@@ -15,6 +15,7 @@
 		F0115EBE27AFEED000426E5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0115EBC27AFEED000426E5A /* LaunchScreen.storyboard */; };
 		F0115EC627AFFE2300426E5A /* AchievmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC527AFFE2300426E5A /* AchievmentViewController.swift */; };
 		F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC727AFFE3400426E5A /* SettingViewController.swift */; };
+		F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC927B0D9C100426E5A /* AddEventViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F0115EBF27AFEED000426E5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0115EC527AFFE2300426E5A /* AchievmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentViewController.swift; sourceTree = "<group>"; };
 		F0115EC727AFFE3400426E5A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		F0115EC927B0D9C100426E5A /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				F0115EBA27AFEED000426E5A /* Assets.xcassets */,
 				F0115EBC27AFEED000426E5A /* LaunchScreen.storyboard */,
 				F0115EBF27AFEED000426E5A /* Info.plist */,
+				F0115EC927B0D9C100426E5A /* AddEventViewController.swift */,
 			);
 			path = RoutineMaker;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
+				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievmentViewController.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
 				F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */,

@@ -69,7 +69,19 @@
                             <constraint firstItem="IwZ-36-Daj" firstAttribute="leading" secondItem="lUe-lc-UYC" secondAttribute="leading" id="yRq-Zt-Hig"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="홈" id="LDl-aL-JwX"/>
+                    <navigationItem key="navigationItem" title="홈" id="LDl-aL-JwX">
+                        <rightBarButtonItems>
+                            <barButtonItem image="ellipsis" catalog="system" id="DVn-hM-yTn">
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
+                            <barButtonItem image="plus" catalog="system" id="IpC-fK-MUJ">
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <segue destination="yjT-HJ-62d" kind="presentation" id="cjb-yP-Zfx"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="upI-PL-gil" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -141,11 +153,49 @@
             </objects>
             <point key="canvasLocation" x="346" y="753"/>
         </scene>
+        <!--Add Event View Controller-->
+        <scene sceneID="EzX-Ir-lNd">
+            <objects>
+                <viewController id="yjT-HJ-62d" customClass="AddEventViewController" customModule="RoutineMaker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7cF-uc-vF2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mqj-m8-iBD">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem title="새로운 이벤트" id="fiT-Rn-7xs">
+                                        <barButtonItem key="leftBarButtonItem" title="취소" id="TGn-Nh-b2Z">
+                                            <connections>
+                                                <action selector="tappedCancelBarButton:" destination="yjT-HJ-62d" id="F1R-bd-2dA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="추가" id="CaA-ku-md2"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="A4r-Yb-L7y"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mqj-m8-iBD" firstAttribute="leading" secondItem="A4r-Yb-L7y" secondAttribute="leading" id="Vrm-8W-hMR"/>
+                            <constraint firstItem="mqj-m8-iBD" firstAttribute="trailing" secondItem="A4r-Yb-L7y" secondAttribute="trailing" id="qQm-yH-PcJ"/>
+                            <constraint firstItem="mqj-m8-iBD" firstAttribute="top" secondItem="A4r-Yb-L7y" secondAttribute="top" id="t4x-zp-yb0"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hK4-Bg-inO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1323" y="1546"/>
+        </scene>
     </scenes>
     <resources>
         <image name="chart.bar.fill" catalog="system" width="128" height="92"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
