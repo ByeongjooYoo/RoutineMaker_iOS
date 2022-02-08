@@ -24,7 +24,9 @@ class AddEventViewController: UIViewController {
 
 private extension AddEventViewController {
     func setLayout() {
-        eventInputStackView.layer.cornerRadius = 15
+        eventInputStackView.layer.cornerRadius = 10
         titleTextField.addLeftPadding(12)
+        titleTextField.layer.cornerRadius = 10
+        descriptionTextView.layer.cornerRadius = 10
     }
 }
