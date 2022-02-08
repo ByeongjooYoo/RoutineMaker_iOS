@@ -21,4 +21,3 @@ private extension MainViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
-
