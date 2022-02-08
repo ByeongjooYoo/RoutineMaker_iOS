@@ -45,6 +45,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F010E27627B29DBB0079BD4B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F000A54127B0E5ED000C880F /* UITextField.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		F010E27727B29E190079BD4B /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				F010E27827B29E340079BD4B /* MainViewController */,
+				F010E27A27B29E660079BD4B /* AchievmentViewController */,
+				F010E27B27B29E770079BD4B /* SettingViewController */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		F010E27827B29E340079BD4B /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F0115EB527AFEECF00426E5A /* MainViewController.swift */,
+				F010E27927B29E4D0079BD4B /* AddEventViewController */,
+			);
+			path = MainViewController;
+			sourceTree = "<group>";
+		};
+		F010E27927B29E4D0079BD4B /* AddEventViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F0115EC927B0D9C100426E5A /* AddEventViewController.swift */,
+			);
+			path = AddEventViewController;
+			sourceTree = "<group>";
+		};
+		F010E27A27B29E660079BD4B /* AchievmentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F0115EC527AFFE2300426E5A /* AchievmentViewController.swift */,
+			);
+			path = AchievmentViewController;
+			sourceTree = "<group>";
+		};
+		F010E27B27B29E770079BD4B /* SettingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F0115EC727AFFE3400426E5A /* SettingViewController.swift */,
+			);
+			path = SettingViewController;
+			sourceTree = "<group>";
+		};
 		F0115EA527AFEECF00426E5A = {
 			isa = PBXGroup;
 			children = (
@@ -66,15 +117,12 @@
 			children = (
 				F0115EB127AFEECF00426E5A /* AppDelegate.swift */,
 				F0115EB327AFEECF00426E5A /* SceneDelegate.swift */,
-				F0115EB527AFEECF00426E5A /* MainViewController.swift */,
-				F0115EC527AFFE2300426E5A /* AchievmentViewController.swift */,
-				F0115EC727AFFE3400426E5A /* SettingViewController.swift */,
 				F0115EB727AFEECF00426E5A /* Main.storyboard */,
 				F0115EBA27AFEED000426E5A /* Assets.xcassets */,
 				F0115EBC27AFEED000426E5A /* LaunchScreen.storyboard */,
 				F0115EBF27AFEED000426E5A /* Info.plist */,
-				F0115EC927B0D9C100426E5A /* AddEventViewController.swift */,
-				F000A54127B0E5ED000C880F /* UITextField.swift */,
+				F010E27727B29E190079BD4B /* Presentation */,
+				F010E27627B29DBB0079BD4B /* Extension */,
 			);
 			path = RoutineMaker;
 			sourceTree = "<group>";
