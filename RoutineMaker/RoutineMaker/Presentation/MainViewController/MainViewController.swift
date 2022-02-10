@@ -27,9 +27,27 @@ private extension MainViewController {
     func setupTableView() {
         eventTableView.delegate = self
         eventTableView.dataSource = self
-        let nibName = UINib(nibName: "EventTableViewCell", bundle: nil)
-        eventTableView.register(nibName, forCellReuseIdentifier: "EventTableViewCell")
-
+        let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
+        eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
+        
+        let eventTableViewHeadCell = UINib(nibName: "EventTableViewHeadCell", bundle: nil)
+        eventTableView.register(eventTableViewHeadCell, forCellReuseIdentifier: "EventTableViewHeadCell")
+    }
+    
+    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        return cell
+    }
+    
+    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
+            return UITableViewCell()
+        }
+        
+        return cell
     }
 }
 
@@ -40,11 +58,21 @@ extension MainViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
-            return UITableViewCell()
+        switch indexPath.row {
+        case 0:
+            return loadEventTableViewHeadCell(tableView, cellForRowAt: indexPath)
+        default:
+            return loadEventTableViewCell(tableView, cellForRowAt: indexPath)
         }
-        
-        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 60
+        default:
+            return 45
+        }
     }
 }
 

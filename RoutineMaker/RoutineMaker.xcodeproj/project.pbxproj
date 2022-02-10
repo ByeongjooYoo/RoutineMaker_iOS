@@ -11,6 +11,8 @@
 		F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */; };
 		F010E28127B4CF350079BD4B /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */; };
 		F010E28527B4D92F0079BD4B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E28427B4D92F0079BD4B /* Event.swift */; };
+		F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E28727B4FB5B0079BD4B /* EventTableViewHeadCell.swift */; };
+		F010E28A27B4FB5B0079BD4B /* EventTableViewHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F010E28827B4FB5B0079BD4B /* EventTableViewHeadCell.xib */; };
 		F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB127AFEECF00426E5A /* AppDelegate.swift */; };
 		F0115EB427AFEECF00426E5A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB327AFEECF00426E5A /* SceneDelegate.swift */; };
 		F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB527AFEECF00426E5A /* MainViewController.swift */; };
@@ -27,6 +29,8 @@
 		F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 		F010E28427B4D92F0079BD4B /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		F010E28727B4FB5B0079BD4B /* EventTableViewHeadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeadCell.swift; sourceTree = "<group>"; };
+		F010E28827B4FB5B0079BD4B /* EventTableViewHeadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewHeadCell.xib; sourceTree = "<group>"; };
 		F0115EAE27AFEECF00426E5A /* RoutineMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoutineMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0115EB127AFEECF00426E5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0115EB327AFEECF00426E5A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 				F0115EB527AFEECF00426E5A /* MainViewController.swift */,
 				F010E27927B29E4D0079BD4B /* AddEventViewController */,
 				F010E28327B4CF810079BD4B /* EventTableViewCell */,
+				F010E28B27B4FB660079BD4B /* EventTableViewHeadCell */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -118,6 +123,15 @@
 				F010E28427B4D92F0079BD4B /* Event.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		F010E28B27B4FB660079BD4B /* EventTableViewHeadCell */ = {
+			isa = PBXGroup;
+			children = (
+				F010E28727B4FB5B0079BD4B /* EventTableViewHeadCell.swift */,
+				F010E28827B4FB5B0079BD4B /* EventTableViewHeadCell.xib */,
+			);
+			path = EventTableViewHeadCell;
 			sourceTree = "<group>";
 		};
 		F0115EA527AFEECF00426E5A = {
@@ -212,6 +226,7 @@
 			files = (
 				F010E28127B4CF350079BD4B /* EventTableViewCell.xib in Resources */,
 				F0115EBE27AFEED000426E5A /* LaunchScreen.storyboard in Resources */,
+				F010E28A27B4FB5B0079BD4B /* EventTableViewHeadCell.xib in Resources */,
 				F0115EBB27AFEED000426E5A /* Assets.xcassets in Resources */,
 				F0115EB927AFEECF00426E5A /* Main.storyboard in Resources */,
 			);
@@ -230,6 +245,7 @@
 				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievmentViewController.swift in Sources */,
+				F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
 				F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */,
 				F0115EB427AFEECF00426E5A /* SceneDelegate.swift in Sources */,
