@@ -10,6 +10,7 @@
 		F000A54227B0E5ED000C880F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F000A54127B0E5ED000C880F /* UITextField.swift */; };
 		F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */; };
 		F010E28127B4CF350079BD4B /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */; };
+		F010E28527B4D92F0079BD4B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E28427B4D92F0079BD4B /* Event.swift */; };
 		F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB127AFEECF00426E5A /* AppDelegate.swift */; };
 		F0115EB427AFEECF00426E5A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB327AFEECF00426E5A /* SceneDelegate.swift */; };
 		F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB527AFEECF00426E5A /* MainViewController.swift */; };
@@ -25,6 +26,7 @@
 		F000A54127B0E5ED000C880F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
+		F010E28427B4D92F0079BD4B /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		F0115EAE27AFEECF00426E5A /* RoutineMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoutineMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0115EB127AFEECF00426E5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0115EB327AFEECF00426E5A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 			path = EventTableViewCell;
 			sourceTree = "<group>";
 		};
+		F010E28627B4D9370079BD4B /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				F010E28427B4D92F0079BD4B /* Event.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		F0115EA527AFEECF00426E5A = {
 			isa = PBXGroup;
 			children = (
@@ -135,8 +145,9 @@
 				F0115EBA27AFEED000426E5A /* Assets.xcassets */,
 				F0115EBC27AFEED000426E5A /* LaunchScreen.storyboard */,
 				F0115EBF27AFEED000426E5A /* Info.plist */,
-				F010E27727B29E190079BD4B /* Presentation */,
+				F010E28627B4D9370079BD4B /* Entity */,
 				F010E27627B29DBB0079BD4B /* Extension */,
+				F010E27727B29E190079BD4B /* Presentation */,
 			);
 			path = RoutineMaker;
 			sourceTree = "<group>";
@@ -214,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */,
+				F010E28527B4D92F0079BD4B /* Event.swift in Sources */,
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,
