@@ -11,11 +11,13 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
     private var eventList: [Event] = []
+    private var completedEventList: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupTableView()
+        setupNotification()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -32,13 +34,21 @@ private extension MainViewController {
     }
     
     func setupTableView() {
-        eventTableView.delegate = self
+        //eventTableView.delegate = self
         eventTableView.dataSource = self
         let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
         let eventTableViewHeadCell = UINib(nibName: "EventTableViewHeadCell", bundle: nil)
         eventTableView.register(eventTableViewHeadCell, forCellReuseIdentifier: "EventTableViewHeadCell")
+    }
+    
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangedEventCompletion(_:)), name: Notification.Name("tappedEventCompletionButton"), object: nil)
+    }
+    
+    @objc func didChangedEventCompletion(_ notification: Notification) {
+        print(notification.object as! Bool)
     }
     
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,7 +80,12 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return eventList.count + 1
+        switch section {
+        case 0:
+            return eventList.count + 1
+        default:
+            return completedEventList.count + 1
+        }
     }
     
     
@@ -93,13 +108,12 @@ extension MainViewController: UITableViewDataSource {
     }
 }
 
-extension MainViewController: UITableViewDelegate {
-    
-}
+//extension MainViewController: UITableViewDelegate {
+//
+//}
 
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
-        print("test")
         eventList.append(event)
         eventTableView.reloadData()
     }

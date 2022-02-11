@@ -11,18 +11,9 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var EventNameLabel: UILabel!
     @IBOutlet weak var EventCompletionButton: UIButton!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     @IBAction func tappedEventCompletionButton(_ sender: UIButton) {
         sender.isSelected.toggle()
+        NotificationCenter.default.post(name: Notification.Name("tappedEventCompletionButton"), object: sender.isSelected)
     }
 }
