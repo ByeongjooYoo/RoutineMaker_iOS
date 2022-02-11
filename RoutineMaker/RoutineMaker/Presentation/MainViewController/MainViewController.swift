@@ -10,11 +10,18 @@ import UIKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
+    private var eventList: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupTableView()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let addEventViewController = segue.destination as? AddEventViewController {
+            addEventViewController.delegate = self
+        }
     }
 }
 
@@ -38,7 +45,7 @@ private extension MainViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
         }
-        
+        cell.EventNameLabel.text = eventList[indexPath.row - 1].title
         return cell
     }
     
@@ -46,14 +53,24 @@ private extension MainViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
             return UITableViewCell()
         }
+        switch indexPath.section {
+        case 0:
+            cell.titleLabel.text = "해야할 일"
+        default:
+            cell.titleLabel.text = "완료"
+        }
         
         return cell
     }
 }
 
 extension MainViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return eventList.count + 1
     }
     
     
@@ -78,4 +95,12 @@ extension MainViewController: UITableViewDataSource {
 
 extension MainViewController: UITableViewDelegate {
     
+}
+
+extension MainViewController: AddEventViewDelegate {
+    func didAddEvent(event: Event) {
+        print("test")
+        eventList.append(event)
+        eventTableView.reloadData()
+    }
 }

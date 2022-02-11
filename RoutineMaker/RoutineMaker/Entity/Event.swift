@@ -8,7 +8,7 @@
 import Foundation
 
 struct Event {
-    var name: String
+    var title: String
     var description: String
     var completion: Bool
 }
