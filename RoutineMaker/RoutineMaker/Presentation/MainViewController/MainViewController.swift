@@ -48,14 +48,38 @@ private extension MainViewController {
     }
     
     @objc func didChangedEventCompletion(_ notification: Notification) {
-        print(notification.object as! Bool)
+        let (isSelected, index) = notification.object as! (Bool, Int)
+        switch isSelected {
+        case true:
+            var event = eventList[index]
+            event.completion = isSelected
+            eventList.remove(at: index)
+            completedEventList.append(event)
+            eventTableView.reloadData()
+        case false:
+            var event = completedEventList[index]
+            event.completion = isSelected
+            completedEventList.remove(at: index)
+            eventList.append(event)
+            eventTableView.reloadData()
+        }
     }
     
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
         }
-        cell.EventNameLabel.text = eventList[indexPath.row - 1].title
+        switch indexPath.section {
+        case 0:
+            cell.EventNameLabel.text = eventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = false
+        default:
+            cell.EventNameLabel.text = completedEventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = true
+        }
+        
         return cell
     }
     
