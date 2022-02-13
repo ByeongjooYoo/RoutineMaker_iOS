@@ -18,6 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" systemColor="systemBackgroundColor"/>
                         <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
@@ -55,13 +56,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IwZ-36-Daj">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IwZ-36-Daj">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lUe-lc-UYC"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
                             <constraint firstItem="lUe-lc-UYC" firstAttribute="trailing" secondItem="IwZ-36-Daj" secondAttribute="trailing" id="QSz-lL-jtR"/>
                             <constraint firstItem="IwZ-36-Daj" firstAttribute="top" secondItem="lUe-lc-UYC" secondAttribute="top" id="iwi-8u-a2z"/>
@@ -70,17 +70,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="홈" id="LDl-aL-JwX">
-                        <rightBarButtonItems>
-                            <barButtonItem image="ellipsis" catalog="system" id="DVn-hM-yTn">
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                            <barButtonItem image="plus" catalog="system" id="IpC-fK-MUJ">
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <segue destination="yjT-HJ-62d" kind="presentation" id="cjb-yP-Zfx"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="IpC-fK-MUJ">
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="yjT-HJ-62d" kind="presentation" id="cjb-yP-Zfx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="eventTableView" destination="IwZ-36-Daj" id="xDs-SQ-aNh"/>
@@ -174,7 +169,11 @@
                                                 <action selector="tappedCancelBarButton:" destination="yjT-HJ-62d" id="F1R-bd-2dA"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="추가" id="CaA-ku-md2"/>
+                                        <barButtonItem key="rightBarButtonItem" title="추가" id="CaA-ku-md2">
+                                            <connections>
+                                                <action selector="tappedAddBarButtton:" destination="yjT-HJ-62d" id="Url-9C-5oX"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -226,6 +225,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addBarButton" destination="CaA-ku-md2" id="H0p-TG-Fpp"/>
                         <outlet property="descriptionTextView" destination="zIt-h4-t3c" id="dci-Wn-Qn1"/>
                         <outlet property="eventInputStackView" destination="Y5y-s8-zXN" id="O9w-e0-41m"/>
                         <outlet property="titleTextField" destination="Bx7-p4-4mo" id="IfH-sz-O1f"/>
@@ -238,7 +238,6 @@
     </scenes>
     <resources>
         <image name="chart.bar.fill" catalog="system" width="128" height="92"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="plus" catalog="system" width="128" height="113"/>

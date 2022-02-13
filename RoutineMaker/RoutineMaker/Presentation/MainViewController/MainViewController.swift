@@ -10,11 +10,20 @@ import UIKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
+    private var eventList: [Event] = []
+    private var completedEventList: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupTableView()
+        setupNotification()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let addEventViewController = segue.destination as? AddEventViewController {
+            addEventViewController.delegate = self
+        }
     }
 }
 
@@ -25,29 +34,123 @@ private extension MainViewController {
     }
     
     func setupTableView() {
-        eventTableView.delegate = self
         eventTableView.dataSource = self
-        let nibName = UINib(nibName: "EventTableViewCell", bundle: nil)
-        eventTableView.register(nibName, forCellReuseIdentifier: "EventTableViewCell")
-
-    }
-}
-
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        
+        let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
+        eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
+        
+        let eventTableViewHeadCell = UINib(nibName: "EventTableViewHeadCell", bundle: nil)
+        eventTableView.register(eventTableViewHeadCell, forCellReuseIdentifier: "EventTableViewHeadCell")
     }
     
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangedEventCompletion(_:)), name: Notification.Name("tappedEventCompletionButton"), object: nil)
+    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    @objc func didChangedEventCompletion(_ notification: Notification) {
+        let (isSelected, index) = notification.object as! (Bool, Int)
+        switch isSelected {
+        case true:
+            var event = eventList[index]
+            event.completion = isSelected
+            eventList.remove(at: index)
+            completedEventList.append(event)
+            eventTableView.reloadData()
+        case false:
+            var event = completedEventList[index]
+            event.completion = isSelected
+            completedEventList.remove(at: index)
+            eventList.append(event)
+            eventTableView.reloadData()
+        }
+    }
+    
+    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
+        }
+        switch indexPath.section {
+        case 0:
+            cell.EventNameLabel.text = eventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = false
+        default:
+            cell.EventNameLabel.text = completedEventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = true
+        }
+        
+        return cell
+    }
+    
+    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
+            return UITableViewCell()
+        }
+        switch indexPath.section {
+        case 0:
+            cell.titleLabel.text = "해야할 일"
+        default:
+            cell.titleLabel.text = "완료"
         }
         
         return cell
     }
 }
 
-extension MainViewController: UITableViewDelegate {
+extension MainViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return eventList.count + 1
+        default:
+            return completedEventList.count + 1
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            return loadEventTableViewHeadCell(tableView, cellForRowAt: indexPath)
+        default:
+            return loadEventTableViewCell(tableView, cellForRowAt: indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 60
+        default:
+            return 45
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            if editingStyle == .delete {
+                eventList.remove(at: indexPath.row - 1)
+                eventTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        default:
+            if editingStyle == .delete {
+                completedEventList.remove(at: indexPath.row - 1)
+                eventTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+        
+    }
+}
+
+extension MainViewController: AddEventViewDelegate {
+    func didAddEvent(event: Event) {
+        eventList.append(event)
+        eventTableView.reloadData()
+    }
 }
