@@ -34,8 +34,8 @@ private extension MainViewController {
     }
     
     func setupTableView() {
-        //eventTableView.delegate = self
         eventTableView.dataSource = self
+        
         let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
@@ -130,11 +130,23 @@ extension MainViewController: UITableViewDataSource {
             return 45
         }
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            if editingStyle == .delete {
+                eventList.remove(at: indexPath.row - 1)
+                eventTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        default:
+            if editingStyle == .delete {
+                completedEventList.remove(at: indexPath.row - 1)
+                eventTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+        
+    }
 }
-
-//extension MainViewController: UITableViewDelegate {
-//
-//}
 
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
