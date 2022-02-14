@@ -110,7 +110,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="pjq-oK-CTO"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                     </view>
                     <navigationItem key="navigationItem" title="설정" id="TNO-cv-jib"/>
                 </viewController>
@@ -142,14 +142,103 @@
                     <view key="view" contentMode="scaleToFill" id="7oC-nL-mFy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IOy-Bw-Hdj">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OnV-da-OJz">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cc7-pf-mMJ">
+                                                <rect key="frame" x="12" y="15" width="390" height="200"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YC0-Qy-vL7">
+                                                        <rect key="frame" x="15" y="25" width="70.5" height="30"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘의 달성도는 40%입니다!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfn-Vb-pDs">
+                                                        <rect key="frame" x="95.5" y="119" width="199" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8I-Ga-u9l">
+                                                        <rect key="frame" x="252" y="158" width="42" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="sYD-Dl-T3U">
+                                                        <rect key="frame" x="18" y="79" width="354" height="31"/>
+                                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                        <color key="tintColor" systemColor="systemGreenColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="Ljb-pv-jrz"/>
+                                                        </constraints>
+                                                    </progressView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBk-J5-cQy">
+                                                        <rect key="frame" x="87" y="158" width="42" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="Cfn-Vb-pDs" firstAttribute="top" secondItem="sYD-Dl-T3U" secondAttribute="bottom" constant="10" id="0pk-gl-aH9"/>
+                                                    <constraint firstAttribute="height" constant="200" id="DrE-uc-4NP"/>
+                                                    <constraint firstItem="YC0-Qy-vL7" firstAttribute="top" secondItem="cc7-pf-mMJ" secondAttribute="top" constant="25" id="JzE-3N-XdR"/>
+                                                    <constraint firstItem="Cfn-Vb-pDs" firstAttribute="centerX" secondItem="cc7-pf-mMJ" secondAttribute="centerX" id="S9C-xM-FJE"/>
+                                                    <constraint firstItem="YC0-Qy-vL7" firstAttribute="leading" secondItem="cc7-pf-mMJ" secondAttribute="leading" constant="15" id="Z0D-Qj-EkZ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="sYD-Dl-T3U" secondAttribute="trailing" constant="18" id="cq4-Z4-Ezn"/>
+                                                    <constraint firstItem="sYD-Dl-T3U" firstAttribute="top" secondItem="YC0-Qy-vL7" secondAttribute="bottom" constant="24" id="hCN-Ve-BVn"/>
+                                                    <constraint firstItem="sYD-Dl-T3U" firstAttribute="leading" secondItem="cc7-pf-mMJ" secondAttribute="leading" constant="18" id="jW3-a7-WNT"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="npV-rQ-uyO"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <constraints>
+                                            <constraint firstItem="cc7-pf-mMJ" firstAttribute="top" secondItem="OnV-da-OJz" secondAttribute="top" constant="15" id="9Zd-1b-k1s"/>
+                                            <constraint firstAttribute="trailing" secondItem="cc7-pf-mMJ" secondAttribute="trailing" constant="12" id="YZo-BU-ZOI"/>
+                                            <constraint firstItem="cc7-pf-mMJ" firstAttribute="leading" secondItem="OnV-da-OJz" secondAttribute="leading" constant="12" id="eY1-03-HaC"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="OnV-da-OJz" firstAttribute="height" secondItem="IOy-Bw-Hdj" secondAttribute="height" id="D6P-br-2xq"/>
+                                    <constraint firstAttribute="trailing" secondItem="OnV-da-OJz" secondAttribute="trailing" id="MGO-TN-Kxa"/>
+                                    <constraint firstAttribute="bottom" secondItem="OnV-da-OJz" secondAttribute="bottom" id="VVO-01-u3i"/>
+                                    <constraint firstItem="OnV-da-OJz" firstAttribute="leading" secondItem="IOy-Bw-Hdj" secondAttribute="leading" id="WpQ-Qk-jxi"/>
+                                    <constraint firstItem="OnV-da-OJz" firstAttribute="top" secondItem="IOy-Bw-Hdj" secondAttribute="top" id="iaB-e7-5nj"/>
+                                    <constraint firstItem="OnV-da-OJz" firstAttribute="width" secondItem="IOy-Bw-Hdj" secondAttribute="width" id="wgd-fY-kyB"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="K69-Oo-AZp"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="qri-GU-Ofb"/>
+                            </scrollView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="fOM-4i-muK"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="IOy-Bw-Hdj" firstAttribute="leading" secondItem="fOM-4i-muK" secondAttribute="leading" id="5S6-zx-Kqa"/>
+                            <constraint firstItem="fOM-4i-muK" firstAttribute="trailing" secondItem="IOy-Bw-Hdj" secondAttribute="trailing" id="ATh-Um-XAR"/>
+                            <constraint firstItem="IOy-Bw-Hdj" firstAttribute="top" secondItem="fOM-4i-muK" secondAttribute="top" id="fCM-xw-oOZ"/>
+                            <constraint firstItem="fOM-4i-muK" firstAttribute="bottom" secondItem="IOy-Bw-Hdj" secondAttribute="bottom" id="qmI-zs-lS7"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="성취도" id="XvD-L8-64N"/>
+                    <connections>
+                        <outlet property="dayAchivmentProgressView" destination="sYD-Dl-T3U" id="ljw-gO-Njf"/>
+                        <outlet property="dayView" destination="cc7-pf-mMJ" id="dLw-Mk-3XF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MRE-W0-jWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="346" y="753"/>
+            <point key="canvasLocation" x="343.47826086956525" y="752.67857142857144"/>
         </scene>
         <!--Add Event View Controller-->
         <scene sceneID="EzX-Ir-lNd">
@@ -250,8 +339,14 @@
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
