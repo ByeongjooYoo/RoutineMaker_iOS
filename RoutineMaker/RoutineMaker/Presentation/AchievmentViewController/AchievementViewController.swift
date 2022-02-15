@@ -50,41 +50,8 @@ private extension AchievementViewController {
     }
     
     func setupWeekBarChartView() {
-        weekBarChartView.noDataText = "데이터가 없습니다."
-        weekBarChartView.noDataFont = .systemFont(ofSize: 20)
-        weekBarChartView.noDataTextColor = .lightGray
-        
-        var dataEntries: [BarChartDataEntry] = []
-        for i in 0 ..< weeks.count {
-            let dataEntry = BarChartDataEntry(x: Double(i), y: completionCount[i])
-            dataEntries.append(dataEntry)
-        }
-        
-        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "달성률(%)")
-        
-        chartDataSet.colors = [.systemGreen]
-//        chartDataSet.highlightEnabled = false
-        
-        let chartData = BarChartData(dataSet: chartDataSet)
-        chartData.setDrawValues(false)
-        chartData.barWidth = Double(0.5)
-        
-        weekBarChartView.data = chartData
-        weekBarChartView.rightAxis.enabled = false
-        weekBarChartView.doubleTapToZoomEnabled = false
-        weekBarChartView.xAxis.labelPosition = .bottom
-        weekBarChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: weeks)
-        
-        weekBarChartView.leftAxis.axisMaximum = 100.0
-        weekBarChartView.leftAxis.axisMinimum = 0.0
-        
-        
-        weekBarChartView.xAxis.drawGridLinesEnabled = false
-        //weekBarChartView.legend.setCustom(entries: [])
-        
-        weekBarChartView.leftAxis.drawGridLinesEnabled = false
-        weekBarChartView.backgroundColor = .systemBackground
-        weekBarChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        drawNoDataChartView(barChartView: weekBarChartView)
+        drawBarChartView(rowData: weeks, values: completionCount, barChartView: weekBarChartView)
     }
     
     func setupMonthViewLayout() {
@@ -93,40 +60,46 @@ private extension AchievementViewController {
     }
     
     func setupMonthBarChartView() {
-        monthBarChartView.noDataText = "데이터가 없습니다."
-        monthBarChartView.noDataFont = .systemFont(ofSize: 20)
-        monthBarChartView.noDataTextColor = .lightGray
-        
+        drawNoDataChartView(barChartView: monthBarChartView)
+        drawBarChartView(rowData: months, values: weekCompletionCount, barChartView: monthBarChartView)
+    }
+    
+    func drawNoDataChartView(barChartView: BarChartView) {
+        barChartView.noDataText = "데이터가 없습니다."
+        barChartView.noDataFont = .systemFont(ofSize: 20)
+        barChartView.noDataTextColor = .lightGray
+    }
+    
+    func drawBarChartView(rowData: [String], values: [Double], barChartView: BarChartView) {
         var dataEntries: [BarChartDataEntry] = []
-        for i in 0 ..< months.count {
-            let dataEntry = BarChartDataEntry(x: Double(i), y: weekCompletionCount[i])
+        for i in 0 ..< rowData.count {
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
             dataEntries.append(dataEntry)
         }
         
         let chartDataSet = BarChartDataSet(entries: dataEntries, label: "달성률(%)")
-        
         chartDataSet.colors = [.systemGreen]
-//        chartDataSet.highlightEnabled = false
+        chartDataSet.highlightEnabled = false
         
         let chartData = BarChartData(dataSet: chartDataSet)
         chartData.setDrawValues(false)
         chartData.barWidth = Double(0.5)
-        monthBarChartView.xAxis.setLabelCount(months.count, force: false)
-        monthBarChartView.data = chartData
-        monthBarChartView.rightAxis.enabled = false
-        monthBarChartView.doubleTapToZoomEnabled = false
-        monthBarChartView.xAxis.labelPosition = .bottom
-        monthBarChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: months)
         
-        monthBarChartView.leftAxis.axisMaximum = 100.0
-        monthBarChartView.leftAxis.axisMinimum = 0.0
+        barChartView.data = chartData
+
+        barChartView.xAxis.setLabelCount(rowData.count, force: false)
+        barChartView.xAxis.labelPosition = .bottom
+        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rowData)
+        barChartView.xAxis.drawGridLinesEnabled = false
         
+        barChartView.rightAxis.enabled = false
         
-        monthBarChartView.xAxis.drawGridLinesEnabled = false
-        //weekBarChartView.legend.setCustom(entries: [])
+        barChartView.leftAxis.axisMaximum = 100.0
+        barChartView.leftAxis.axisMinimum = 0.0
+        barChartView.leftAxis.drawGridLinesEnabled = false
         
-        monthBarChartView.leftAxis.drawGridLinesEnabled = false
-        monthBarChartView.backgroundColor = .systemBackground
-        monthBarChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        barChartView.backgroundColor = .systemBackground
+        barChartView.doubleTapToZoomEnabled = false
+        barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
 }
