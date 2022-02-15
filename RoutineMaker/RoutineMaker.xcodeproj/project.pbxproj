@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B20D7D6A13390152CF06B69 /* Pods_RoutineMaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FDE7B857498C4DD87E4C6B /* Pods_RoutineMaker.framework */; };
 		F000A54227B0E5ED000C880F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F000A54127B0E5ED000C880F /* UITextField.swift */; };
 		F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */; };
 		F010E28127B4CF350079BD4B /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */; };
@@ -25,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53FDE7B857498C4DD87E4C6B /* Pods_RoutineMaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RoutineMaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A69B5414DB2F699DA2AA857 /* Pods-RoutineMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoutineMaker.debug.xcconfig"; path = "Target Support Files/Pods-RoutineMaker/Pods-RoutineMaker.debug.xcconfig"; sourceTree = "<group>"; };
+		9DC94173C4ED0EEFFDE4D27D /* Pods-RoutineMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoutineMaker.release.xcconfig"; path = "Target Support Files/Pods-RoutineMaker/Pods-RoutineMaker.release.xcconfig"; sourceTree = "<group>"; };
 		F000A54127B0E5ED000C880F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
@@ -49,12 +53,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B20D7D6A13390152CF06B69 /* Pods_RoutineMaker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		005F6F9EA6F5494CF87CBE47 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9A69B5414DB2F699DA2AA857 /* Pods-RoutineMaker.debug.xcconfig */,
+				9DC94173C4ED0EEFFDE4D27D /* Pods-RoutineMaker.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8F426DA765D72F7768EDF7A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53FDE7B857498C4DD87E4C6B /* Pods_RoutineMaker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F010E27627B29DBB0079BD4B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +162,8 @@
 			children = (
 				F0115EB027AFEECF00426E5A /* RoutineMaker */,
 				F0115EAF27AFEECF00426E5A /* Products */,
+				005F6F9EA6F5494CF87CBE47 /* Pods */,
+				8F426DA765D72F7768EDF7A3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -173,9 +198,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0115EC227AFEED000426E5A /* Build configuration list for PBXNativeTarget "RoutineMaker" */;
 			buildPhases = (
+				E5E5EE67A5797BD55535DB36 /* [CP] Check Pods Manifest.lock */,
 				F0115EAA27AFEECF00426E5A /* Sources */,
 				F0115EAB27AFEECF00426E5A /* Frameworks */,
 				F0115EAC27AFEECF00426E5A /* Resources */,
+				62A10A1AE9A64009E1C56653 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -233,6 +260,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62A10A1AE9A64009E1C56653 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RoutineMaker/Pods-RoutineMaker-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RoutineMaker/Pods-RoutineMaker-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RoutineMaker/Pods-RoutineMaker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5E5EE67A5797BD55535DB36 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RoutineMaker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F0115EAA27AFEECF00426E5A /* Sources */ = {
@@ -392,6 +461,7 @@
 		};
 		F0115EC327AFEED000426E5A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A69B5414DB2F699DA2AA857 /* Pods-RoutineMaker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -420,6 +490,7 @@
 		};
 		F0115EC427AFEED000426E5A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DC94173C4ED0EEFFDE4D27D /* Pods-RoutineMaker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
