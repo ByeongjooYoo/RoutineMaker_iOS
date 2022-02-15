@@ -18,6 +18,9 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         setupNotification()
+        
+        let dayEventData = DayEventData(todoEventList: eventList, completionEventList: completedEventList, todayAchivement: 0)
+        print(dayEventData.date)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -35,7 +38,7 @@ private extension MainViewController {
     
     func setupTableView() {
         eventTableView.dataSource = self
-        
+        eventTableView.delegate = self
         let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
@@ -132,6 +135,9 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            return
+        }
         switch indexPath.section {
         case 0:
             if editingStyle == .delete {
@@ -144,7 +150,16 @@ extension MainViewController: UITableViewDataSource {
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
-        
+    }
+}
+
+extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.row == 0 {
+            return UITableViewCell.EditingStyle.none
+        } else {
+            return UITableViewCell.EditingStyle.delete
+        }
     }
 }
 
