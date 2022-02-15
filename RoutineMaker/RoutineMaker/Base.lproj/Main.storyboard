@@ -200,11 +200,21 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="npV-rQ-uyO"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LVN-LL-r2t" customClass="BarChartView" customModule="Charts">
+                                                <rect key="frame" x="12" y="245" width="390" height="250"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="250" id="ggB-BX-GP5"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <constraints>
                                             <constraint firstItem="cc7-pf-mMJ" firstAttribute="top" secondItem="OnV-da-OJz" secondAttribute="top" constant="15" id="9Zd-1b-k1s"/>
+                                            <constraint firstAttribute="trailing" secondItem="LVN-LL-r2t" secondAttribute="trailing" constant="12" id="NKp-s0-Tqf"/>
+                                            <constraint firstItem="LVN-LL-r2t" firstAttribute="leading" secondItem="OnV-da-OJz" secondAttribute="leading" constant="12" id="WDb-q2-Ooe"/>
                                             <constraint firstAttribute="trailing" secondItem="cc7-pf-mMJ" secondAttribute="trailing" constant="12" id="YZo-BU-ZOI"/>
+                                            <constraint firstItem="LVN-LL-r2t" firstAttribute="top" secondItem="cc7-pf-mMJ" secondAttribute="bottom" constant="30" id="ZdF-aR-CIY"/>
                                             <constraint firstItem="cc7-pf-mMJ" firstAttribute="leading" secondItem="OnV-da-OJz" secondAttribute="leading" constant="12" id="eY1-03-HaC"/>
                                         </constraints>
                                     </view>
@@ -234,6 +244,7 @@
                     <connections>
                         <outlet property="dayAchivmentProgressView" destination="sYD-Dl-T3U" id="ljw-gO-Njf"/>
                         <outlet property="dayView" destination="cc7-pf-mMJ" id="dLw-Mk-3XF"/>
+                        <outlet property="weekBarChartView" destination="LVN-LL-r2t" id="DfW-oC-Yan"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MRE-W0-jWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
