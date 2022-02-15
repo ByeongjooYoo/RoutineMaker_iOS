@@ -18,6 +18,9 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         setupNotification()
+        
+        let dayEventData = DayEventData(todoEventList: eventList, completionEventList: completedEventList, todayAchivement: 0)
+        print(dayEventData.date)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
