@@ -6,12 +6,16 @@
 //
 
 import UIKit
+import Firebase
 
 class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
-    private var eventList: [Event] = []
-    private var completedEventList: [Event] = []
+    var dayEventData: DayEventData?
+    var eventData: [DayEventData] = []
+    
+    var ref: DatabaseReference!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +23,11 @@ class MainViewController: UIViewController {
         setupTableView()
         setupNotification()
         
-        let dayEventData = DayEventData(todoEventList: eventList, completionEventList: completedEventList, todayAchivement: 0)
-        print(dayEventData.date)
+        dayEventData = DayEventData(todoEventList: [], completionEventList: [])
+        print(dayEventData!.date)
+        
+        //readFirebaseData()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -39,6 +46,7 @@ private extension MainViewController {
     func setupTableView() {
         eventTableView.dataSource = self
         eventTableView.delegate = self
+        
         let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
@@ -50,55 +58,45 @@ private extension MainViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedEventCompletion(_:)), name: Notification.Name("tappedEventCompletionButton"), object: nil)
     }
     
+    func readFirebaseData() {
+        ref = Database.database().reference()
+        
+    }
+    
+    func writeFirebaseData(dayEventData: DayEventData) {
+        ref = Database.database().reference()
+        print(dayEventData.toDictionary)
+        
+    }
+    
+    
+    
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
         switch isSelected {
         case true:
-            var event = eventList[index]
-            event.completion = isSelected
-            eventList.remove(at: index)
-            completedEventList.append(event)
+            var event = dayEventData?.todoEventList[index]
+            event!.completion = isSelected
+            dayEventData?.todoEventList.remove(at: index)
+            dayEventData?.completionEventList.append(event!)
+            
+            print("\(dayEventData!.todayAchivement * 100)%")
+            
             eventTableView.reloadData()
         case false:
-            var event = completedEventList[index]
-            event.completion = isSelected
-            completedEventList.remove(at: index)
-            eventList.append(event)
+            var event = dayEventData?.completionEventList[index]
+            event?.completion = isSelected
+            dayEventData?.completionEventList.remove(at: index)
+            dayEventData?.todoEventList.append(event!)
+            
+            
+            print("\(dayEventData!.todayAchivement * 100)%")
+            
             eventTableView.reloadData()
         }
     }
     
-    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
-            return UITableViewCell()
-        }
-        switch indexPath.section {
-        case 0:
-            cell.EventNameLabel.text = eventList[indexPath.row - 1].title
-            cell.setIndex(indexPath.row - 1)
-            cell.EventCompletionButton.isSelected = false
-        default:
-            cell.EventNameLabel.text = completedEventList[indexPath.row - 1].title
-            cell.setIndex(indexPath.row - 1)
-            cell.EventCompletionButton.isSelected = true
-        }
-        
-        return cell
-    }
     
-    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
-            return UITableViewCell()
-        }
-        switch indexPath.section {
-        case 0:
-            cell.titleLabel.text = "해야할 일"
-        default:
-            cell.titleLabel.text = "완료"
-        }
-        
-        return cell
-    }
 }
 
 extension MainViewController: UITableViewDataSource {
@@ -109,14 +107,15 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return eventList.count + 1
+            return (dayEventData?.todoEventList.count ?? 0) + 1
         default:
-            return completedEventList.count + 1
+            return (dayEventData?.completionEventList.count ?? 0) + 1
         }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch indexPath.row {
         case 0:
             return loadEventTableViewHeadCell(tableView, cellForRowAt: indexPath)
@@ -141,15 +140,46 @@ extension MainViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             if editingStyle == .delete {
-                eventList.remove(at: indexPath.row - 1)
+                dayEventData?.todoEventList.remove(at: indexPath.row - 1)
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         default:
             if editingStyle == .delete {
-                completedEventList.remove(at: indexPath.row - 1)
+                dayEventData?.completionEventList.remove(at: indexPath.row - 1)
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
+    }
+    
+    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
+            return UITableViewCell()
+        }
+        switch indexPath.section {
+        case 0:
+            cell.EventNameLabel.text = dayEventData?.todoEventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = false
+        default:
+            cell.EventNameLabel.text = dayEventData?.completionEventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = true
+        }
+        return cell
+    }
+    
+    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
+            return UITableViewCell()
+        }
+        switch indexPath.section {
+        case 0:
+            cell.titleLabel.text = "해야할 일"
+        default:
+            cell.titleLabel.text = "완료"
+        }
+        
+        return cell
     }
 }
 
@@ -165,7 +195,8 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
-        eventList.append(event)
+        dayEventData?.todoEventList.append(event)
+        //writeFirebaseData(dayEventData: dayEventData!)
         eventTableView.reloadData()
     }
 }

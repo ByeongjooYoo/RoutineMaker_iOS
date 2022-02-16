@@ -153,7 +153,7 @@
                                                 <rect key="frame" x="12" y="15" width="390" height="200"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YC0-Qy-vL7">
-                                                        <rect key="frame" x="15" y="25" width="70.5" height="30"/>
+                                                        <rect key="frame" x="15" y="25" width="125" height="30"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -179,7 +179,7 @@
                                                     <constraint firstAttribute="height" constant="200" id="DrE-uc-4NP"/>
                                                     <constraint firstItem="YC0-Qy-vL7" firstAttribute="top" secondItem="cc7-pf-mMJ" secondAttribute="top" constant="25" id="JzE-3N-XdR"/>
                                                     <constraint firstItem="Cfn-Vb-pDs" firstAttribute="centerX" secondItem="cc7-pf-mMJ" secondAttribute="centerX" id="S9C-xM-FJE"/>
-                                                    <constraint firstAttribute="trailing" secondItem="YC0-Qy-vL7" secondAttribute="trailing" priority="999" constant="304.5" id="SBV-Ix-EcW"/>
+                                                    <constraint firstAttribute="trailing" secondItem="YC0-Qy-vL7" secondAttribute="trailing" priority="999" constant="250" id="SBV-Ix-EcW"/>
                                                     <constraint firstItem="YC0-Qy-vL7" firstAttribute="leading" secondItem="cc7-pf-mMJ" secondAttribute="leading" constant="15" id="Z0D-Qj-EkZ"/>
                                                     <constraint firstAttribute="trailing" secondItem="sYD-Dl-T3U" secondAttribute="trailing" constant="18" id="cq4-Z4-Ezn"/>
                                                     <constraint firstItem="sYD-Dl-T3U" firstAttribute="top" secondItem="YC0-Qy-vL7" secondAttribute="bottom" constant="24" id="hCN-Ve-BVn"/>
@@ -191,7 +191,7 @@
                                                 <rect key="frame" x="12" y="250" width="390" height="280"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Week" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qao-u5-hY9">
-                                                        <rect key="frame" x="15" y="25" width="65.5" height="30"/>
+                                                        <rect key="frame" x="15" y="25" width="125" height="30"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -211,7 +211,7 @@
                                                     <constraint firstItem="qao-u5-hY9" firstAttribute="top" secondItem="3jr-TO-Uwj" secondAttribute="top" constant="25" id="Ys9-qd-KS0"/>
                                                     <constraint firstItem="LVN-LL-r2t" firstAttribute="leading" secondItem="3jr-TO-Uwj" secondAttribute="leading" constant="18" id="Z2D-LS-nRl"/>
                                                     <constraint firstAttribute="bottom" secondItem="LVN-LL-r2t" secondAttribute="bottom" id="sxy-45-wt0"/>
-                                                    <constraint firstAttribute="trailing" secondItem="qao-u5-hY9" secondAttribute="trailing" priority="999" constant="309.5" id="wdH-mW-vEP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="qao-u5-hY9" secondAttribute="trailing" priority="999" constant="250" id="wdH-mW-vEP"/>
                                                     <constraint firstAttribute="height" constant="280" id="ytk-zP-LCv"/>
                                                 </constraints>
                                             </view>
@@ -219,7 +219,7 @@
                                                 <rect key="frame" x="12" y="565" width="390" height="280"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v62-Wi-LCA">
-                                                        <rect key="frame" x="15" y="25" width="76" height="30"/>
+                                                        <rect key="frame" x="15" y="25" width="125" height="30"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -236,7 +236,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="tX9-po-bjV" secondAttribute="bottom" id="OqB-kd-1zf"/>
                                                     <constraint firstItem="tX9-po-bjV" firstAttribute="leading" secondItem="BaF-wf-CjJ" secondAttribute="leading" constant="18" id="Sue-ot-32s"/>
-                                                    <constraint firstAttribute="trailing" secondItem="v62-Wi-LCA" secondAttribute="trailing" priority="999" constant="299" id="TdM-2M-qKA"/>
+                                                    <constraint firstAttribute="trailing" secondItem="v62-Wi-LCA" secondAttribute="trailing" priority="999" constant="250" id="TdM-2M-qKA"/>
                                                     <constraint firstItem="v62-Wi-LCA" firstAttribute="top" secondItem="BaF-wf-CjJ" secondAttribute="top" constant="25" id="d5N-kB-2NK"/>
                                                     <constraint firstItem="v62-Wi-LCA" firstAttribute="leading" secondItem="BaF-wf-CjJ" secondAttribute="leading" constant="15" id="dwO-Pc-8OB"/>
                                                     <constraint firstAttribute="height" constant="280" id="hQe-N6-7cb"/>
