@@ -12,7 +12,8 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
     var dayEventData: DayEventData?
-    var eventData: [DayEventData] = []
+    var todoEventList: [Event] = []
+    var completionEventList: [Event] = []
     
     var ref: DatabaseReference!
     
@@ -23,10 +24,10 @@ class MainViewController: UIViewController {
         setupTableView()
         setupNotification()
         
-        dayEventData = DayEventData(todoEventList: [], completionEventList: [])
+        dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
         print(dayEventData!.date)
         
-        //readFirebaseData()
+        readFirebaseData(date: dayEventData!.date)
         
     }
     
@@ -58,15 +59,66 @@ private extension MainViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedEventCompletion(_:)), name: Notification.Name("tappedEventCompletionButton"), object: nil)
     }
     
-    func readFirebaseData() {
+    func readFirebaseData(date: String) {
         ref = Database.database().reference()
-        
+        ref.child("user1").observeSingleEvent(of: .value, with: { snapshot in
+            guard let value = snapshot.value as? [String: Any] else { return }
+            print("-----------------------")
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: value)
+                let todayEvent = try JSONDecoder().decode([String: DayEventData].self, from: jsonData)
+                guard let data = todayEvent[date] else { return }
+                self.dayEventData = data
+                self.loadDayData()
+                self.eventTableView.reloadData()
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+          print(error.localizedDescription)
+        }
     }
     
     func writeFirebaseData(dayEventData: DayEventData) {
         ref = Database.database().reference()
         print(dayEventData.toDictionary)
-        
+        ref.child("user1").child(dayEventData.date).setValue(dayEventData.toDictionary)
+    }
+    
+    func getTodayDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = dateFormatter.string(from: Date())
+        return date
+    }
+    
+    func computedAchivement() -> Double {
+        if todoEventList.count + completionEventList.count == 0 {
+            return 0.0
+        }
+        let result = Double(completionEventList.count) / (Double(todoEventList.count) + Double(completionEventList.count))
+        NotificationCenter.default.post(name: Notification.Name("getDayAchivementData"), object: round(result * 100) / 100)
+        return round(result * 100) / 100
+    }
+    
+    func loadDayData() {
+        dayEventData?.eventList.forEach { event in
+            if event.completion {
+                completionEventList.append(event)
+            } else {
+                todoEventList.append(event)
+            }
+        }
+    }
+    
+    func addDayData(event: Event) {
+        dayEventData?.eventList.append(event)
+    }
+    
+    func deleteDayData(event: Event) {
+        guard let index = dayEventData?.eventList.firstIndex(of: event) else { return }
+        dayEventData?.eventList.remove(at: index)
     }
     
     
@@ -75,25 +127,26 @@ private extension MainViewController {
         let (isSelected, index) = notification.object as! (Bool, Int)
         switch isSelected {
         case true:
-            var event = dayEventData?.todoEventList[index]
-            event!.completion = isSelected
-            dayEventData?.todoEventList.remove(at: index)
-            dayEventData?.completionEventList.append(event!)
-            
-            print("\(dayEventData!.todayAchivement * 100)%")
-            
-            eventTableView.reloadData()
+            var event = todoEventList[index]
+            deleteDayData(event: event)
+            event.completion = isSelected
+            addDayData(event: event)
+            todoEventList.remove(at: index)
+            completionEventList.append(event)
+            break
         case false:
-            var event = dayEventData?.completionEventList[index]
-            event?.completion = isSelected
-            dayEventData?.completionEventList.remove(at: index)
-            dayEventData?.todoEventList.append(event!)
-            
-            
-            print("\(dayEventData!.todayAchivement * 100)%")
-            
-            eventTableView.reloadData()
+            var event = completionEventList[index]
+            deleteDayData(event: event)
+            event.completion = isSelected
+            addDayData(event: event)
+            completionEventList.remove(at: index)
+            todoEventList.append(event)
+            break
         }
+        let todayAchivement = computedAchivement()
+        dayEventData?.todayAchivement = todayAchivement
+        writeFirebaseData(dayEventData: dayEventData!)
+        eventTableView.reloadData()
     }
     
     
@@ -107,15 +160,14 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return (dayEventData?.todoEventList.count ?? 0) + 1
+            return todoEventList.count + 1
         default:
-            return (dayEventData?.completionEventList.count ?? 0) + 1
+            return completionEventList.count + 1
         }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.row {
         case 0:
             return loadEventTableViewHeadCell(tableView, cellForRowAt: indexPath)
@@ -137,15 +189,20 @@ extension MainViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             return
         }
+        
         switch indexPath.section {
         case 0:
             if editingStyle == .delete {
-                dayEventData?.todoEventList.remove(at: indexPath.row - 1)
+                let event = todoEventList[indexPath.row - 1]
+                deleteDayData(event: event)
+                todoEventList.remove(at: indexPath.row - 1)
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         default:
             if editingStyle == .delete {
-                dayEventData?.completionEventList.remove(at: indexPath.row - 1)
+                let event = completionEventList[indexPath.row - 1]
+                deleteDayData(event: event)
+                completionEventList.remove(at: indexPath.row - 1)
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
@@ -157,11 +214,11 @@ extension MainViewController: UITableViewDataSource {
         }
         switch indexPath.section {
         case 0:
-            cell.EventNameLabel.text = dayEventData?.todoEventList[indexPath.row - 1].title
+            cell.EventNameLabel.text = todoEventList[indexPath.row - 1].title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = false
         default:
-            cell.EventNameLabel.text = dayEventData?.completionEventList[indexPath.row - 1].title
+            cell.EventNameLabel.text = completionEventList[indexPath.row - 1].title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = true
         }
@@ -195,8 +252,9 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
-        dayEventData?.todoEventList.append(event)
-        //writeFirebaseData(dayEventData: dayEventData!)
+        todoEventList.append(event)
+        addDayData(event: event)
+        writeFirebaseData(dayEventData: dayEventData!)
         eventTableView.reloadData()
     }
 }

@@ -11,6 +11,7 @@ import Charts
 class AchievementViewController: UIViewController {
     @IBOutlet weak var dayView: UIView!
     @IBOutlet weak var dayAchivementProgressView: UIProgressView!
+    @IBOutlet weak var dayAchivementLabel: UILabel!
     
     @IBOutlet weak var weekView: UIView!
     @IBOutlet weak var weekBarChartView: BarChartView!
@@ -30,10 +31,23 @@ class AchievementViewController: UIViewController {
         setupDayViewLayout()
         setupWeekViewLayout()
         setupMonthViewLayout()
+        setupNotification()
+    }
+    
+    @objc func getDayAchivementData(_ notification: Notification) {
+        let data = notification.object as! Double
+        DispatchQueue.main.async {
+            self.dayAchivementProgressView.progress = Float(data)
+            self.dayAchivementLabel.text = "오늘의 달성도는 \(Int(data * 100))%입니다!"
+        }
     }
 }
 
 private extension AchievementViewController {
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(getDayAchivementData(_:)), name: Notification.Name("getDayAchivementData"), object: nil)
+    }
+    
     func setupNavigationController() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true

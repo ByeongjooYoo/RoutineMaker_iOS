@@ -282,6 +282,7 @@
                     <navigationItem key="navigationItem" title="성취도" id="XvD-L8-64N"/>
                     <size key="freeformSize" width="414" height="1100"/>
                     <connections>
+                        <outlet property="dayAchivementLabel" destination="Cfn-Vb-pDs" id="3DB-V6-uWQ"/>
                         <outlet property="dayAchivementProgressView" destination="sYD-Dl-T3U" id="ljw-gO-Njf"/>
                         <outlet property="dayView" destination="cc7-pf-mMJ" id="dLw-Mk-3XF"/>
                         <outlet property="monthBarChartView" destination="tX9-po-bjV" id="Qbc-o0-zEV"/>

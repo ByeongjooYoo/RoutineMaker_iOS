@@ -39,7 +39,6 @@ class AddEventViewController: UIViewController {
         guard let title = titleTextField.text else { return }
         guard let description = descriptionTextView.text else { return }
         let event = Event(title: title, description: description, completion: false)
-        print(event)
         
         self.delegate?.didAddEvent(event: event)
         dismiss(animated: true, completion: nil)
