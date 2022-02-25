@@ -164,7 +164,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="sYD-Dl-T3U">
+                                                    <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="sYD-Dl-T3U">
                                                         <rect key="frame" x="18" y="79" width="354" height="31"/>
                                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                         <color key="tintColor" systemColor="systemGreenColor"/>

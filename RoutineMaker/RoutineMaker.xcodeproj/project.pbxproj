@@ -25,6 +25,7 @@
 		F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC927B0D9C100426E5A /* AddEventViewController.swift */; };
 		F0321AF527BBA3C600727A2B /* DayEventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0321AF427BBA3C600727A2B /* DayEventData.swift */; };
 		F0321AF727BCD86800727A2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0321AF627BCD86800727A2B /* GoogleService-Info.plist */; };
+		F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		F0115EC927B0D9C100426E5A /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		F0321AF427BBA3C600727A2B /* DayEventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEventData.swift; sourceTree = "<group>"; };
 		F0321AF627BCD86800727A2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataGeneration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,8 +194,17 @@
 				F010E28627B4D9370079BD4B /* Entity */,
 				F010E27627B29DBB0079BD4B /* Extension */,
 				F010E27727B29E190079BD4B /* Presentation */,
+				F0BF8DA127C9185F003FC132 /* Test */,
 			);
 			path = RoutineMaker;
+			sourceTree = "<group>";
+		};
+		F0BF8DA127C9185F003FC132 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */,
+				F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */,
 				F010E28527B4D92F0079BD4B /* Event.swift in Sources */,
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,

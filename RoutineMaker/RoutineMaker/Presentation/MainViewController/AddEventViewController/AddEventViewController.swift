@@ -21,6 +21,7 @@ class AddEventViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setLayout()
         placeholderSetting(descriptionTextView)
         configureInputField()

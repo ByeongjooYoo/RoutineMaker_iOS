@@ -23,12 +23,7 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         setupNotification()
-        
-        dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
-        print(dayEventData!.date)
-        
-        readFirebaseData(date: dayEventData!.date)
-        
+        readFirebaseData(date: getTodayDate())
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -61,15 +56,24 @@ private extension MainViewController {
     
     func readFirebaseData(date: String) {
         ref = Database.database().reference()
-        ref.child("user1").observeSingleEvent(of: .value, with: { snapshot in
-            guard let value = snapshot.value as? [String: Any] else { return }
+        ref.child("user1").observeSingleEvent(of: .value, with: { [self] snapshot in
+            guard let value = snapshot.value as? [String: Any] else {
+                self.dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
+                print("Firebase hasn't Data")
+                return
+            }
+            
             print("-----------------------")
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let todayEvent = try JSONDecoder().decode([String: DayEventData].self, from: jsonData)
-                guard let data = todayEvent[date] else { return }
+                guard let data = todayEvent[date] else {
+                    self.dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
+                    return
+                }
                 self.dayEventData = data
                 self.loadDayData()
+                self.sendAchivementData(Float(self.dayEventData!.todayAchivement))
                 self.eventTableView.reloadData()
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
@@ -99,6 +103,8 @@ private extension MainViewController {
         }
         let result = Double(completionEventList.count) / (Double(todoEventList.count) + Double(completionEventList.count))
         NotificationCenter.default.post(name: Notification.Name("getDayAchivementData"), object: round(result * 100) / 100)
+        dayEventData?.todayAchivement = result
+        writeFirebaseData(dayEventData: dayEventData!)
         return round(result * 100) / 100
     }
     
@@ -121,7 +127,11 @@ private extension MainViewController {
         dayEventData?.eventList.remove(at: index)
     }
     
-    
+    func sendAchivementData(_ achivement: Float) {
+        let vc = tabBarController?.viewControllers![1] as! UINavigationController
+        let vvc = vc.topViewController as! AchievementViewController
+        vvc.progress = achivement
+    }
     
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
@@ -254,6 +264,7 @@ extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
         todoEventList.append(event)
         addDayData(event: event)
+        computedAchivement()
         writeFirebaseData(dayEventData: dayEventData!)
         eventTableView.reloadData()
     }

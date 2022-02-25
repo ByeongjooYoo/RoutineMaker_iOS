@@ -25,6 +25,10 @@ class AchievementViewController: UIViewController {
     let months: [String] = ["3주 전", "2주 전", "1주 전", "이번 주"]
     let weekCompletionCount: [Double] = [80, 70, 50, 98]
     
+    var time: Float = 0.0
+    var timer: Timer?
+    var progress: Float = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
@@ -37,7 +41,8 @@ class AchievementViewController: UIViewController {
     @objc func getDayAchivementData(_ notification: Notification) {
         let data = notification.object as! Double
         DispatchQueue.main.async {
-            self.dayAchivementProgressView.progress = Float(data)
+            self.progress = Float(data)
+            self.dayAchivementProgressView.setProgress(self.progress, animated: true)
             self.dayAchivementLabel.text = "오늘의 달성도는 \(Int(data * 100))%입니다!"
         }
     }
@@ -56,6 +61,7 @@ private extension AchievementViewController {
     func setupDayViewLayout() {
         dayView.layer.cornerRadius = 10
         dayAchivementProgressView.layer.cornerRadius = 8
+        dayAchivementProgressView.setProgress(progress, animated: true)
     }
     
     func setupWeekViewLayout() {
