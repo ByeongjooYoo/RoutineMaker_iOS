@@ -103,8 +103,6 @@ private extension MainViewController {
         }
         let result = Double(completionEventList.count) / (Double(todoEventList.count) + Double(completionEventList.count))
         NotificationCenter.default.post(name: Notification.Name("getDayAchivementData"), object: round(result * 100) / 100)
-        dayEventData?.todayAchivement = result
-        writeFirebaseData(dayEventData: dayEventData!)
         return round(result * 100) / 100
     }
     
@@ -264,7 +262,7 @@ extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
         todoEventList.append(event)
         addDayData(event: event)
-        computedAchivement()
+        dayEventData?.todayAchivement = computedAchivement()
         writeFirebaseData(dayEventData: dayEventData!)
         eventTableView.reloadData()
     }
