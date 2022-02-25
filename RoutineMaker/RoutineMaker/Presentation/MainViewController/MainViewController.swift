@@ -6,21 +6,24 @@
 //
 
 import UIKit
+import Firebase
 
 class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
-    private var eventList: [Event] = []
-    private var completedEventList: [Event] = []
+    var dayEventData: DayEventData?
+    var todoEventList: [Event] = []
+    var completionEventList: [Event] = []
+    
+    var ref: DatabaseReference!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupTableView()
         setupNotification()
-        
-        let dayEventData = DayEventData(todoEventList: eventList, completionEventList: completedEventList, todayAchivement: 0)
-        print(dayEventData.date)
+        readFirebaseData(date: getTodayDate())
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -39,6 +42,7 @@ private extension MainViewController {
     func setupTableView() {
         eventTableView.dataSource = self
         eventTableView.delegate = self
+        
         let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
@@ -50,55 +54,110 @@ private extension MainViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedEventCompletion(_:)), name: Notification.Name("tappedEventCompletionButton"), object: nil)
     }
     
+    func readFirebaseData(date: String) {
+        ref = Database.database().reference()
+        ref.child("user1").observeSingleEvent(of: .value, with: { [self] snapshot in
+            guard let value = snapshot.value as? [String: Any] else {
+                self.dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
+                print("Firebase hasn't Data")
+                return
+            }
+            
+            print("-----------------------")
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: value)
+                let todayEvent = try JSONDecoder().decode([String: DayEventData].self, from: jsonData)
+                guard let data = todayEvent[date] else {
+                    self.dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
+                    return
+                }
+                self.dayEventData = data
+                self.loadDayData()
+                self.sendAchivementData(Float(self.dayEventData!.todayAchivement))
+                self.eventTableView.reloadData()
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+          print(error.localizedDescription)
+        }
+    }
+    
+    func writeFirebaseData(dayEventData: DayEventData) {
+        ref = Database.database().reference()
+        print(dayEventData.toDictionary)
+        ref.child("user1").child(dayEventData.date).setValue(dayEventData.toDictionary)
+    }
+    
+    func getTodayDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = dateFormatter.string(from: Date())
+        return date
+    }
+    
+    func computedAchivement() -> Double {
+        if todoEventList.count + completionEventList.count == 0 {
+            return 0.0
+        }
+        let result = Double(completionEventList.count) / (Double(todoEventList.count) + Double(completionEventList.count))
+        NotificationCenter.default.post(name: Notification.Name("getDayAchivementData"), object: round(result * 100) / 100)
+        return round(result * 100) / 100
+    }
+    
+    func loadDayData() {
+        dayEventData?.eventList.forEach { event in
+            if event.completion {
+                completionEventList.append(event)
+            } else {
+                todoEventList.append(event)
+            }
+        }
+    }
+    
+    func addDayData(event: Event) {
+        dayEventData?.eventList.append(event)
+    }
+    
+    func deleteDayData(event: Event) {
+        guard let index = dayEventData?.eventList.firstIndex(of: event) else { return }
+        dayEventData?.eventList.remove(at: index)
+    }
+    
+    func sendAchivementData(_ achivement: Float) {
+        let vc = tabBarController?.viewControllers![1] as! UINavigationController
+        let vvc = vc.topViewController as! AchievementViewController
+        vvc.progress = achivement
+    }
+    
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
         switch isSelected {
         case true:
-            var event = eventList[index]
+            var event = todoEventList[index]
+            deleteDayData(event: event)
             event.completion = isSelected
-            eventList.remove(at: index)
-            completedEventList.append(event)
-            eventTableView.reloadData()
+            addDayData(event: event)
+            todoEventList.remove(at: index)
+            completionEventList.append(event)
+            break
         case false:
-            var event = completedEventList[index]
+            var event = completionEventList[index]
+            deleteDayData(event: event)
             event.completion = isSelected
-            completedEventList.remove(at: index)
-            eventList.append(event)
-            eventTableView.reloadData()
+            addDayData(event: event)
+            completionEventList.remove(at: index)
+            todoEventList.append(event)
+            break
         }
+        let todayAchivement = computedAchivement()
+        dayEventData?.todayAchivement = todayAchivement
+        writeFirebaseData(dayEventData: dayEventData!)
+        eventTableView.reloadData()
     }
     
-    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
-            return UITableViewCell()
-        }
-        switch indexPath.section {
-        case 0:
-            cell.EventNameLabel.text = eventList[indexPath.row - 1].title
-            cell.setIndex(indexPath.row - 1)
-            cell.EventCompletionButton.isSelected = false
-        default:
-            cell.EventNameLabel.text = completedEventList[indexPath.row - 1].title
-            cell.setIndex(indexPath.row - 1)
-            cell.EventCompletionButton.isSelected = true
-        }
-        
-        return cell
-    }
     
-    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
-            return UITableViewCell()
-        }
-        switch indexPath.section {
-        case 0:
-            cell.titleLabel.text = "해야할 일"
-        default:
-            cell.titleLabel.text = "완료"
-        }
-        
-        return cell
-    }
 }
 
 extension MainViewController: UITableViewDataSource {
@@ -109,9 +168,9 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return eventList.count + 1
+            return todoEventList.count + 1
         default:
-            return completedEventList.count + 1
+            return completionEventList.count + 1
         }
     }
     
@@ -138,18 +197,54 @@ extension MainViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             return
         }
+        
         switch indexPath.section {
         case 0:
             if editingStyle == .delete {
-                eventList.remove(at: indexPath.row - 1)
+                let event = todoEventList[indexPath.row - 1]
+                deleteDayData(event: event)
+                todoEventList.remove(at: indexPath.row - 1)
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         default:
             if editingStyle == .delete {
-                completedEventList.remove(at: indexPath.row - 1)
+                let event = completionEventList[indexPath.row - 1]
+                deleteDayData(event: event)
+                completionEventList.remove(at: indexPath.row - 1)
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
+    }
+    
+    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
+            return UITableViewCell()
+        }
+        switch indexPath.section {
+        case 0:
+            cell.EventNameLabel.text = todoEventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = false
+        default:
+            cell.EventNameLabel.text = completionEventList[indexPath.row - 1].title
+            cell.setIndex(indexPath.row - 1)
+            cell.EventCompletionButton.isSelected = true
+        }
+        return cell
+    }
+    
+    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
+            return UITableViewCell()
+        }
+        switch indexPath.section {
+        case 0:
+            cell.titleLabel.text = "해야할 일"
+        default:
+            cell.titleLabel.text = "완료"
+        }
+        
+        return cell
     }
 }
 
@@ -165,7 +260,10 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
-        eventList.append(event)
+        todoEventList.append(event)
+        addDayData(event: event)
+        dayEventData?.todayAchivement = computedAchivement()
+        writeFirebaseData(dayEventData: dayEventData!)
         eventTableView.reloadData()
     }
 }

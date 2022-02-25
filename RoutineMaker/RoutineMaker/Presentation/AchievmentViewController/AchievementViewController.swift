@@ -11,6 +11,7 @@ import Charts
 class AchievementViewController: UIViewController {
     @IBOutlet weak var dayView: UIView!
     @IBOutlet weak var dayAchivementProgressView: UIProgressView!
+    @IBOutlet weak var dayAchivementLabel: UILabel!
     
     @IBOutlet weak var weekView: UIView!
     @IBOutlet weak var weekBarChartView: BarChartView!
@@ -24,16 +25,34 @@ class AchievementViewController: UIViewController {
     let months: [String] = ["3주 전", "2주 전", "1주 전", "이번 주"]
     let weekCompletionCount: [Double] = [80, 70, 50, 98]
     
+    var time: Float = 0.0
+    var timer: Timer?
+    var progress: Float = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupDayViewLayout()
         setupWeekViewLayout()
         setupMonthViewLayout()
+        setupNotification()
+    }
+    
+    @objc func getDayAchivementData(_ notification: Notification) {
+        let data = notification.object as! Double
+        DispatchQueue.main.async {
+            self.progress = Float(data)
+            self.dayAchivementProgressView.setProgress(self.progress, animated: true)
+            self.dayAchivementLabel.text = "오늘의 달성도는 \(Int(data * 100))%입니다!"
+        }
     }
 }
 
 private extension AchievementViewController {
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(getDayAchivementData(_:)), name: Notification.Name("getDayAchivementData"), object: nil)
+    }
+    
     func setupNavigationController() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -42,6 +61,8 @@ private extension AchievementViewController {
     func setupDayViewLayout() {
         dayView.layer.cornerRadius = 10
         dayAchivementProgressView.layer.cornerRadius = 8
+        dayAchivementProgressView.setProgress(progress, animated: true)
+        dayAchivementLabel.text = "오늘의 달성도는 \(Int(progress * 100))%입니다!"
     }
     
     func setupWeekViewLayout() {

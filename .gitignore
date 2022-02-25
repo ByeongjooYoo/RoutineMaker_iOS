@@ -92,3 +92,6 @@ iOSInjectionProject/
 
 # pod file ignore
 Pods/
+
+# .plist file ignore
+*.plist

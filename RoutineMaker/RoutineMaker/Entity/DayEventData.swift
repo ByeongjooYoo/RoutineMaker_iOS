@@ -7,15 +7,19 @@
 
 import Foundation
 
-struct DayEventData {
-    var todoEventList: [Event]
-    var completionEventList: [Event]
+struct DayEventData: Codable {
+    var eventList: [Event]
+    
     var todayAchivement: Double
-    var date: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY.MM.dd EEEE"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = dateFormatter.string(from: Date())
-        return date
+    
+    var date: String
+    
+    var toDictionary: [String: Any] {
+        let todoArray = eventList.map { $0.toDictionary }
+        
+        let dict: [String: Any] = ["eventList": todoArray, "todayAchivement": todayAchivement,"date": date]
+        return dict
     }
+    
+    static var id: Int = 0
 }
