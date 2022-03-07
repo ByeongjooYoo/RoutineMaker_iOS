@@ -91,7 +91,7 @@ private extension MainViewController {
         }
         let todayAchivement = computedAchivement()
         dayEventData?.todayAchivement = todayAchivement
-        writeFirebaseData(dayEventData: dayEventData!)
+        updateEventList(todoEventList: todoEventList, completionEventList: completionEventList)
         eventTableView.reloadData()
     }
     
@@ -201,7 +201,7 @@ extension MainViewController: AddEventViewDelegate {
         todoEventList.append(event)
         addDayData(event: event)
         dayEventData?.todayAchivement = computedAchivement()
-        writeFirebaseData(dayEventData: dayEventData!)
+        updateEventList(todoEventList: todoEventList, completionEventList: completionEventList)
         eventTableView.reloadData()
     }
 }
@@ -209,15 +209,6 @@ extension MainViewController: AddEventViewDelegate {
 
 // Firebase data structure Refactoring
 extension MainViewController {
-
-    
-    func writeFirebaseData(dayEventData: DayEventData) {
-//        ref = Database.database().reference()
-//        print(dayEventData.toDictionary)
-//        ref.child("user1").child(dayEventData.date).setValue(dayEventData.toDictionary)
-        updateEventList(todoEventList: todoEventList, completionEventList: completionEventList)
-    }
-    
     func getTodayDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
