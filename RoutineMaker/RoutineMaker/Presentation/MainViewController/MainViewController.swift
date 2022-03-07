@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         setupNotification()
-        readFirebaseData(date: getTodayDate())
+        fetchEventList()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,68 +52,6 @@ private extension MainViewController {
     
     func setupNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedEventCompletion(_:)), name: Notification.Name("tappedEventCompletionButton"), object: nil)
-    }
-    
-    func readFirebaseData(date: String) {
-        ref = Database.database().reference()
-        ref.child("user1").observeSingleEvent(of: .value, with: { [self] snapshot in
-            guard let value = snapshot.value as? [String: Any] else {
-                self.dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
-                print("Firebase hasn't Data")
-                return
-            }
-            
-            print("-----------------------")
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value)
-                let todayEvent = try JSONDecoder().decode([String: DayEventData].self, from: jsonData)
-                guard let data = todayEvent[date] else {
-                    self.dayEventData = DayEventData(eventList: [], todayAchivement: 0.0, date: getTodayDate())
-                    return
-                }
-                self.dayEventData = data
-                self.loadDayData()
-                self.sendAchivementData(Float(self.dayEventData!.todayAchivement))
-                self.eventTableView.reloadData()
-            }  catch let error {
-                print("Error JSON parsing: \(error.localizedDescription)")
-            }
-        }) { error in
-          print(error.localizedDescription)
-        }
-    }
-    
-    func writeFirebaseData(dayEventData: DayEventData) {
-        ref = Database.database().reference()
-        print(dayEventData.toDictionary)
-        ref.child("user1").child(dayEventData.date).setValue(dayEventData.toDictionary)
-    }
-    
-    func getTodayDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = dateFormatter.string(from: Date())
-        return date
-    }
-    
-    func computedAchivement() -> Double {
-        if todoEventList.count + completionEventList.count == 0 {
-            return 0.0
-        }
-        let result = Double(completionEventList.count) / (Double(todoEventList.count) + Double(completionEventList.count))
-        NotificationCenter.default.post(name: Notification.Name("getDayAchivementData"), object: round(result * 100) / 100)
-        return round(result * 100) / 100
-    }
-    
-    func loadDayData() {
-        dayEventData?.eventList.forEach { event in
-            if event.completion {
-                completionEventList.append(event)
-            } else {
-                todoEventList.append(event)
-            }
-        }
     }
     
     func addDayData(event: Event) {
@@ -265,5 +203,76 @@ extension MainViewController: AddEventViewDelegate {
         dayEventData?.todayAchivement = computedAchivement()
         writeFirebaseData(dayEventData: dayEventData!)
         eventTableView.reloadData()
+    }
+}
+
+
+// Firebase data structure Refactoring
+extension MainViewController {
+
+    
+    func writeFirebaseData(dayEventData: DayEventData) {
+//        ref = Database.database().reference()
+//        print(dayEventData.toDictionary)
+//        ref.child("user1").child(dayEventData.date).setValue(dayEventData.toDictionary)
+        updateEventList(todoEventList: todoEventList, completionEventList: completionEventList)
+    }
+    
+    func getTodayDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = dateFormatter.string(from: Date())
+        return date
+    }
+    
+    func computedAchivement() -> Double {
+        if todoEventList.count + completionEventList.count == 0 {
+            return 0.0
+        }
+        let result = Double(completionEventList.count) / (Double(todoEventList.count) + Double(completionEventList.count))
+        NotificationCenter.default.post(name: Notification.Name("getDayAchivementData"), object: round(result * 100) / 100)
+        return round(result * 100) / 100
+    }
+    
+    // Event 추가 or 삭제 될 때 호출
+    func updateEventList(todoEventList: [Event], completionEventList: [Event]) {
+        let eventList = (todoEventList + completionEventList).map { $0.toDictionary }
+        ref = Database.database().reference()
+        ref.child("user1").child("EventList").setValue(eventList)
+    }
+    
+    // Firebase에 저장된 Event를 가져올때 호출
+    func fetchEventList() {
+        ref = Database.database().reference()
+        ref.child("user1").child("EventList").observeSingleEvent(of: .value, with: {[self] snapshot in
+            guard let value = snapshot.value as? [Any] else { return }
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: value)
+                let eventList = try JSONDecoder().decode([Event].self, from: jsonData)
+                eventList.forEach { event in
+                    if event.completion {
+                        completionEventList.append(event)
+                    } else {
+                        todoEventList.append(event)
+                    }
+                }
+                eventTableView.reloadData()
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+          print(error.localizedDescription)
+        }
+    }
+    
+    // Day 성취도가 변경될 때 호출
+    func updateDayAchievementData() {
+        
+    }
+    
+    // Firebase에 저장된 Day 성취도를 호출
+    func fetchDaDayAchievementData() {
+        
     }
 }

@@ -26,6 +26,7 @@
 		F0321AF527BBA3C600727A2B /* DayEventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0321AF427BBA3C600727A2B /* DayEventData.swift */; };
 		F0321AF727BCD86800727A2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0321AF627BCD86800727A2B /* GoogleService-Info.plist */; };
 		F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */; };
+		F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		F0321AF427BBA3C600727A2B /* DayEventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEventData.swift; sourceTree = "<group>"; };
 		F0321AF627BCD86800727A2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataGeneration.swift; sourceTree = "<group>"; };
+		F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			children = (
 				F010E28427B4D92F0079BD4B /* Event.swift */,
 				F0321AF427BBA3C600727A2B /* DayEventData.swift */,
+				F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,
+				F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */,
 				F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
