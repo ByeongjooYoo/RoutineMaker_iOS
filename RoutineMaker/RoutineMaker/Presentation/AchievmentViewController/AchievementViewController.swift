@@ -32,10 +32,20 @@ class AchievementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
-        setupDayViewLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getAchivementData()
+        setupDayViewLayout(progress: progress)
         setupWeekViewLayout()
         setupMonthViewLayout()
-        setupNotification()
+    }
+        
+    func getAchivementData() {
+        let vc = tabBarController?.viewControllers![0] as! UINavigationController
+        let vvc = vc.topViewController as! MainViewController
+        progress = Float(vvc.dayAchievement?.dayAchivement ?? 0.0 )
     }
     
     @objc func getDayAchivementData(_ notification: Notification) {
@@ -48,17 +58,14 @@ class AchievementViewController: UIViewController {
     }
 }
 
+
 private extension AchievementViewController {
-    func setupNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(getDayAchivementData(_:)), name: Notification.Name("getDayAchivementData"), object: nil)
-    }
-    
     func setupNavigationController() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    func setupDayViewLayout() {
+    func setupDayViewLayout(progress: Float) {
         dayView.layer.cornerRadius = 10
         dayAchivementProgressView.layer.cornerRadius = 8
         dayAchivementProgressView.setProgress(progress, animated: true)

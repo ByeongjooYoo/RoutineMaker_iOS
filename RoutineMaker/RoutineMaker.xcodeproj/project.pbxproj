@@ -23,7 +23,6 @@
 		F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC527AFFE2300426E5A /* AchievementViewController.swift */; };
 		F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC727AFFE3400426E5A /* SettingViewController.swift */; };
 		F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC927B0D9C100426E5A /* AddEventViewController.swift */; };
-		F0321AF527BBA3C600727A2B /* DayEventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0321AF427BBA3C600727A2B /* DayEventData.swift */; };
 		F0321AF727BCD86800727A2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0321AF627BCD86800727A2B /* GoogleService-Info.plist */; };
 		F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */; };
 		F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */; };
@@ -50,7 +49,6 @@
 		F0115EC527AFFE2300426E5A /* AchievementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
 		F0115EC727AFFE3400426E5A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F0115EC927B0D9C100426E5A /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
-		F0321AF427BBA3C600727A2B /* DayEventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEventData.swift; sourceTree = "<group>"; };
 		F0321AF627BCD86800727A2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataGeneration.swift; sourceTree = "<group>"; };
 		F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievement.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				F010E28427B4D92F0079BD4B /* Event.swift */,
-				F0321AF427BBA3C600727A2B /* DayEventData.swift */,
 				F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */,
 			);
 			path = Entity;
@@ -338,7 +335,6 @@
 				F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */,
 				F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
-				F0321AF527BBA3C600727A2B /* DayEventData.swift in Sources */,
 				F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */,
 				F0115EB427AFEECF00426E5A /* SceneDelegate.swift in Sources */,
 			);

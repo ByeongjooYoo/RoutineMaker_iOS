@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct DayAchievement {
-    var todayAchivement: Double
+struct DayAchievement: Codable {
+    var dayAchivement: Double
     var date: String
+    
+    var toDictionary: [String: Any] {
+        let dict: [String: Any] = ["dayAchivement": dayAchivement, "date": date]
+        return dict
+    }
 }
