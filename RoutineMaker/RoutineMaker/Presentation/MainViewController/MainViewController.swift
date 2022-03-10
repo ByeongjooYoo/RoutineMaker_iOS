@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
         setupTableView()
         setupNotification()
         fetchEventList()
-        //fetchDayAchievementData()
+        fetchDayAchievementData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -213,7 +213,8 @@ extension MainViewController {
     func fetchEventList() {
         ref = Database.database().reference()
         ref.child("user1").child("EventList").observeSingleEvent(of: .value, with: {[self] snapshot in
-            guard let value = snapshot.value as? [Any] else { return }
+            guard let value = snapshot.value as? [Any] else { print("Firebase Data Empty")
+                return }
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let eventList = try JSONDecoder().decode([Event].self, from: jsonData)
@@ -244,19 +245,18 @@ extension MainViewController {
         dayAchievement = DayAchievement(dayAchivement: 0.0, date: getTodayDate())
         ref = Database.database().reference()
         ref.child("user1").child(getTodayDate()).observeSingleEvent(of: .value, with: { [self] snapshot in
+            if snapshot.value is NSNull { return }
             guard let value = snapshot.value else {
-                updateDayAchievementData(dayAchievement: dayAchievement ?? DayAchievement(dayAchivement: 0, date: getTodayDate()))
                 return
             }
             do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value)
+                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
                 let loadData = try JSONDecoder().decode(DayAchievement.self, from: jsonData)
                 dayAchievement = loadData
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }
         }) { error in
-            print("debug")
             print(error.localizedDescription)
         }
     }
