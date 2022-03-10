@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
         setupTableView()
         setupNotification()
         fetchEventList()
-        fetchDayAchievementData()
+        //fetchDayAchievementData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -243,8 +243,11 @@ extension MainViewController {
     func fetchDayAchievementData() {
         dayAchievement = DayAchievement(dayAchivement: 0.0, date: getTodayDate())
         ref = Database.database().reference()
-        ref.child("user1").child(dayAchievement!.date).observeSingleEvent(of: .value, with: { [self] snapshot in
-            guard let value = snapshot.value else { return }
+        ref.child("user1").child(getTodayDate()).observeSingleEvent(of: .value, with: { [self] snapshot in
+            guard let value = snapshot.value else {
+                updateDayAchievementData(dayAchievement: dayAchievement ?? DayAchievement(dayAchivement: 0, date: getTodayDate()))
+                return
+            }
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let loadData = try JSONDecoder().decode(DayAchievement.self, from: jsonData)
@@ -253,7 +256,8 @@ extension MainViewController {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }
         }) { error in
-          print(error.localizedDescription)
+            print("debug")
+            print(error.localizedDescription)
         }
     }
 }

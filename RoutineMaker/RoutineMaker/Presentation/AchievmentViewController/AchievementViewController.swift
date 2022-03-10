@@ -19,7 +19,7 @@ class AchievementViewController: UIViewController {
     @IBOutlet weak var monthView: UIView!
     @IBOutlet weak var monthBarChartView: BarChartView!
     
-    let weeks: [String] = ["일", "월", "화", "수", "목", "금", "토"]
+    var weeks: [String] = []
     let completionCount: [Double] = [50, 40, 20, 50, 70, 80, 90]
     
     let months: [String] = ["3주 전", "2주 전", "1주 전", "이번 주"]
@@ -27,6 +27,7 @@ class AchievementViewController: UIViewController {
     
     var time: Float = 0.0
     var timer: Timer?
+    
     var progress: Float = 0.0
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class AchievementViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getAchivementData()
+        weeks = getWeekDays()
         setupDayViewLayout(progress: progress)
         setupWeekViewLayout()
         setupMonthViewLayout()
@@ -58,6 +60,33 @@ class AchievementViewController: UIViewController {
     }
 }
 
+extension AchievementViewController {
+    //TODO: 일주일 계산
+    func getWeekDays() -> [String] {
+        var result: [String] = []
+        for number in (0 ..< 7).reversed() {
+            let day = calculateDays(number: number)
+            result.append(day)
+        }
+        return result
+    }
+    
+    func calculateDays(number: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "M/d(E)"
+        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
+        let result = dateFormatter.string(from: date ?? Date())
+        return result
+    }
+    
+    //TODO: Firebase 성취도 데이터 가져오기
+    
+    //TODO: 성취도 계산(일주일)
+    
+    
+}
+
 
 private extension AchievementViewController {
     func setupNavigationController() {
@@ -74,21 +103,14 @@ private extension AchievementViewController {
     
     func setupWeekViewLayout() {
         weekView.layer.cornerRadius = 10
-        setupWeekBarChartView()
-    }
-    
-    func setupWeekBarChartView() {
         drawNoDataChartView(barChartView: weekBarChartView)
-        drawBarChartView(rowData: weeks, values: completionCount, barChartView: weekBarChartView)
-    }
+        //TODO: Firebase 데이터로 교체
+        drawBarChartView(rowData: weeks, values: completionCount, barChartView: weekBarChartView)    }
     
     func setupMonthViewLayout() {
         monthView.layer.cornerRadius = 10
-        setupMonthBarChartView()
-    }
-    
-    func setupMonthBarChartView() {
         drawNoDataChartView(barChartView: monthBarChartView)
+        //TODO: Firebase 데이터로 교체
         drawBarChartView(rowData: months, values: weekCompletionCount, barChartView: monthBarChartView)
     }
     
