@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
     var todoEventList: [Event] = []
     var completionEventList: [Event] = []
     
-    var flag = true
+    var isRunToday = true
     var ref: DatabaseReference!
     
     override func viewDidLoad() {
@@ -213,14 +213,13 @@ extension MainViewController {
     // Firebase에 저장된 Event를 가져올때 호출
     func fetchEventList() {
         ref = Database.database().reference()
-        
         ref.child("user1").child("EventList").observeSingleEvent(of: .value, with: {[self] snapshot in
             guard let value = snapshot.value as? [Any] else { print("Firebase Data Empty")
                 return }
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let eventList = try JSONDecoder().decode([Event].self, from: jsonData)
-                switch flag {
+                switch isRunToday {
                 case true:
                     eventList.forEach { event in
                         if event.completion {
@@ -258,7 +257,7 @@ extension MainViewController {
         ref = Database.database().reference()
         ref.child("user1").child("AchievementList").child(getTodayDate()).observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull {
-                flag = false
+                isRunToday = false
                 fetchEventList()
                 return
             }
