@@ -25,7 +25,7 @@ class AchievementViewController: UIViewController {
     var weeks: [String] = []
     var completionCount: [DayAchievement] = []
     
-    let months: [String] = ["3주 전", "2주 전", "1주 전", "이번 주"]
+    let months: [String] = ["3주 전", "2주 전", "1주 전", "이번 달"]
     //let weekCompletionCount: [Double] = [80, 70, 50, 98]
     
     var time: Float = 0.0
@@ -66,6 +66,29 @@ extension AchievementViewController {
             let day = calculateDays(number: number)
             result.append(day)
         }
+        return result
+    }
+    
+    func getMonthDays() {
+        
+    }
+    
+    // TODO: ReFactoring 필요
+    func getDate(number: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
+        let result = dateFormatter.string(from: date ?? Date())
+        return result
+    }
+    
+    func getMonth(number: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = Calendar.current.date(byAdding: .month, value: -(number), to: Date())
+        let result = dateFormatter.string(from: date ?? Date())
         return result
     }
     
@@ -128,16 +151,6 @@ extension AchievementViewController {
         }) { error in
             print(error.localizedDescription)
         }
-    }
-    
-    // TODO: ReFactoring 필요
-    func getDate(number: Int) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
-        let result = dateFormatter.string(from: date ?? Date())
-        return result
     }
 }
 
