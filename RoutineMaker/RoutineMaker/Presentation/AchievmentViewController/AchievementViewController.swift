@@ -23,10 +23,10 @@ class AchievementViewController: UIViewController {
     var ref: DatabaseReference!
     
     var weeks: [String] = []
-    var completionCount: [DayAchievement] = []
+    var completionCount: [Double] = []
     
-    let months: [String] = ["3주 전", "2주 전", "1주 전", "이번 주"]
-    //let weekCompletionCount: [Double] = [80, 70, 50, 98]
+    var months: [String] = []
+    var monthsCompletionCount: [Double] = []
     
     var time: Float = 0.0
     var timer: Timer?
@@ -42,9 +42,8 @@ class AchievementViewController: UIViewController {
         super.viewWillAppear(animated)
         fetchDayAchievementData()
         weeks = getWeekDays()
-        fetchWeekAchievementData()
-        
-//        setupMonthViewLayout()
+        months = getMonth()
+        fetchAchievementData()
     }
 
     
@@ -69,6 +68,34 @@ extension AchievementViewController {
         return result
     }
     
+    func getMonth() -> [String] {
+        var result: [String] = []
+        for number in (0 ..< 4).reversed() {
+            let month = calculateMonths(number: number)
+            result.append(month)
+        }
+        return result
+    }
+    
+    // TODO: ReFactoring 필요
+    func getDate(number: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
+        let result = dateFormatter.string(from: date ?? Date())
+        return result
+    }
+    
+    func calculateMonths(number: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY_MM"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let date = Calendar.current.date(byAdding: .month, value: -(number), to: Date())
+        let result = dateFormatter.string(from: date ?? Date())
+        return result
+    }
+    
     func calculateDays(number: Int) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
@@ -76,6 +103,20 @@ extension AchievementViewController {
         let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
         let result = dateFormatter.string(from: date ?? Date())
         return result
+    }
+    
+    func calculateMonthAchievement( dayAchievement:[DayAchievement]) -> Double {
+        let count = dayAchievement.count
+        var result: Double = 0
+        if count == 0 {
+            return 0
+        }
+        
+        for data in dayAchievement {
+            result += data.dayAchivement
+        }
+        
+        return result / Double(count)
     }
     
     //TODO: Firebase 성취도 데이터 가져오기
@@ -101,7 +142,7 @@ extension AchievementViewController {
     }
     
     //TODO: 성취도 계산(일주일)
-    func fetchWeekAchievementData() {
+    func fetchAchievementData() {
         ref = Database.database().reference()
         ref.child("user1").child("AchievementList").observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull { return }
@@ -113,31 +154,35 @@ extension AchievementViewController {
                 let loadData = try JSONDecoder().decode([String: DayAchievement].self, from: jsonData)
                 
                 var dateArray: [String] = []
-                var dataArray: [DayAchievement] = []
+                var dataArray: [Double] = []
                 for i in (0 ..< 7).reversed() {
                     dateArray.append(getDate(number: i))
                 }
                 for date in dateArray {
-                    dataArray.append(loadData[date] ?? DayAchievement(dayAchivement: 0.0, date: date))
+                    dataArray.append(loadData[date]?.dayAchivement ?? 0.0)
                 }
                 completionCount = dataArray
                 setupWeekViewLayout()
+                
+                var monthAchievement: [Double] = []
+                for month in months {
+                    var monthArray: [DayAchievement] = []
+                    for date in loadData.keys {
+                        if date.contains(month) {
+                            monthArray.append(loadData[date] ?? DayAchievement(dayAchivement: 0.0, date: date))
+                        }
+                    }
+                    let achievement = calculateMonthAchievement(dayAchievement: monthArray)
+                    monthAchievement.append(achievement)
+                }
+                monthsCompletionCount = monthAchievement
+                setupMonthViewLayout()
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }
         }) { error in
             print(error.localizedDescription)
         }
-    }
-    
-    // TODO: ReFactoring 필요
-    func getDate(number: Int) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
-        let result = dateFormatter.string(from: date ?? Date())
-        return result
     }
 }
 
@@ -165,7 +210,7 @@ private extension AchievementViewController {
         monthView.layer.cornerRadius = 10
         drawNoDataChartView(barChartView: monthBarChartView)
         //TODO: Firebase 데이터로 교체
-        drawBarChartView(rowData: months, values: completionCount, barChartView: monthBarChartView)
+        drawBarChartView(rowData: months, values: monthsCompletionCount, barChartView: monthBarChartView)
     }
     
     func drawNoDataChartView(barChartView: BarChartView) {
@@ -174,10 +219,10 @@ private extension AchievementViewController {
         barChartView.noDataTextColor = .lightGray
     }
     
-    func drawBarChartView(rowData: [String], values: [DayAchievement], barChartView: BarChartView) {
+    func drawBarChartView(rowData: [String], values: [Double], barChartView: BarChartView) {
         var dataEntries: [BarChartDataEntry] = []
         for i in 0 ..< rowData.count {
-            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i].dayAchivement * 100)
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i] * 100)
             dataEntries.append(dataEntry)
         }
         
