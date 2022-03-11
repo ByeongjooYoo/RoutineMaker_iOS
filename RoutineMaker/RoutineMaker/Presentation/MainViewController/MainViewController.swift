@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
     var todoEventList: [Event] = []
     var completionEventList: [Event] = []
     
+    var flag = true
     var ref: DatabaseReference!
     
     override func viewDidLoad() {
@@ -22,7 +23,6 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         setupNotification()
-        fetchEventList()
         fetchDayAchievementData()
     }
     
@@ -146,6 +146,7 @@ extension MainViewController: UITableViewDataSource {
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
+        updateEventList(todoEventList: todoEventList, completionEventList: completionEventList)
     }
     
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -212,19 +213,30 @@ extension MainViewController {
     // Firebase에 저장된 Event를 가져올때 호출
     func fetchEventList() {
         ref = Database.database().reference()
+        
         ref.child("user1").child("EventList").observeSingleEvent(of: .value, with: {[self] snapshot in
             guard let value = snapshot.value as? [Any] else { print("Firebase Data Empty")
                 return }
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let eventList = try JSONDecoder().decode([Event].self, from: jsonData)
-                eventList.forEach { event in
-                    if event.completion {
-                        completionEventList.append(event)
-                    } else {
+                switch flag {
+                case true:
+                    eventList.forEach { event in
+                        if event.completion {
+                            completionEventList.append(event)
+                        } else {
+                            todoEventList.append(event)
+                        }
+                    }
+                case false:
+                    eventList.forEach { event in
+                        var event = event
+                        event.completion = false
                         todoEventList.append(event)
                     }
                 }
+                
                 eventTableView.reloadData()
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
@@ -245,7 +257,12 @@ extension MainViewController {
         dayAchievement = DayAchievement(dayAchivement: 0.0, date: getTodayDate())
         ref = Database.database().reference()
         ref.child("user1").child("AchievementList").child(getTodayDate()).observeSingleEvent(of: .value, with: { [self] snapshot in
-            if snapshot.value is NSNull { return }
+            if snapshot.value is NSNull {
+                flag = false
+                fetchEventList()
+                return
+            }
+            fetchEventList()
             guard let value = snapshot.value else {
                 return
             }
