@@ -237,14 +237,14 @@ extension MainViewController {
     // Day 성취도가 변경될 때 호출
     func updateDayAchievementData(dayAchievement: DayAchievement) {
         ref = Database.database().reference()
-        ref.child("user1").child(dayAchievement.date).setValue(dayAchievement.toDictionary)
+        ref.child("user1").child("AchievementList").child(dayAchievement.date).setValue(dayAchievement.toDictionary)
     }
     
     // Firebase에 저장된 Day 성취도를 호출
     func fetchDayAchievementData() {
         dayAchievement = DayAchievement(dayAchivement: 0.0, date: getTodayDate())
         ref = Database.database().reference()
-        ref.child("user1").child(getTodayDate()).observeSingleEvent(of: .value, with: { [self] snapshot in
+        ref.child("user1").child("AchievementList").child(getTodayDate()).observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull { return }
             guard let value = snapshot.value else {
                 return
