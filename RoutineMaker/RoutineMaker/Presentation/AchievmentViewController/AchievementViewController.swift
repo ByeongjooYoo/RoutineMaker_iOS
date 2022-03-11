@@ -112,14 +112,15 @@ extension AchievementViewController {
                 let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
                 let loadData = try JSONDecoder().decode([String: DayAchievement].self, from: jsonData)
                 
-                //date
                 var dateArray: [String] = []
+                var dataArray: [DayAchievement] = []
                 for i in (0 ..< 7).reversed() {
                     dateArray.append(getDate(number: i))
                 }
                 for date in dateArray {
-                    completionCount.append(loadData[date] ?? DayAchievement(dayAchivement: 0.0, date: date))
+                    dataArray.append(loadData[date] ?? DayAchievement(dayAchivement: 0.0, date: date))
                 }
+                completionCount = dataArray
                 setupWeekViewLayout()
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
