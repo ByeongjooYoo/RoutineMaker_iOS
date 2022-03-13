@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event: Codable, Equatable {
+struct Event: Codable {
     var title: String
     var description: String
     var completion: Bool
