@@ -24,6 +24,7 @@
 		F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC727AFFE3400426E5A /* SettingViewController.swift */; };
 		F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC927B0D9C100426E5A /* AddEventViewController.swift */; };
 		F0321AF727BCD86800727A2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0321AF627BCD86800727A2B /* GoogleService-Info.plist */; };
+		F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F088930C27E2246F006ACFCD /* AddEventViewModel.swift */; };
 		F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */; };
 		F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		F0115EC727AFFE3400426E5A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F0115EC927B0D9C100426E5A /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		F0321AF627BCD86800727A2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F088930C27E2246F006ACFCD /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
 		F0BF8DA227C918A3003FC132 /* TestDataGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataGeneration.swift; sourceTree = "<group>"; };
 		F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,19 +107,20 @@
 			isa = PBXGroup;
 			children = (
 				F0115EB527AFEECF00426E5A /* MainViewController.swift */,
-				F010E27927B29E4D0079BD4B /* AddEventViewController */,
+				F010E27927B29E4D0079BD4B /* AddEvent */,
 				F010E28327B4CF810079BD4B /* EventTableViewCell */,
 				F010E28B27B4FB660079BD4B /* EventTableViewHeadCell */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
 		};
-		F010E27927B29E4D0079BD4B /* AddEventViewController */ = {
+		F010E27927B29E4D0079BD4B /* AddEvent */ = {
 			isa = PBXGroup;
 			children = (
 				F0115EC927B0D9C100426E5A /* AddEventViewController.swift */,
+				F088930C27E2246F006ACFCD /* AddEventViewModel.swift */,
 			);
-			path = AddEventViewController;
+			path = AddEvent;
 			sourceTree = "<group>";
 		};
 		F010E27A27B29E660079BD4B /* AchievmentViewController */ = {
@@ -328,6 +331,7 @@
 				F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */,
 				F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */,
 				F010E28527B4D92F0079BD4B /* Event.swift in Sources */,
+				F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */,
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,

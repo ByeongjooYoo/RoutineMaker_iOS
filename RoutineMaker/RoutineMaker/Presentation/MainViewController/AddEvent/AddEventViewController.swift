@@ -17,10 +17,14 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
+    private let viewModel = AddEventViewModel()
+    
     weak var delegate: AddEventViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.delegate = self
         
         setLayout()
         placeholderSetting(descriptionTextView)
@@ -33,20 +37,15 @@ class AddEventViewController: UIViewController {
     }
     
     @objc private func titleTextFieldDidChange(_ textField: UITextField) {
-        self.validateInputField()
+        viewModel.titleDidChange(to: textField.text)
     }
     
     @IBAction func tappedAddBarButtton(_ sender: UIBarButtonItem) {
-        guard let title = titleTextField.text else { return }
-        guard let description = descriptionTextView.text else { return }
-        let event = Event(title: title, description: description, completion: false)
-        
-        self.delegate?.didAddEvent(event: event)
-        dismiss(animated: true, completion: nil)
+        viewModel.addButtonDidClick()
     }
     
     @IBAction func tappedCancelBarButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        viewModel.cancelButtonDidClick()
     }
 }
 
@@ -64,9 +63,6 @@ private extension AddEventViewController {
         titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
     }
     
-    func validateInputField() {
-        addBarButton.isEnabled = !(titleTextField.text?.isEmpty ?? true) && !descriptionTextView.text.isEmpty
-    }
 }
 
 extension AddEventViewController: UITextViewDelegate {
@@ -91,7 +87,24 @@ extension AddEventViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        self.validateInputField()
+        viewModel.descriptionDidChange(to: textView.text)
     }
 }
+
+extension AddEventViewController: AddEventViewModelDelegate {
+    func didAddEvent(event: Event) {
+        delegate?.didAddEvent(event: event)
+    }
+    
+    func isAddButtonEnabledDidChage() {
+        addBarButton.isEnabled = viewModel.isAddButtonEnabled
+    }
+    
+    func dismiss() {
+        dismiss(animated: true)
+    }
+    
+}
+
+
 
