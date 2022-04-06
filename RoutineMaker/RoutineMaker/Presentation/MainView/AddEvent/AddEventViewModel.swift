@@ -17,8 +17,9 @@ import Foundation
  추가버튼 클릭: ButtonEvent
  제목이 변경이 된 이벤트: textvalueChange
  내용이 변경이 된 이벤트: textvalueChange
- 
+
  */
+
 protocol AddEventViewModelDelegate: AnyObject {
     func isAddButtonEnabledDidChage()
     
