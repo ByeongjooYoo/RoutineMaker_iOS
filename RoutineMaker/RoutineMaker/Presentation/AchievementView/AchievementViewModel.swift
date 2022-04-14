@@ -15,9 +15,9 @@ import Firebase
  monthAchievement: [Double]
  month 날짜: [String]
  
- firebase에서 오늘 성취도 데이터를 받아오는 함수: getDayAchievement
- firebase에서 최근 한 주 데이터를 받아오는 함수: getWeekAchievement
- firebase에서 최근 4달 데이터를 받아오는 함수: getMonthAchievement
+ firebase에서 오늘 성취도 데이터를 받아오는 함수: fetchDayAchievement
+ firebase에서 최근 한 주 데이터를 받아오는 함수: fetchWeekAchievement
+ firebase에서 최근 4달 데이터를 받아오는 함수: fetchMonthAchievement
  
  한달 평균 성취도를 계산하는 함수: calculateMonthAchievement
  오늘을 기준으로 일주일을 구하는 함수: getWeeks
@@ -35,7 +35,7 @@ class AchievementViewModel {
     
     var ref: DatabaseReference!
 
-    func fectchDayAchievement(completion: @escaping (Float) -> Void) {
+    func fetchDayAchievement(completion: @escaping (Float) -> Void) {
         ref = Database.database().reference()
         ref.child("user1").child("AchievementList").child(convertDateFormat(0)).observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull { return }
@@ -56,11 +56,11 @@ class AchievementViewModel {
         }
     }
     
-    func getWeekAchievement() {
+    func fetchWeekAchievement(completion: @escaping (Float) -> Void) {
         
     }
     
-    func getMonthAchievement() {
+    func fetchMonthAchievement(completion: @escaping (Float) -> Void) {
         
     }
     

@@ -42,7 +42,7 @@ class AchievementViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fectchDayAchievement(completion: { [self] achievement in
+        viewModel.fetchDayAchievement(completion: { [self] achievement in
             setupDayViewLayout(progress: achievement)
         })
         
