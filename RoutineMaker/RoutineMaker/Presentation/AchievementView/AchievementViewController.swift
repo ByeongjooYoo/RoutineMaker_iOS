@@ -5,7 +5,7 @@
 //  Created by ByeongJu Yu on 2022/02/06.
 //
 
-import UIKit
+import UIKit 
 import Charts
 import Firebase
 
@@ -20,6 +20,8 @@ class AchievementViewController: UIViewController {
     @IBOutlet weak var monthView: UIView!
     @IBOutlet weak var monthBarChartView: BarChartView!
     
+    private let viewModel = AchievementViewModel()
+    
     var ref: DatabaseReference!
     
     var weeks: [String] = []
@@ -31,7 +33,7 @@ class AchievementViewController: UIViewController {
     var time: Float = 0.0
     var timer: Timer?
     
-    var progress: Float = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,20 +42,13 @@ class AchievementViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDayAchievementData()
+        viewModel.fectchDayAchievement(completion: { [self] achievement in
+            setupDayViewLayout(progress: achievement)
+        })
+        
         weeks = getWeekDays()
         months = getMonth()
         fetchAchievementData()
-    }
-
-    
-    @objc func getDayAchivementData(_ notification: Notification) {
-        let data = notification.object as! Double
-        DispatchQueue.main.async {
-            self.progress = Float(data)
-            self.dayAchivementProgressView.setProgress(self.progress, animated: true)
-            self.dayAchivementLabel.text = "오늘의 달성도는 \(Int(data * 100))%입니다!"
-        }
     }
 }
 
@@ -117,28 +112,6 @@ extension AchievementViewController {
         }
         
         return result / Double(count)
-    }
-    
-    //TODO: Firebase 성취도 데이터 가져오기
-    // Firebase에 저장된 Day 성취도를 호출
-    func fetchDayAchievementData() {
-        ref = Database.database().reference()
-        ref.child("user1").child("AchievementList").child(getDate(number: 0)).observeSingleEvent(of: .value, with: { [self] snapshot in
-            if snapshot.value is NSNull { return }
-            guard let value = snapshot.value else {
-                return
-            }
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-                let loadData = try JSONDecoder().decode(DayAchievement.self, from: jsonData)
-                progress = Float(loadData.dayAchivement)
-                setupDayViewLayout(progress: progress)
-            }  catch let error {
-                print("Error JSON parsing: \(error.localizedDescription)")
-            }
-        }) { error in
-            print(error.localizedDescription)
-        }
     }
     
     //TODO: 성취도 계산(일주일)
