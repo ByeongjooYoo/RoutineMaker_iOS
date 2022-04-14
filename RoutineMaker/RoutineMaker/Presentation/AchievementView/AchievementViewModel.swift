@@ -24,6 +24,7 @@ import Firebase
  */
 
 class AchievementViewModel {
+    var ref: DatabaseReference!
     var dayAchievement: Float?
     
     var weekAchievement: [Double]?
@@ -45,8 +46,6 @@ class AchievementViewModel {
         }
         return result
     }
-    
-    var ref: DatabaseReference!
 
     func fetchDayAchievement(completion: @escaping (Float) -> Void) {
         ref = Database.database().reference()
@@ -98,12 +97,50 @@ class AchievementViewModel {
         }
     }
     
-    func fetchMonthAchievement(completion: @escaping (Float) -> Void) {
-        
+    func fetchMonthAchievement(completion: @escaping ([Double]) -> Void) {
+        ref = Database.database().reference()
+        ref.child("user1").child("AchievementList").observeSingleEvent(of: .value, with: { [self] snapshot in
+            if snapshot.value is NSNull { return }
+            guard let value = snapshot.value else {
+                return
+            }
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
+                let loadData = try JSONDecoder().decode([String: DayAchievement].self, from: jsonData)
+                
+                var dataArray: [Double] = []
+                for month in months {
+                    var monthArray: [DayAchievement] = []
+                    for date in loadData.keys {
+                        if date.contains(month) {
+                            monthArray.append(loadData[date] ?? DayAchievement(dayAchivement: 0.0, date: date))
+                        }
+                    }
+                    let achievement = calculateMonthAchievement(dayAchievement: monthArray)
+                    dataArray.append(achievement)
+                }
+                monthAchievement = dataArray
+                completion(monthAchievement ?? [])
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
     
-    func calculateMonthAchievement() {
+    func calculateMonthAchievement(dayAchievement: [DayAchievement]) -> Double {
+        let count = dayAchievement.count
+        var result: Double = 0
+        if count == 0 {
+            return 0
+        }
         
+        for data in dayAchievement {
+            result += data.dayAchivement
+        }
+        
+        return result / Double(count)
     }
     
     func convertDateFormat(_ day: Int, _ format: String, _ component: Calendar.Component) -> String {

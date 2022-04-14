@@ -22,17 +22,6 @@ class AchievementViewController: UIViewController {
     
     private let viewModel = AchievementViewModel()
     
-    var ref: DatabaseReference!
-    
-    // viewModel.weekAchievement
-    var completionCount: [Double] = []
-    
-    // viewModel.monthAchivement
-    var monthsCompletionCount: [Double] = []
-    
-    var time: Float = 0.0
-    var timer: Timer?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
@@ -49,61 +38,10 @@ class AchievementViewController: UIViewController {
         })
         
         viewModel.fetchMonthAchievement(completion: { [self] result in
-            
+            setupMonthViewLayout(monthAchievement: result)
         })
     }
 }
-
-extension AchievementViewController {
-    
-    func calculateMonthAchievement( dayAchievement:[DayAchievement]) -> Double {
-        let count = dayAchievement.count
-        var result: Double = 0
-        if count == 0 {
-            return 0
-        }
-        
-        for data in dayAchievement {
-            result += data.dayAchivement
-        }
-        
-        return result / Double(count)
-    }
-    
-    //TODO: 성취도 계산(일주일)
-    func fetchAchievementData() {
-        ref = Database.database().reference()
-        ref.child("user1").child("AchievementList").observeSingleEvent(of: .value, with: { [self] snapshot in
-            if snapshot.value is NSNull { return }
-            guard let value = snapshot.value else {
-                return
-            }
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-                let loadData = try JSONDecoder().decode([String: DayAchievement].self, from: jsonData)
-                
-                var monthAchievement: [Double] = []
-                for month in viewModel.months {
-                    var monthArray: [DayAchievement] = []
-                    for date in loadData.keys {
-                        if date.contains(month) {
-                            monthArray.append(loadData[date] ?? DayAchievement(dayAchivement: 0.0, date: date))
-                        }
-                    }
-                    let achievement = calculateMonthAchievement(dayAchievement: monthArray)
-                    monthAchievement.append(achievement)
-                }
-                monthsCompletionCount = monthAchievement
-                setupMonthViewLayout()
-            }  catch let error {
-                print("Error JSON parsing: \(error.localizedDescription)")
-            }
-        }) { error in
-            print(error.localizedDescription)
-        }
-    }
-}
-
 
 private extension AchievementViewController {
     func setupNavigationController() {
@@ -121,14 +59,12 @@ private extension AchievementViewController {
     func setupWeekViewLayout(weekAchievement: [Double]) {
         weekView.layer.cornerRadius = 10
         drawNoDataChartView(barChartView: weekBarChartView)
-        //TODO: Firebase 데이터로 교체
         drawBarChartView(rowData: viewModel.weeks, values: weekAchievement, barChartView: weekBarChartView)    }
     
-    func setupMonthViewLayout() {
+    func setupMonthViewLayout(monthAchievement: [Double]) {
         monthView.layer.cornerRadius = 10
         drawNoDataChartView(barChartView: monthBarChartView)
-        //TODO: Firebase 데이터로 교체
-        drawBarChartView(rowData: viewModel.months, values: monthsCompletionCount, barChartView: monthBarChartView)
+        drawBarChartView(rowData: viewModel.months, values: monthAchievement, barChartView: monthBarChartView)
     }
     
     func drawNoDataChartView(barChartView: BarChartView) {
