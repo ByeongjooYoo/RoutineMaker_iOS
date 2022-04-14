@@ -24,16 +24,14 @@ class AchievementViewController: UIViewController {
     
     var ref: DatabaseReference!
     
-    var weeks: [String] = []
+    // viewModel.weekAchievement
     var completionCount: [Double] = []
     
-    var months: [String] = []
+    // viewModel.monthAchivement
     var monthsCompletionCount: [Double] = []
     
     var time: Float = 0.0
     var timer: Timer?
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,63 +40,21 @@ class AchievementViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchDayAchievement(completion: { [self] achievement in
-            setupDayViewLayout(progress: achievement)
+        viewModel.fetchDayAchievement(completion: { [self] result in
+            setupDayViewLayout(progress: result)
         })
         
-        weeks = getWeekDays()
-        months = getMonth()
-        fetchAchievementData()
+        viewModel.fetchWeekAchievement(completion: { [self] result in
+            setupWeekViewLayout(weekAchievement: result)
+        })
+        
+        viewModel.fetchMonthAchievement(completion: { [self] result in
+            
+        })
     }
 }
 
 extension AchievementViewController {
-    //TODO: 일주일 계산
-    func getWeekDays() -> [String] {
-        var result: [String] = []
-        for number in (0 ..< 7).reversed() {
-            let day = calculateDays(number: number)
-            result.append(day)
-        }
-        return result
-    }
-    
-    func getMonth() -> [String] {
-        var result: [String] = []
-        for number in (0 ..< 4).reversed() {
-            let month = calculateMonths(number: number)
-            result.append(month)
-        }
-        return result
-    }
-    
-    // TODO: ReFactoring 필요
-    func getDate(number: Int) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
-        let result = dateFormatter.string(from: date ?? Date())
-        return result
-    }
-    
-    func calculateMonths(number: Int) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY_MM"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = Calendar.current.date(byAdding: .month, value: -(number), to: Date())
-        let result = dateFormatter.string(from: date ?? Date())
-        return result
-    }
-    
-    func calculateDays(number: Int) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "M/d(E)"
-        let date = Calendar.current.date(byAdding: .day, value: -(number), to: Date())
-        let result = dateFormatter.string(from: date ?? Date())
-        return result
-    }
     
     func calculateMonthAchievement( dayAchievement:[DayAchievement]) -> Double {
         let count = dayAchievement.count
@@ -126,19 +82,8 @@ extension AchievementViewController {
                 let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
                 let loadData = try JSONDecoder().decode([String: DayAchievement].self, from: jsonData)
                 
-                var dateArray: [String] = []
-                var dataArray: [Double] = []
-                for i in (0 ..< 7).reversed() {
-                    dateArray.append(getDate(number: i))
-                }
-                for date in dateArray {
-                    dataArray.append(loadData[date]?.dayAchivement ?? 0.0)
-                }
-                completionCount = dataArray
-                setupWeekViewLayout()
-                
                 var monthAchievement: [Double] = []
-                for month in months {
+                for month in viewModel.months {
                     var monthArray: [DayAchievement] = []
                     for date in loadData.keys {
                         if date.contains(month) {
@@ -173,17 +118,17 @@ private extension AchievementViewController {
         dayAchivementLabel.text = "오늘의 달성도는 \(Int(progress * 100))%입니다!"
     }
     
-    func setupWeekViewLayout() {
+    func setupWeekViewLayout(weekAchievement: [Double]) {
         weekView.layer.cornerRadius = 10
         drawNoDataChartView(barChartView: weekBarChartView)
         //TODO: Firebase 데이터로 교체
-        drawBarChartView(rowData: weeks, values: completionCount, barChartView: weekBarChartView)    }
+        drawBarChartView(rowData: viewModel.weeks, values: weekAchievement, barChartView: weekBarChartView)    }
     
     func setupMonthViewLayout() {
         monthView.layer.cornerRadius = 10
         drawNoDataChartView(barChartView: monthBarChartView)
         //TODO: Firebase 데이터로 교체
-        drawBarChartView(rowData: months, values: monthsCompletionCount, barChartView: monthBarChartView)
+        drawBarChartView(rowData: viewModel.months, values: monthsCompletionCount, barChartView: monthBarChartView)
     }
     
     func drawNoDataChartView(barChartView: BarChartView) {

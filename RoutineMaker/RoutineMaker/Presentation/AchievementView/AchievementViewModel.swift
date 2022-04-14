@@ -20,24 +20,37 @@ import Firebase
  firebase에서 최근 4달 데이터를 받아오는 함수: fetchMonthAchievement
  
  한달 평균 성취도를 계산하는 함수: calculateMonthAchievement
- 오늘을 기준으로 일주일을 구하는 함수: getWeeks
- 오늘을 기준으로 -3달을 구하는 함수: getMonths
+
  */
 
 class AchievementViewModel {
     var dayAchievement: Float?
     
     var weekAchievement: [Double]?
-    var weeks: [String]?
+    var weeks: [String] {
+        var result: [String] = []
+        for number in (0 ..< 7).reversed() {
+            let day = convertDateFormat(number, "M/d(E)", .day)
+            result.append(day)
+        }
+        return result
+    }
     
     var monthAchievement: [Double]?
-    var months: [String]?
+    var months: [String] {
+        var result: [String] = []
+        for number in (0 ..< 4).reversed() {
+            let month = convertDateFormat(number, "YYYY_MM", .month)
+            result.append(month)
+        }
+        return result
+    }
     
     var ref: DatabaseReference!
 
     func fetchDayAchievement(completion: @escaping (Float) -> Void) {
         ref = Database.database().reference()
-        ref.child("user1").child("AchievementList").child(convertDateFormat(0)).observeSingleEvent(of: .value, with: { [self] snapshot in
+        ref.child("user1").child("AchievementList").child(convertDateFormat(0, "YYYY_MM_dd_EEEE", .day)).observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull { return }
             guard let value = snapshot.value else {
                 return
@@ -56,8 +69,33 @@ class AchievementViewModel {
         }
     }
     
-    func fetchWeekAchievement(completion: @escaping (Float) -> Void) {
-        
+    func fetchWeekAchievement(completion: @escaping ([Double]) -> Void) {
+        ref = Database.database().reference()
+        ref.child("user1").child("AchievementList").observeSingleEvent(of: .value, with: { [self] snapshot in
+            if snapshot.value is NSNull { return }
+            guard let value = snapshot.value else {
+                return
+            }
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
+                let loadData = try JSONDecoder().decode([String: DayAchievement].self, from: jsonData)
+                
+                var dateArray: [String] = []
+                var dataArray: [Double] = []
+                for i in (0 ..< 7).reversed() {
+                    dateArray.append(convertDateFormat(i, "YYYY_MM_dd_EEEE", .day))
+                }
+                for date in dateArray {
+                    dataArray.append(loadData[date]?.dayAchivement ?? 0.0)
+                }
+                weekAchievement = dataArray
+                completion(weekAchievement ?? [])
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
     
     func fetchMonthAchievement(completion: @escaping (Float) -> Void) {
@@ -68,20 +106,12 @@ class AchievementViewModel {
         
     }
     
-    func convertDateFormat(_ day: Int) -> String {
+    func convertDateFormat(_ day: Int, _ format: String, _ component: Calendar.Component) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY_MM_dd_EEEE"
+        dateFormatter.dateFormat = format
         dateFormatter.locale = Locale(identifier: "ko_KR")
-        let date = Calendar.current.date(byAdding: .day, value: -(day), to: Date())
+        let date = Calendar.current.date(byAdding: component, value: -(day), to: Date())
         let result = dateFormatter.string(from: date ?? Date())
         return result
-    }
-    
-    func getWeeks() {
-        
-    }
-    
-    func getMonths() {
-        
     }
 }
