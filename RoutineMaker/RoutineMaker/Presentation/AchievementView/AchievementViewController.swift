@@ -30,7 +30,7 @@ class AchievementViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchDayAchievement(completion: { [self] result in
-            setupDayViewLayout(progress: result)
+            setupDayViewLayout(dayAchievement: result)
         })
         
         viewModel.fetchWeekAchievement(completion: { [self] result in
@@ -49,11 +49,11 @@ private extension AchievementViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    func setupDayViewLayout(progress: Float) {
+    func setupDayViewLayout(dayAchievement: Float) {
         dayView.layer.cornerRadius = 10
         dayAchivementProgressView.layer.cornerRadius = 8
-        dayAchivementProgressView.setProgress(progress, animated: true)
-        dayAchivementLabel.text = "오늘의 달성도는 \(Int(progress * 100))%입니다!"
+        dayAchivementProgressView.setProgress(dayAchievement, animated: true)
+        dayAchivementLabel.text = "오늘의 달성도는 \(Int(dayAchievement * 100))%입니다!"
     }
     
     func setupWeekViewLayout(weekAchievement: [Double]) {
