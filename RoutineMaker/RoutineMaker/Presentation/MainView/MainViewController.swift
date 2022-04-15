@@ -97,7 +97,6 @@ extension MainViewController: UITableViewDataSource {
         }
     }
     
-    // TODO: Need Refactoring
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             return
@@ -114,13 +113,8 @@ extension MainViewController: UITableViewDataSource {
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
-        viewModel.dayAchievement?.dayAchivement = viewModel.computedAchivement()
-       
-        viewModel.updateAchievement()
-        viewModel.updateEventList()
     }
     
-    // TODO: Need Refactoring
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
