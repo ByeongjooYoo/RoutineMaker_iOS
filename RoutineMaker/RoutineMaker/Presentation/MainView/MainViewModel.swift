@@ -121,7 +121,6 @@ class MainViewModel {
     }
     
     func fetchAchievement(completion: @escaping () -> Void) {
-//        dayAchievement = DayAchievement(dayAchivement: 0.0, date: convertDateFormat(0, "YYYY_MM_dd_EEEE", .day))
         ref = Database.database().reference()
         ref.child("user1").child("AchievementList").child(convertDateFormat(0, "YYYY_MM_dd_EEEE", .day)).observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull {
