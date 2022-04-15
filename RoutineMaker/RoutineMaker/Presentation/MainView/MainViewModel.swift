@@ -26,14 +26,46 @@ import Firebase
  */
 
 class MainViewModel {
-    var todoEventList: [Event] = []
-    var completedEventList: [Event] = []
-    var dayAchievement: DayAchievement?
+    var todoEventList: [Event] = [] {
+        didSet {
+            dayAchievement?.dayAchivement = computedAchivement()
+            updateEventList()
+        }
+    }
+    
+    var completedEventList: [Event] = [] {
+        didSet {
+            dayAchievement?.dayAchivement = computedAchivement()
+            updateEventList()
+        }
+    }
+    
+    var dayAchievement: DayAchievement? {
+        didSet {
+            updateAchievement()
+        }
+    }
     
     var ref: DatabaseReference!
     var isRunToday: Bool = true
     
-    func computedAchivement(_ todoEventCount: Int, _ completioneventCount: Int) -> Double {
+    func didChangedEventState(_ done: Bool, _ index: Int) {
+        if done {
+            var event = todoEventList[index]
+            event.completion = true
+            todoEventList.remove(at: index)
+            completedEventList.append(event)
+        } else {
+            var event = completedEventList[index]
+            event.completion = false
+            completedEventList.remove(at: index)
+            todoEventList.append(event)
+        }
+    }
+    
+    func computedAchivement() -> Double {
+        let todoEventCount = todoEventList.count
+        let completioneventCount = completedEventList.count
         if todoEventCount + completioneventCount == 0 { return 0.0 }
         let result = Double(completioneventCount) / (Double(todoEventCount) + Double(completioneventCount))
         return round(result * 100) / 100

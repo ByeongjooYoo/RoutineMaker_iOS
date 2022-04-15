@@ -49,7 +49,6 @@ private extension MainViewController {
         eventTableView.register(eventTableViewHeadCell, forCellReuseIdentifier: "EventTableViewHeadCell")
     }
     
-    // TODO: Need Refactoring
     func setupNotification() {
         NotificationCenter.default.addObserver(
             self,
@@ -59,28 +58,9 @@ private extension MainViewController {
         )
     }
 
-    // TODO: Need Refactoring
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
-        
-        switch isSelected {
-        case true:
-            var event = viewModel.todoEventList[index]
-            event.completion = isSelected
-            viewModel.todoEventList.remove(at: index)
-            viewModel.completedEventList.append(event)
-            break
-        case false:
-            var event = viewModel.completedEventList[index]
-            event.completion = isSelected
-            viewModel.completedEventList.remove(at: index)
-            viewModel.todoEventList.append(event)
-            break
-        }
-        viewModel.dayAchievement?.dayAchivement = viewModel.computedAchivement(viewModel.todoEventList.count, viewModel.completedEventList.count)
-       
-        viewModel.updateAchievement()
-        viewModel.updateEventList()
+        viewModel.didChangedEventState(isSelected, index)
         eventTableView.reloadData()
     }
 }
@@ -134,7 +114,7 @@ extension MainViewController: UITableViewDataSource {
                 eventTableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
-        viewModel.dayAchievement?.dayAchivement = viewModel.computedAchivement(viewModel.todoEventList.count, viewModel.completedEventList.count)
+        viewModel.dayAchievement?.dayAchivement = viewModel.computedAchivement()
        
         viewModel.updateAchievement()
         viewModel.updateEventList()
@@ -186,9 +166,6 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent(event: Event) {
         viewModel.todoEventList.append(event)
-        viewModel.dayAchievement?.dayAchivement = viewModel.computedAchivement(viewModel.todoEventList.count, viewModel.completedEventList.count)
-        viewModel.updateAchievement()
-        viewModel.updateEventList()
         eventTableView.reloadData()
     }
 }
