@@ -7,7 +7,6 @@
 
 import UIKit 
 import Charts
-import Firebase
 
 class AchievementViewController: UIViewController {
     @IBOutlet weak var dayView: UIView!

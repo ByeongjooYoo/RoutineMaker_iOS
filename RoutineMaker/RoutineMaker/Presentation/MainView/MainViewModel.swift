@@ -121,15 +121,18 @@ class MainViewModel {
     }
     
     func fetchAchievement(completion: @escaping () -> Void) {
-        dayAchievement = DayAchievement(dayAchivement: 0.0, date: convertDateFormat(0, "YYYY_MM_dd_EEEE", .day))
+//        dayAchievement = DayAchievement(dayAchivement: 0.0, date: convertDateFormat(0, "YYYY_MM_dd_EEEE", .day))
         ref = Database.database().reference()
-        ref.child("user1").child("AchievementList").child(dayAchievement?.date ?? "").observeSingleEvent(of: .value, with: { [self] snapshot in
+        ref.child("user1").child("AchievementList").child(convertDateFormat(0, "YYYY_MM_dd_EEEE", .day)).observeSingleEvent(of: .value, with: { [self] snapshot in
             if snapshot.value is NSNull {
                 isRunToday = false
                 fetchEventList { completion() }
+                dayAchievement = DayAchievement(dayAchivement: 0.0, date: convertDateFormat(0, "YYYY_MM_dd_EEEE", .day))
                 return
+            } else {
+                fetchEventList { completion() }
             }
-            fetchEventList { completion() }
+            
             guard let value = snapshot.value else {
                 return
             }
