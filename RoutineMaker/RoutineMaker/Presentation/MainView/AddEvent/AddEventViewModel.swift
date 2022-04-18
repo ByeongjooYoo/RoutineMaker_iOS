@@ -21,7 +21,7 @@ import Foundation
  */
 
 protocol AddEventViewModelDelegate: AnyObject {
-    func isAddButtonEnabledDidChage()
+    func isAddButtonEnabledDidChange()
     
     func dismiss()
     func didAddEvent(event: Event)
@@ -42,7 +42,7 @@ class AddEventViewModel {
     
     var isAddButtonEnabled: Bool = false {
         didSet {
-            delegate?.isAddButtonEnabledDidChage()
+            delegate?.isAddButtonEnabledDidChange()
             print("isAddButtonEnabled: \(isAddButtonEnabled)")
         }
     }
@@ -55,7 +55,7 @@ class AddEventViewModel {
     
     func addButtonDidClick() {
         guard let title = title, let description = description else { return }
-        let event = Event(title: title, description: description, completion: false)
+        let event = Event(id: "1",title: title, description: description, isCompleted: false)
         
         delegate?.didAddEvent(event: event)
         delegate?.dismiss()
@@ -83,3 +83,5 @@ class AddEventViewModel {
         isAddButtonEnabled = !(title?.isEmpty ?? true) && !(description?.isEmpty ?? true)
     }
 }
+
+// TODO: event가 add될 때 바로 추가되게 만들기

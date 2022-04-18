@@ -17,7 +17,7 @@ class EventTableViewCell: UITableViewCell {
     }
     
     @IBAction func tappedEventCompletionButton(_ sender: UIButton) {
-        sender.isSelected.toggle()
+//        sender.isSelected.toggle()
         NotificationCenter.default.post(name: Notification.Name("tappedEventCompletionButton"), object: (sender.isSelected, index!))
     }
 }

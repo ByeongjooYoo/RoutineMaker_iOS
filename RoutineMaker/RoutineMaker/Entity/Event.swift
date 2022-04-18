@@ -8,12 +8,19 @@
 import Foundation
 
 struct Event: Codable {
+    var id: String
     var title: String
     var description: String
-    var completion: Bool
-    
+    var isCompleted: Bool
+}
+
+extension Event {
     var toDictionary: [String: Any] {
-        let dict: [String: Any] = ["title": title, "description": description, "completion" : completion]
-        return dict
+        return [
+            "id": id,
+            "title": title,
+            "description": description,
+            "isCompleted" : isCompleted
+        ]
     }
 }

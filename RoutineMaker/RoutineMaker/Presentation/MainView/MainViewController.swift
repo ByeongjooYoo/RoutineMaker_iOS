@@ -11,16 +11,20 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
 
-    private let viewModel = MainViewModel()
+    private let viewModel = MainViewModel(eventListUseCase: EventListUseCaseImpl())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupTableView()
         setupNotification()
-        viewModel.fetchAchievement {
+        viewModel.fetchEventList {
             self.eventTableView.reloadData()
         }
+//        viewModel.fetchAchievement {
+//            // TODO: self capturing
+//            self.eventTableView.reloadData()
+//        }
     }
     
     // TODO: Need Refactoring
@@ -59,8 +63,9 @@ private extension MainViewController {
 
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
-        viewModel.didChangedEventState(isSelected, index)
-        eventTableView.reloadData()
+        viewModel.didChangedEventState(isSelected, index) {
+            self.eventTableView.reloadData()
+        }
     }
 }
 
@@ -100,20 +105,28 @@ extension MainViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             return
         }
-        switch indexPath.section {
-        case 0:
-            if editingStyle == .delete {
-                viewModel.todoEventList.remove(at: indexPath.row - 1)
-                eventTableView.deleteRows(at: [indexPath], with: .fade)
-            }
-        default:
-            if editingStyle == .delete {
-                viewModel.completedEventList.remove(at: indexPath.row - 1)
-                eventTableView.deleteRows(at: [indexPath], with: .fade)
+        if editingStyle == .delete {
+            viewModel.deleteEventButtonDidClick(section: indexPath.section, row: indexPath.row - 1) {
+                self.eventTableView.reloadData()
             }
         }
+//        switch indexPath.section {
+//        case 0:
+//            if editingStyle == .delete {
+//
+////                viewModel.todoEventList.remove(at: indexPath.row - 1)
+////                eventTableView.deleteRows(at: [indexPath], with: .fade)
+//            }
+//        default:
+//            if editingStyle == .delete {
+////                viewModel.completedEventList.remove(at: indexPath.row - 1)
+////                eventTableView.deleteRows(at: [indexPath], with: .fade)
+//            }
+//        }
     }
     
+    // TODO: 개선필요
+
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
