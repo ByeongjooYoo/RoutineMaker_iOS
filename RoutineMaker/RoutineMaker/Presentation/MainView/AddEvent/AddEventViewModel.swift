@@ -48,6 +48,7 @@ class AddEventViewModel {
     }
     
     weak var delegate: AddEventViewModelDelegate?
+    let eventRepositoryUmpl = EventRepositoryImpl()
     
     func cancelButtonDidClick() {
         delegate?.dismiss()
@@ -55,9 +56,9 @@ class AddEventViewModel {
     
     func addButtonDidClick() {
         guard let title = title, let description = description else { return }
-        let event = Event(id: "1",title: title, description: description, isCompleted: false)
-        
-        delegate?.didAddEvent(event: event)
+        let event = Event(id: UUID().uuidString ,title: title, description: description, isCompleted: false)
+        eventRepositoryUmpl.postEvent(event: event)
+        //delegate?.didAddEvent(event: event)
         delegate?.dismiss()
     }
     
