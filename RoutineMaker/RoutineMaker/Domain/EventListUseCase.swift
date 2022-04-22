@@ -9,7 +9,6 @@ import Foundation
 
 protocol EventListUseCase {
     func fetchEventList(completion: @escaping (EventList) -> Void)
-    
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
     func deleteEvent(byID id: String, completion: () -> Void)
 }
@@ -20,8 +19,9 @@ class EventListUseCaseImpl: EventListUseCase {
     let eventRepositoryUmpl = EventRepositoryImpl()
     
     func fetchEventList(completion: @escaping (EventList) -> Void) {
-        eventRepositoryUmpl.requestEvents { eventList in
-            self.eventList = eventList
+        
+        eventRepositoryUmpl.requestEvents { response in
+            self.eventList = response
             let incompletedEventList = self.eventList.filter { $0.isCompleted == false }
             let completedEventList = self.eventList.filter { $0.isCompleted == true }
             completion((incompletedEventList, completedEventList))
@@ -34,6 +34,7 @@ class EventListUseCaseImpl: EventListUseCase {
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
         if let index = eventList.firstIndex(where: { $0.id == id }) {
             eventList[index].isCompleted = isCompleted
+            eventRepositoryUmpl.updateIsCompletedOfEvent(to: isCompleted, byID: id)
         }
         completion()
     }

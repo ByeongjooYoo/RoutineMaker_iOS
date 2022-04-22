@@ -63,7 +63,6 @@ class MainViewModel {
         eventListUseCase.updateIsCompletedOfEvent(to: !event.isCompleted, byID: eventID) {
             self.fetchEventList(completion: completion)
         }
-        print("didChangedEventState")
     }
     
     func deleteEventButtonDidClick(section: Int, row: Int, completion: @escaping () -> Void) {
