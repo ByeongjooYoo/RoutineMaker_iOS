@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddEventViewDelegate: AnyObject {
-    func didAddEvent(event: Event)
+    func didAddEvent()
 }
 
 class AddEventViewController: UIViewController {
@@ -89,8 +89,9 @@ extension AddEventViewController: UITextViewDelegate {
 
 extension AddEventViewController: AddEventViewModelDelegate {
     // 삭제
-    func didAddEvent(event: Event) {
-        delegate?.didAddEvent(event: event)
+    func didAddEvent() {
+        delegate?.didAddEvent()
+        print("AddEventViewController: AddEvent")
     }
     
     func isAddButtonEnabledDidChange() {

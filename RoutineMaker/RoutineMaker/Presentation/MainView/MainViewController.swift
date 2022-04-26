@@ -21,10 +21,12 @@ class MainViewController: UIViewController {
         viewModel.fetchEventList {
             self.eventTableView.reloadData()
         }
-//        viewModel.fetchAchievement {
-//            // TODO: self capturing
-//            self.eventTableView.reloadData()
-//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("View Will Appear")
+        
     }
     
     // TODO: Need Refactoring
@@ -64,6 +66,7 @@ private extension MainViewController {
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
         viewModel.didChangedEventState(isSelected, index) {
+            print("ViewController: reloadData!")
             self.eventTableView.reloadData()
         }
     }
@@ -110,23 +113,9 @@ extension MainViewController: UITableViewDataSource {
                 self.eventTableView.reloadData()
             }
         }
-//        switch indexPath.section {
-//        case 0:
-//            if editingStyle == .delete {
-//
-////                viewModel.todoEventList.remove(at: indexPath.row - 1)
-////                eventTableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//        default:
-//            if editingStyle == .delete {
-////                viewModel.completedEventList.remove(at: indexPath.row - 1)
-////                eventTableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//        }
     }
     
     // TODO: 개선필요
-
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
@@ -170,9 +159,10 @@ extension MainViewController: UITableViewDelegate {
 
 // TODO: Need Refactoring
 extension MainViewController: AddEventViewDelegate {
-    func didAddEvent(event: Event) {
-        viewModel.todoEventList.append(event)
-        eventTableView.reloadData()
+    func didAddEvent() {
+        viewModel.fetchEventList {
+            self.eventTableView.reloadData()
+        }
     }
 }
 

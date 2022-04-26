@@ -9,26 +9,38 @@ import Foundation
 import Firebase
 
 protocol EventRepository {
-    var reference: DatabaseReference { get }
-    func postEvent(event: Event)
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String)
-    func deleteEvent(event: Event)
+    func postEvent(event: Event, completion: () -> Void)
+    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: ([Event]) -> Void)
+    func deleteEvent(byID id: String, completion: ([Event]) -> Void)
     func requestEvents(completion: @escaping ([Event]) -> Void)
 }
 
+
+//Event 데이터를 가지고 있도록 수정
 class EventRepositoryImpl: EventRepository {
-    var reference: DatabaseReference = Database.database().reference()
+    let reference: DatabaseReference = Database.database().reference()
+    var eventList: [Event] = []
     
-    func postEvent(event: Event) {
+    func postEvent(event: Event, completion: () -> Void) {
+        eventList.append(event)
         reference.child("user1").child("EventList").child(event.id).setValue(event.toDictionary)
+        completion()
     }
     
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String) {
+    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: ([Event]) -> Void) {
+        if let index = eventList.firstIndex(where: { $0.id == id }) {
+            eventList[index].isCompleted = isCompleted
+        }
         reference.child("user1").child("EventList").child(id).child("isCompleted").setValue(isCompleted)
+        completion(eventList)
     }
     
-    func deleteEvent(event: Event) {
-        reference.child("user1").child("EventList").child(event.id).removeValue()
+    func deleteEvent(byID id: String, completion: ([Event]) -> Void) {
+        if let index = eventList.firstIndex(where: { $0.id == id }) {
+            eventList.remove(at: index)
+        }
+        reference.child("user1").child("EventList").child(id).removeValue()
+        completion(eventList)
     }
     
     func requestEvents(completion: @escaping ([Event]) -> Void) {
@@ -40,7 +52,8 @@ class EventRepositoryImpl: EventRepository {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let eventList = try JSONDecoder().decode([String:Event].self, from: jsonData).map { $0.value }
-                completion(eventList)
+                self.eventList = eventList
+                completion(self.eventList)
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }

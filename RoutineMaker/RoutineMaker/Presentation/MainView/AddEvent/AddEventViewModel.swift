@@ -22,9 +22,8 @@ import Foundation
 
 protocol AddEventViewModelDelegate: AnyObject {
     func isAddButtonEnabledDidChange()
-    
     func dismiss()
-    func didAddEvent(event: Event)
+    func didAddEvent()
 }
 
 class AddEventViewModel {
@@ -48,7 +47,7 @@ class AddEventViewModel {
     }
     
     weak var delegate: AddEventViewModelDelegate?
-    let eventRepositoryUmpl = EventRepositoryImpl()
+    let eventListUseCase = EventListUseCaseImpl()
     
     func cancelButtonDidClick() {
         delegate?.dismiss()
@@ -57,9 +56,10 @@ class AddEventViewModel {
     func addButtonDidClick() {
         guard let title = title, let description = description else { return }
         let event = Event(id: UUID().uuidString ,title: title, description: description, isCompleted: false)
-        eventRepositoryUmpl.postEvent(event: event)
-        //delegate?.didAddEvent(event: event)
-        delegate?.dismiss()
+        eventListUseCase.addEvent(event: event) {
+            delegate?.didAddEvent()
+            delegate?.dismiss()
+        }
     }
     
     func titleDidChange(to title: String?) {
