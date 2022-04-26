@@ -46,8 +46,13 @@ class AddEventViewModel {
         }
     }
     
+    private let eventListUseCase: EventListUseCase
+    
     weak var delegate: AddEventViewModelDelegate?
-    let eventListUseCase = EventListUseCaseImpl()
+    
+    init(eventListUseCase: EventListUseCase) {
+        self.eventListUseCase = eventListUseCase
+    }
     
     func cancelButtonDidClick() {
         delegate?.dismiss()
@@ -73,16 +78,6 @@ class AddEventViewModel {
     }
     
     private func updateIsAddButtonEnabled() {
-        //좆밥 버전
-//        if (title?.isEmpty ?? false) && (description?.isEmpty ?? false) {
-//            isAddButtonEnabled = true
-//        } else {
-//            isAddButtonEnabled = false
-//        }
-        
-        //병한버전
         isAddButtonEnabled = !(title?.isEmpty ?? true) && !(description?.isEmpty ?? true)
     }
 }
-
-// TODO: event가 add될 때 바로 추가되게 만들기

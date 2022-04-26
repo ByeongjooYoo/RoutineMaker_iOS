@@ -9,6 +9,7 @@ import Foundation
 
 protocol EventListUseCase {
     func getEventList(completion: (EventList) -> Void)
+    func addEvent(event: Event, completion: () -> Void)
     func fetchEventList(completion: @escaping (EventList) -> Void)
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: (EventList) -> Void)
     func deleteEvent(byID id: String, completion: (EventList) -> Void)
@@ -38,9 +39,6 @@ class EventListUseCaseImpl: EventListUseCase {
             let completedEventList = eventList.filter { $0.isCompleted == true }
             completion((incompletedEventList, completedEventList))
         }
-//        let incompletedEventList = self.eventList.filter { $0.isCompleted == false }
-//        let completedEventList = self.eventList.filter { $0.isCompleted == true }
-//        completion((incompletedEventList, completedEventList))
     }
     
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: (EventList) -> Void) {

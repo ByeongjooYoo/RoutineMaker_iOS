@@ -17,7 +17,7 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    private let viewModel = AddEventViewModel()
+    private let viewModel = AddEventViewModel(eventListUseCase: EventListUseCaseImpl())
     
     weak var delegate: AddEventViewDelegate?
     
