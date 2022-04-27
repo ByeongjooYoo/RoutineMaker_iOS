@@ -29,6 +29,22 @@ class MainViewModel {
     init(eventListUseCase: EventListUseCase) {
         self.eventListUseCase = eventListUseCase
     }
+    
+    func getIncompletedEvent(by index: Int) -> Event? {
+        var event: Event?
+        eventListUseCase.getEventList { eventList in
+            event = eventList.incompleted[index]
+        }
+        return event
+    }
+    
+    func getCompletedEvent(by index: Int) -> Event? {
+        var event: Event?
+        eventListUseCase.getEventList { eventList in
+            event = eventList.completed[index]
+        }
+        return event
+    }
 
     // TODO: 개선필요
     func didChangedEventState(_ done: Bool, _ index: Int, completion: @escaping () -> Void) {

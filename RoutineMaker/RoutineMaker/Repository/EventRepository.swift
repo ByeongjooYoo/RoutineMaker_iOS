@@ -15,7 +15,6 @@ protocol EventRepository {
     func requestEvents(completion: @escaping ([Event]) -> Void)
 }
 
-
 //Event 데이터를 가지고 있도록 수정
 class EventRepositoryImpl: EventRepository {
     let reference: DatabaseReference = Database.database().reference()

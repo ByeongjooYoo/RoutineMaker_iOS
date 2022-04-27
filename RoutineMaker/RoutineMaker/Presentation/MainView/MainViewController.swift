@@ -21,6 +21,7 @@ class MainViewController: UIViewController {
         viewModel.fetchEventList {
             self.eventTableView.reloadData()
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,11 +123,18 @@ extension MainViewController: UITableViewDataSource {
         }
         switch indexPath.section {
         case 0:
-            cell.EventNameLabel.text = viewModel.todoEventList[indexPath.row - 1].title
+//            cell.EventNameLabel.text = viewModel.todoEventList[indexPath.row - 1].title
+//            cell.setIndex(indexPath.row - 1)
+//            cell.EventCompletionButton.isSelected = false
+            
+            guard let event = viewModel.getIncompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
+            cell.EventNameLabel.text = event.title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = false
+//            print("IncompletedCell: \(viewModel.getIncompletedEvent(by: indexPath.row - 1))")
         default:
-            cell.EventNameLabel.text = viewModel.completedEventList[indexPath.row - 1].title
+            guard let event = viewModel.getCompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
+            cell.EventNameLabel.text = event.title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = true
         }
