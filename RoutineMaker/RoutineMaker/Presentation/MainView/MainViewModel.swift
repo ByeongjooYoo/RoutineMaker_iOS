@@ -6,28 +6,20 @@
 //
 
 import Foundation
-import Firebase
 
 class MainViewModel {
     private let eventListUseCase: EventListUseCase
     
-    // TODO: 개선필요
-    var todoEventList: [Event] = []
-    
-    
-    // TODO: 개선필요
-    var completedEventList: [Event] = []
-    
-    
-    var dayAchievement: DayAchievement? {
-        didSet {
-//            updateAchievement()
-        }
-    }
-
-    
     init(eventListUseCase: EventListUseCase) {
         self.eventListUseCase = eventListUseCase
+    }
+    
+    func getIncompletedEventCount() -> Int {
+        return eventListUseCase.countOfEvent(to: false)
+    }
+    
+    func getCompletedEventCount() -> Int {
+        return eventListUseCase.countOfEvent(to: true)
     }
     
     func getIncompletedEvent(by index: Int) -> Event? {
@@ -46,46 +38,22 @@ class MainViewModel {
         return event
     }
 
-    // TODO: 개선필요
     func didChangedEventState(_ done: Bool, _ index: Int, completion: @escaping () -> Void) {
-        let event = done ? completedEventList[index] : todoEventList[index]
+        guard let event = done ? getCompletedEvent(by: index) : getIncompletedEvent(by: index) else { return }
         let eventID = event.id
-        eventListUseCase.updateIsCompletedOfEvent(to: !event.isCompleted, byID: eventID) { eventList in
-            self.todoEventList = eventList.incompleted
-            self.completedEventList = eventList.completed
-            completion()
-        }
+        eventListUseCase.updateIsCompletedOfEvent(to: !event.isCompleted, byID: eventID, completion: completion)
     }
     
-    func deleteEventButtonDidClick(section: Int, row: Int, completion: @escaping () -> Void) {
-        let event = section == 0 ? todoEventList[row] : completedEventList[row]
+    func deleteEventButtonDidClick(section: Int, index: Int, completion: @escaping () -> Void) {
+        guard let event = section == 1 ? getCompletedEvent(by: index) : getIncompletedEvent(by: index) else { return }
         let eventID = event.id
-        eventListUseCase.deleteEvent(byID: eventID) { eventList in
-            self.todoEventList = eventList.incompleted
-            self.completedEventList = eventList.completed
-            completion()
-        }
-    }
-    
-    func computedAchivement() -> Double {
-//        let todoEventCount = todoEventList.count
-//        let completioneventCount = completedEventList.count
-//        if todoEventCount + completioneventCount == 0 { return 0.0 }
-//        let result = Double(completioneventCount) / (Double(todoEventCount) + Double(completioneventCount))
-//        return round(result * 100) / 100
-        return 0.0
+        eventListUseCase.deleteEvent(byID: eventID, completion: completion)
     }
     
     //View가 로드 될떄 호출되어 eventlist 데이터를 전달하는 역할
     func fetchEventList(completion: @escaping () -> Void) {
-        eventListUseCase.fetchEventList { eventList in
-            self.todoEventList = eventList.incompleted
-            self.completedEventList = eventList.completed
-            
-            completion()
-        }
+        eventListUseCase.fetchEventList(completion: completion)
     }
-
     
     func fetchAchievement(completion: @escaping () -> Void) {
 //        ref = Database.database().reference()

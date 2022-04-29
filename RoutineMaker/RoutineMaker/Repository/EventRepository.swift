@@ -10,9 +10,9 @@ import Firebase
 
 protocol EventRepository {
     func postEvent(event: Event, completion: () -> Void)
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: ([Event]) -> Void)
-    func deleteEvent(byID id: String, completion: ([Event]) -> Void)
-    func requestEvents(completion: @escaping ([Event]) -> Void)
+    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
+    func deleteEvent(byID id: String, completion: () -> Void)
+    func requestEvents(completion: @escaping () -> Void)
 }
 
 //Event 데이터를 가지고 있도록 수정
@@ -26,23 +26,23 @@ class EventRepositoryImpl: EventRepository {
         completion()
     }
     
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: ([Event]) -> Void) {
+    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
         if let index = eventList.firstIndex(where: { $0.id == id }) {
             eventList[index].isCompleted = isCompleted
         }
         reference.child("user1").child("EventList").child(id).child("isCompleted").setValue(isCompleted)
-        completion(eventList)
+        completion()
     }
     
-    func deleteEvent(byID id: String, completion: ([Event]) -> Void) {
+    func deleteEvent(byID id: String, completion: () -> Void) {
         if let index = eventList.firstIndex(where: { $0.id == id }) {
             eventList.remove(at: index)
         }
         reference.child("user1").child("EventList").child(id).removeValue()
-        completion(eventList)
+        completion()
     }
     
-    func requestEvents(completion: @escaping ([Event]) -> Void) {
+    func requestEvents(completion: @escaping () -> Void) {
         reference.child("user1").child("EventList").observeSingleEvent(of: .value, with: { snapshot in
             guard let value = snapshot.value else {
                 print("Firebase Data Empty")
@@ -52,7 +52,7 @@ class EventRepositoryImpl: EventRepository {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
                 let eventList = try JSONDecoder().decode([String:Event].self, from: jsonData).map { $0.value }
                 self.eventList = eventList
-                completion(self.eventList)
+                completion()
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }

@@ -8,18 +8,24 @@
 import Foundation
 
 protocol EventListUseCase {
+    func countOfEvent(to isCompleted: Bool) -> Int
     func getEventList(completion: (EventList) -> Void)
     func addEvent(event: Event, completion: () -> Void)
-    func fetchEventList(completion: @escaping (EventList) -> Void)
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: (EventList) -> Void)
-    func deleteEvent(byID id: String, completion: (EventList) -> Void)
+    func fetchEventList(completion: @escaping () -> Void)
+    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
+    func deleteEvent(byID id: String, completion: () -> Void)
 }
 
 class EventListUseCaseImpl: EventListUseCase {
     
     let eventRepositoryUmpl = EventRepositoryImpl()
     
-    func getEventList(completion: (EventList) -> Void){
+    func countOfEvent(to isCompleted: Bool) -> Int {
+        let eventList = eventRepositoryUmpl.eventList
+        return isCompleted ? eventList.filter { $0.isCompleted == true }.count : eventList.filter { $0.isCompleted == false }.count
+    }
+    
+    func getEventList(completion: (EventList) -> Void) {
         let eventList = eventRepositoryUmpl.eventList
         let incompletedEventList = eventList.filter { $0.isCompleted == false }
         let completedEventList = eventList.filter { $0.isCompleted == true }
@@ -27,35 +33,18 @@ class EventListUseCaseImpl: EventListUseCase {
     }
     
     func addEvent(event: Event, completion: () -> Void) {
-        eventRepositoryUmpl.postEvent(event: event) {
-            completion()
-        }
+        eventRepositoryUmpl.postEvent(event: event, completion: completion)
     }
     
-    func fetchEventList(completion: @escaping (EventList) -> Void) {
-        eventRepositoryUmpl.requestEvents { response in
-            let eventList = response
-            let incompletedEventList = eventList.filter { $0.isCompleted == false }
-            let completedEventList = eventList.filter { $0.isCompleted == true }
-            completion((incompletedEventList, completedEventList))
-        }
+    func fetchEventList(completion: @escaping () -> Void) {
+        eventRepositoryUmpl.requestEvents(completion: completion)
     }
     
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: (EventList) -> Void) {
-        eventRepositoryUmpl.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: { eventList in
-            let eventList = eventList
-            let incompletedEventList = eventList.filter { $0.isCompleted == false }
-            let completedEventList = eventList.filter { $0.isCompleted == true }
-            completion((incompletedEventList, completedEventList))
-        })
+    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
+        eventRepositoryUmpl.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: completion)
     }
     
-    func deleteEvent(byID id: String, completion: (EventList) -> Void) {
-        eventRepositoryUmpl.deleteEvent(byID: id) { eventList in
-            let eventList = eventList
-            let incompletedEventList = eventList.filter { $0.isCompleted == false }
-            let completedEventList = eventList.filter { $0.isCompleted == true }
-            completion((incompletedEventList, completedEventList))
-        }
+    func deleteEvent(byID id: String, completion: () -> Void) {
+        eventRepositoryUmpl.deleteEvent(byID: id, completion: completion)
     }
 }

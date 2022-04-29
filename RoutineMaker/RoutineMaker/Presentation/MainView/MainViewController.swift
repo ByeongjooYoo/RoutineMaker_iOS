@@ -81,9 +81,9 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return viewModel.todoEventList.count + 1
+            return viewModel.getIncompletedEventCount() + 1
         default:
-            return viewModel.completedEventList.count + 1
+            return viewModel.getCompletedEventCount() + 1
         }
     }
     
@@ -110,7 +110,7 @@ extension MainViewController: UITableViewDataSource {
             return
         }
         if editingStyle == .delete {
-            viewModel.deleteEventButtonDidClick(section: indexPath.section, row: indexPath.row - 1) {
+            viewModel.deleteEventButtonDidClick(section: indexPath.section, index: indexPath.row - 1) {
                 self.eventTableView.reloadData()
             }
         }
