@@ -18,33 +18,37 @@ protocol EventListUseCase {
 
 class EventListUseCaseImpl: EventListUseCase {
     
-    let eventRepositoryUmpl = EventRepositoryImpl()
+    private let eventRepository: EventRepository
+    
+    init(eventRepository: EventRepository) {
+        self.eventRepository = eventRepository
+    }
     
     func countOfEvent(to isCompleted: Bool) -> Int {
-        let eventList = eventRepositoryUmpl.eventList
+        let eventList = eventRepository.eventList
         return isCompleted ? eventList.filter { $0.isCompleted == true }.count : eventList.filter { $0.isCompleted == false }.count
     }
     
     func getEventList(completion: (EventList) -> Void) {
-        let eventList = eventRepositoryUmpl.eventList
+        let eventList = eventRepository.eventList
         let incompletedEventList = eventList.filter { $0.isCompleted == false }
         let completedEventList = eventList.filter { $0.isCompleted == true }
         completion((incompletedEventList, completedEventList))
     }
     
     func addEvent(event: Event, completion: () -> Void) {
-        eventRepositoryUmpl.postEvent(event: event, completion: completion)
+        eventRepository.postEvent(event: event, completion: completion)
     }
     
     func fetchEventList(completion: @escaping () -> Void) {
-        eventRepositoryUmpl.requestEvents(completion: completion)
+        eventRepository.requestEvents(completion: completion)
     }
     
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
-        eventRepositoryUmpl.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: completion)
+        eventRepository.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: completion)
     }
     
     func deleteEvent(byID id: String, completion: () -> Void) {
-        eventRepositoryUmpl.deleteEvent(byID: id, completion: completion)
+        eventRepository.deleteEvent(byID: id, completion: completion)
     }
 }

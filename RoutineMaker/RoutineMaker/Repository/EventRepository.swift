@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 
 protocol EventRepository {
+    var eventList: [Event] { get }
     func postEvent(event: Event, completion: () -> Void)
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
     func deleteEvent(byID id: String, completion: () -> Void)

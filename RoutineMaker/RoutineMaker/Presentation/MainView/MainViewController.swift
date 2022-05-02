@@ -11,7 +11,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
 
-    private let viewModel = MainViewModel(eventListUseCase: EventListUseCaseImpl())
+    private let viewModel = MainViewModel(eventListUseCase: EventListUseCaseImpl(eventRepository: EventRepositoryImpl()))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +24,6 @@ class MainViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("View Will Appear")
-        
-    }
-    
-    // TODO: Need Refactoring
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addEventViewController = segue.destination as? AddEventViewController {
             addEventViewController.delegate = self
@@ -123,15 +116,10 @@ extension MainViewController: UITableViewDataSource {
         }
         switch indexPath.section {
         case 0:
-//            cell.EventNameLabel.text = viewModel.todoEventList[indexPath.row - 1].title
-//            cell.setIndex(indexPath.row - 1)
-//            cell.EventCompletionButton.isSelected = false
-            
             guard let event = viewModel.getIncompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
             cell.EventNameLabel.text = event.title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = false
-//            print("IncompletedCell: \(viewModel.getIncompletedEvent(by: indexPath.row - 1))")
         default:
             guard let event = viewModel.getCompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
             cell.EventNameLabel.text = event.title
@@ -165,7 +153,6 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-// TODO: Need Refactoring
 extension MainViewController: AddEventViewDelegate {
     func didAddEvent() {
         viewModel.fetchEventList {
@@ -173,4 +160,3 @@ extension MainViewController: AddEventViewDelegate {
         }
     }
 }
-

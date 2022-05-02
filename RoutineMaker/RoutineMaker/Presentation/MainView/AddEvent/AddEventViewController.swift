@@ -17,7 +17,7 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    private let viewModel = AddEventViewModel(eventListUseCase: EventListUseCaseImpl())
+    private let viewModel = AddEventViewModel(eventListUseCase: EventListUseCaseImpl(eventRepository: EventRepositoryImpl()))
     
     weak var delegate: AddEventViewDelegate?
     
@@ -30,7 +30,7 @@ class AddEventViewController: UIViewController {
         placeholderSetting(descriptionTextView)
     }
     
-    //빈화면을 클릭 시 키보드 or DatePicker가 내려가게 해주는 함수
+    //빈화면을 클릭 시 키보드가 내려가게 해주는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         print("touchesBegan: \(touches)")
@@ -91,7 +91,6 @@ extension AddEventViewController: AddEventViewModelDelegate {
     // 삭제
     func didAddEvent() {
         delegate?.didAddEvent()
-        print("AddEventViewController: AddEvent")
     }
     
     func isAddButtonEnabledDidChange() {
@@ -102,6 +101,3 @@ extension AddEventViewController: AddEventViewModelDelegate {
         dismiss(animated: true)
     }
 }
-
-
-

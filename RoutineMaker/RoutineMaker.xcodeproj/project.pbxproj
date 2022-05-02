@@ -27,6 +27,7 @@
 		F022D9A4280ACC0D00D623B3 /* DayAchievementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A3280ACC0C00D623B3 /* DayAchievementRepository.swift */; };
 		F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */; };
 		F022D9A8280AD66B00D623B3 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A7280AD66B00D623B3 /* EventList.swift */; };
+		F044062A28201BB70020CA0B /* AchievementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F044062928201BB70020CA0B /* AchievementUseCase.swift */; };
 		F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F088930C27E2246F006ACFCD /* AddEventViewModel.swift */; };
 		F09CE9502807DE0D006AA586 /* AchievementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */; };
 		F0A1B62028080B7200D0C77A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B61F28080B7200D0C77A /* MainViewModel.swift */; };
@@ -60,6 +61,7 @@
 		F022D9A3280ACC0C00D623B3 /* DayAchievementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievementRepository.swift; sourceTree = "<group>"; };
 		F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListUseCase.swift; sourceTree = "<group>"; };
 		F022D9A7280AD66B00D623B3 /* EventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
+		F044062928201BB70020CA0B /* AchievementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUseCase.swift; sourceTree = "<group>"; };
 		F088930C27E2246F006ACFCD /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
 		F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewModel.swift; sourceTree = "<group>"; };
 		F0A1B61F28080B7200D0C77A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */,
+				F044062928201BB70020CA0B /* AchievementUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */,
 				F022D9A4280ACC0D00D623B3 /* DayAchievementRepository.swift in Sources */,
+				F044062A28201BB70020CA0B /* AchievementUseCase.swift in Sources */,
 				F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */,
 				F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
