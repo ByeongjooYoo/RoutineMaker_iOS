@@ -11,19 +11,19 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
 
-    private let viewModel = MainViewModel()
+    private let viewModel = MainViewModel(eventListUseCase: EventListUseCaseImpl(eventRepository: EventRepositoryImpl()))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
         setupTableView()
         setupNotification()
-        viewModel.fetchAchievement {
+        viewModel.fetchEventList {
             self.eventTableView.reloadData()
         }
+        
     }
     
-    // TODO: Need Refactoring
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addEventViewController = segue.destination as? AddEventViewController {
             addEventViewController.delegate = self
@@ -59,8 +59,10 @@ private extension MainViewController {
 
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
-        viewModel.didChangedEventState(isSelected, index)
-        eventTableView.reloadData()
+        viewModel.didChangedEventState(isSelected, index) {
+            print("ViewController: reloadData!")
+            self.eventTableView.reloadData()
+        }
     }
 }
 
@@ -72,9 +74,9 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return viewModel.todoEventList.count + 1
+            return viewModel.getIncompletedEventCount() + 1
         default:
-            return viewModel.completedEventList.count + 1
+            return viewModel.getCompletedEventCount() + 1
         }
     }
     
@@ -100,31 +102,27 @@ extension MainViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             return
         }
-        switch indexPath.section {
-        case 0:
-            if editingStyle == .delete {
-                viewModel.todoEventList.remove(at: indexPath.row - 1)
-                eventTableView.deleteRows(at: [indexPath], with: .fade)
-            }
-        default:
-            if editingStyle == .delete {
-                viewModel.completedEventList.remove(at: indexPath.row - 1)
-                eventTableView.deleteRows(at: [indexPath], with: .fade)
+        if editingStyle == .delete {
+            viewModel.deleteEventButtonDidClick(section: indexPath.section, index: indexPath.row - 1) {
+                self.eventTableView.reloadData()
             }
         }
     }
     
+    // TODO: 개선필요
     func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
         }
         switch indexPath.section {
         case 0:
-            cell.EventNameLabel.text = viewModel.todoEventList[indexPath.row - 1].title
+            guard let event = viewModel.getIncompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
+            cell.EventNameLabel.text = event.title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = false
         default:
-            cell.EventNameLabel.text = viewModel.completedEventList[indexPath.row - 1].title
+            guard let event = viewModel.getCompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
+            cell.EventNameLabel.text = event.title
             cell.setIndex(indexPath.row - 1)
             cell.EventCompletionButton.isSelected = true
         }
@@ -155,11 +153,10 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-// TODO: Need Refactoring
 extension MainViewController: AddEventViewDelegate {
-    func didAddEvent(event: Event) {
-        viewModel.todoEventList.append(event)
-        eventTableView.reloadData()
+    func didAddEvent() {
+        viewModel.fetchEventList {
+            self.eventTableView.reloadData()
+        }
     }
 }
-

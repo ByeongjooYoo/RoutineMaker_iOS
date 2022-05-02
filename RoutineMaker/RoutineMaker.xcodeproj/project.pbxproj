@@ -23,6 +23,11 @@
 		F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC527AFFE2300426E5A /* AchievementViewController.swift */; };
 		F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC727AFFE3400426E5A /* SettingViewController.swift */; };
 		F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EC927B0D9C100426E5A /* AddEventViewController.swift */; };
+		F022D9A2280ACBD900D623B3 /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A1280ACBD900D623B3 /* EventRepository.swift */; };
+		F022D9A4280ACC0D00D623B3 /* DayAchievementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A3280ACC0C00D623B3 /* DayAchievementRepository.swift */; };
+		F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */; };
+		F022D9A8280AD66B00D623B3 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A7280AD66B00D623B3 /* EventList.swift */; };
+		F044062A28201BB70020CA0B /* AchievementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F044062928201BB70020CA0B /* AchievementUseCase.swift */; };
 		F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F088930C27E2246F006ACFCD /* AddEventViewModel.swift */; };
 		F09CE9502807DE0D006AA586 /* AchievementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */; };
 		F0A1B62028080B7200D0C77A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B61F28080B7200D0C77A /* MainViewModel.swift */; };
@@ -52,6 +57,11 @@
 		F0115EC527AFFE2300426E5A /* AchievementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
 		F0115EC727AFFE3400426E5A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F0115EC927B0D9C100426E5A /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		F022D9A1280ACBD900D623B3 /* EventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepository.swift; sourceTree = "<group>"; };
+		F022D9A3280ACC0C00D623B3 /* DayAchievementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievementRepository.swift; sourceTree = "<group>"; };
+		F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListUseCase.swift; sourceTree = "<group>"; };
+		F022D9A7280AD66B00D623B3 /* EventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
+		F044062928201BB70020CA0B /* AchievementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUseCase.swift; sourceTree = "<group>"; };
 		F088930C27E2246F006ACFCD /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
 		F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewModel.swift; sourceTree = "<group>"; };
 		F0A1B61F28080B7200D0C77A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -159,6 +169,7 @@
 			children = (
 				F010E28427B4D92F0079BD4B /* Event.swift */,
 				F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */,
+				F022D9A7280AD66B00D623B3 /* EventList.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -193,6 +204,12 @@
 		F0115EB027AFEECF00426E5A /* RoutineMaker */ = {
 			isa = PBXGroup;
 			children = (
+				F010E27727B29E190079BD4B /* Presentation */,
+				F010E28627B4D9370079BD4B /* Entity */,
+				F022D99E280ACAC500D623B3 /* Domain */,
+				F022D99F280ACADA00D623B3 /* Repository */,
+				F010E27627B29DBB0079BD4B /* Extension */,
+				F0BF8DA127C9185F003FC132 /* Test */,
 				F0F9DB4027FC78EF002BA611 /* GoogleService-Info.plist */,
 				F0115EB127AFEECF00426E5A /* AppDelegate.swift */,
 				F0115EB327AFEECF00426E5A /* SceneDelegate.swift */,
@@ -200,12 +217,26 @@
 				F0115EBA27AFEED000426E5A /* Assets.xcassets */,
 				F0115EBC27AFEED000426E5A /* LaunchScreen.storyboard */,
 				F0115EBF27AFEED000426E5A /* Info.plist */,
-				F010E28627B4D9370079BD4B /* Entity */,
-				F010E27627B29DBB0079BD4B /* Extension */,
-				F010E27727B29E190079BD4B /* Presentation */,
-				F0BF8DA127C9185F003FC132 /* Test */,
 			);
 			path = RoutineMaker;
+			sourceTree = "<group>";
+		};
+		F022D99E280ACAC500D623B3 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */,
+				F044062928201BB70020CA0B /* AchievementUseCase.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		F022D99F280ACADA00D623B3 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F022D9A1280ACBD900D623B3 /* EventRepository.swift */,
+				F022D9A3280ACC0C00D623B3 /* DayAchievementRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		F0BF8DA127C9185F003FC132 /* Test */ = {
@@ -336,7 +367,9 @@
 			files = (
 				F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */,
 				F0BF8DA327C918A3003FC132 /* TestDataGeneration.swift in Sources */,
+				F022D9A2280ACBD900D623B3 /* EventRepository.swift in Sources */,
 				F010E28527B4D92F0079BD4B /* Event.swift in Sources */,
+				F022D9A8280AD66B00D623B3 /* EventList.swift in Sources */,
 				F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */,
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0A1B62028080B7200D0C77A /* MainViewModel.swift in Sources */,
@@ -344,6 +377,9 @@
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,
 				F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */,
+				F022D9A4280ACC0D00D623B3 /* DayAchievementRepository.swift in Sources */,
+				F044062A28201BB70020CA0B /* AchievementUseCase.swift in Sources */,
+				F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */,
 				F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
 				F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */,

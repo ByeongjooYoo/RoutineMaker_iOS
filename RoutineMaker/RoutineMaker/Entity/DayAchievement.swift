@@ -10,9 +10,13 @@ import Foundation
 struct DayAchievement: Codable {
     var dayAchivement: Double
     var date: String
-    
+}
+
+extension DayAchievement {
     var toDictionary: [String: Any] {
-        let dict: [String: Any] = ["dayAchivement": dayAchivement, "date": date]
-        return dict
+        return [
+            "dayAchivement": dayAchivement,
+            "date": date
+        ]
     }
 }

@@ -12,19 +12,16 @@ import Foundation
  내용: String
  추가버튼 활성화 여부: Bool
  
- 
  취소버튼 클릭: ButtonEvent
  추가버튼 클릭: ButtonEvent
  제목이 변경이 된 이벤트: textvalueChange
  내용이 변경이 된 이벤트: textvalueChange
-
  */
 
 protocol AddEventViewModelDelegate: AnyObject {
-    func isAddButtonEnabledDidChage()
-    
+    func isAddButtonEnabledDidChange()
     func dismiss()
-    func didAddEvent(event: Event)
+    func didAddEvent()
 }
 
 class AddEventViewModel {
@@ -42,12 +39,17 @@ class AddEventViewModel {
     
     var isAddButtonEnabled: Bool = false {
         didSet {
-            delegate?.isAddButtonEnabledDidChage()
-            print("isAddButtonEnabled: \(isAddButtonEnabled)")
+            delegate?.isAddButtonEnabledDidChange()
         }
     }
     
+    private let eventListUseCase: EventListUseCase
+    
     weak var delegate: AddEventViewModelDelegate?
+    
+    init(eventListUseCase: EventListUseCase) {
+        self.eventListUseCase = eventListUseCase
+    }
     
     func cancelButtonDidClick() {
         delegate?.dismiss()
@@ -55,31 +57,22 @@ class AddEventViewModel {
     
     func addButtonDidClick() {
         guard let title = title, let description = description else { return }
-        let event = Event(title: title, description: description, completion: false)
-        
-        delegate?.didAddEvent(event: event)
-        delegate?.dismiss()
+        let event = Event(id: UUID().uuidString ,title: title, description: description, isCompleted: false)
+        eventListUseCase.addEvent(event: event) {
+            delegate?.didAddEvent()
+            delegate?.dismiss()
+        }
     }
     
     func titleDidChange(to title: String?) {
         self.title = title
-        print("titleDidChage: \(title ?? "nil")")
     }
     
     func descriptionDidChange(to description: String?) {
         self.description = description
-        print("descriptionDidChange: \(description ?? "nil")")
     }
     
     private func updateIsAddButtonEnabled() {
-        //좆밥 버전
-//        if (title?.isEmpty ?? false) && (description?.isEmpty ?? false) {
-//            isAddButtonEnabled = true
-//        } else {
-//            isAddButtonEnabled = false
-//        }
-        
-        //병한버전
         isAddButtonEnabled = !(title?.isEmpty ?? true) && !(description?.isEmpty ?? true)
     }
 }

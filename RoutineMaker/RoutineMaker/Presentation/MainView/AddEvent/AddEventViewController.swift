@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddEventViewDelegate: AnyObject {
-    func didAddEvent(event: Event)
+    func didAddEvent()
 }
 
 class AddEventViewController: UIViewController {
@@ -17,7 +17,7 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    private let viewModel = AddEventViewModel()
+    private let viewModel = AddEventViewModel(eventListUseCase: EventListUseCaseImpl(eventRepository: EventRepositoryImpl()))
     
     weak var delegate: AddEventViewDelegate?
     
@@ -28,16 +28,12 @@ class AddEventViewController: UIViewController {
         
         setLayout()
         placeholderSetting(descriptionTextView)
-        configureInputField()
     }
     
-    //빈화면을 클릭 시 키보드 or DatePicker가 내려가게 해주는 함수
+    //빈화면을 클릭 시 키보드가 내려가게 해주는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    @objc private func titleTextFieldDidChange(_ textField: UITextField) {
-        viewModel.titleDidChange(to: textField.text)
+        view.endEditing(true)
+        print("touchesBegan: \(touches)")
     }
     
     @IBAction func tappedAddBarButtton(_ sender: UIBarButtonItem) {
@@ -46,6 +42,10 @@ class AddEventViewController: UIViewController {
     
     @IBAction func tappedCancelBarButton(_ sender: UIBarButtonItem) {
         viewModel.cancelButtonDidClick()
+    }
+    
+    @IBAction func titleTextFieldDidChage(_ sender: UITextField) {
+        viewModel.titleDidChange(to: sender.text)
     }
 }
 
@@ -57,15 +57,11 @@ private extension AddEventViewController {
         descriptionTextView.layer.cornerRadius = 10
         addBarButton.isEnabled = false
     }
-    
-    private func configureInputField() {
-        descriptionTextView.delegate = self
-        titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
-    }
-    
 }
 
 extension AddEventViewController: UITextViewDelegate {
+    
+    // TODO: TextView를 상속받아 처리
     private func placeholderSetting(_ textView: UITextView) {
         textView.delegate = self
         textView.text = "내용"
@@ -92,19 +88,16 @@ extension AddEventViewController: UITextViewDelegate {
 }
 
 extension AddEventViewController: AddEventViewModelDelegate {
-    func didAddEvent(event: Event) {
-        delegate?.didAddEvent(event: event)
+    // 삭제
+    func didAddEvent() {
+        delegate?.didAddEvent()
     }
     
-    func isAddButtonEnabledDidChage() {
+    func isAddButtonEnabledDidChange() {
         addBarButton.isEnabled = viewModel.isAddButtonEnabled
     }
     
     func dismiss() {
         dismiss(animated: true)
     }
-    
 }
-
-
-
