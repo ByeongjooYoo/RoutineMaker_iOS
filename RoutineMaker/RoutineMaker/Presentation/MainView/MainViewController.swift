@@ -21,7 +21,6 @@ class MainViewController: UIViewController {
         viewModel.fetchEventList {
             self.eventTableView.reloadData()
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

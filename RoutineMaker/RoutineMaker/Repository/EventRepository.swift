@@ -50,10 +50,14 @@ class EventRepositoryImpl: EventRepository {
                 return
             }
             do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value)
-                let eventList = try JSONDecoder().decode([String:Event].self, from: jsonData).map { $0.value }
-                self.eventList = eventList
-                completion()
+                if value is NSNull {
+                    print("RequestEvents: Null!")
+                } else {
+                    let jsonData = try JSONSerialization.data(withJSONObject: value)
+                    let eventList = try JSONDecoder().decode([String:Event].self, from: jsonData).map { $0.value }
+                    self.eventList = eventList
+                    completion()
+                }                
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }
