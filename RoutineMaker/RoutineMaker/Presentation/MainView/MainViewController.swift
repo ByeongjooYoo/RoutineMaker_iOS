@@ -11,7 +11,11 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
 
-    private let viewModel = MainViewModel(eventListUseCase: EventListUseCaseImpl(eventRepository: EventRepositoryImpl()))
+    private let viewModel = MainViewModel(
+        eventListUseCase: EventListUseCaseImpl(
+            eventRepository: EventRepositoryImpl()
+        )
+    )
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +25,6 @@ class MainViewController: UIViewController {
         viewModel.fetchEventList {
             self.eventTableView.reloadData()
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -60,7 +63,6 @@ private extension MainViewController {
     @objc func didChangedEventCompletion(_ notification: Notification) {
         let (isSelected, index) = notification.object as! (Bool, Int)
         viewModel.didChangedEventState(isSelected, index) {
-            print("ViewController: reloadData!")
             self.eventTableView.reloadData()
         }
     }

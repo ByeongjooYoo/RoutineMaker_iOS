@@ -22,7 +22,6 @@ class EventRepositoryImpl: EventRepository {
     var eventList: [Event] = []
     
     func postEvent(event: Event, completion: () -> Void) {
-        eventList.append(event)
         reference.child("user1").child("EventList").child(event.id).setValue(event.toDictionary)
         completion()
     }
@@ -50,10 +49,14 @@ class EventRepositoryImpl: EventRepository {
                 return
             }
             do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value)
-                let eventList = try JSONDecoder().decode([String:Event].self, from: jsonData).map { $0.value }
-                self.eventList = eventList
-                completion()
+                if value is NSNull {
+                    print("RequestEvents: Null!")
+                } else {
+                    let jsonData = try JSONSerialization.data(withJSONObject: value)
+                    let eventList = try JSONDecoder().decode([String:Event].self, from: jsonData).map { $0.value }
+                    self.eventList = eventList
+                    completion()
+                }
             }  catch let error {
                 print("Error JSON parsing: \(error.localizedDescription)")
             }

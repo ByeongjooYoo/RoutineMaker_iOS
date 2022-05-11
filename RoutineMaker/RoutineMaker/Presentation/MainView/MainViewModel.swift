@@ -15,11 +15,11 @@ class MainViewModel {
     }
     
     func getIncompletedEventCount() -> Int {
-        return eventListUseCase.countOfEvent(to: false)
+        return eventListUseCase.countOfEvent(isCompleted: false)
     }
     
     func getCompletedEventCount() -> Int {
-        return eventListUseCase.countOfEvent(to: true)
+        return eventListUseCase.countOfEvent(isCompleted: true)
     }
     
     func getIncompletedEvent(by index: Int) -> Event? {
