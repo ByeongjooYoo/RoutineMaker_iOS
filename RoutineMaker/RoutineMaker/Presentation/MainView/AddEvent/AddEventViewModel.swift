@@ -43,13 +43,9 @@ class AddEventViewModel {
         }
     }
     
-    private let eventListUseCase: EventListUseCase
-    
+    private let eventListUseCase: EventListUseCase = DIContainer.instance.get(type: EventListUseCase.self)
+
     weak var delegate: AddEventViewModelDelegate?
-    
-    init(eventListUseCase: EventListUseCase) {
-        self.eventListUseCase = eventListUseCase
-    }
     
     func cancelButtonDidClick() {
         delegate?.dismiss()

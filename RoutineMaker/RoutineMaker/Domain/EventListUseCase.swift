@@ -8,24 +8,19 @@
 import Foundation
 
 protocol EventListUseCase {
-    func countOfEvent(isCompleted: Bool) -> Int
+    func countOfEvent(to isCompleted: Bool) -> Int
     func getEventList(completion: (EventList) -> Void)
     func addEvent(event: Event, completion: () -> Void)
     func fetchEventList(completion: @escaping () -> Void)
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
     func deleteEvent(byID id: String, completion: () -> Void)
-    
-    func calculateAchievement()
 }
 
 class EventListUseCaseImpl: EventListUseCase {
-    private let eventRepository: EventRepository
+    @Dependency
+    private var eventRepository: EventRepository
     
-    init(eventRepository: EventRepository) {
-        self.eventRepository = eventRepository
-    }
-    
-    func countOfEvent(isCompleted: Bool) -> Int {
+    func countOfEvent(to isCompleted: Bool) -> Int {
         let eventList = eventRepository.eventList
         return isCompleted ? eventList.filter { $0.isCompleted == true }.count : eventList.filter { $0.isCompleted == false }.count
     }
@@ -43,18 +38,14 @@ class EventListUseCaseImpl: EventListUseCase {
     
     func fetchEventList(completion: @escaping () -> Void) {
         eventRepository.requestEvents(completion: completion)
-        calculateAchievement()
-        getTodayDate()
     }
     
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
         eventRepository.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: completion)
-        calculateAchievement()
     }
     
     func deleteEvent(byID id: String, completion: () -> Void) {
         eventRepository.deleteEvent(byID: id, completion: completion)
-        calculateAchievement()
     }
     
     func calculateAchievement() {
