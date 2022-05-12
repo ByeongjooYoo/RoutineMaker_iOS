@@ -88,7 +88,7 @@ private extension AchievementViewController {
         chartData.barWidth = Double(0.5)
         
         barChartView.data = chartData
-
+        
         barChartView.xAxis.setLabelCount(rowData.count, force: false)
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: rowData)

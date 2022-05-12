@@ -49,16 +49,16 @@ class EventListUseCaseImpl: EventListUseCase {
     }
     
     func calculateAchievement() {
-//        let incompletedEventCount = countOfEvent(isCompleted: false)
-//        let completedEventCount = countOfEvent(isCompleted: true)
-//        let achievement = incompletedEventCount + completedEventCount == 0 ? 0 : round(Double(completedEventCount) / (Double(incompletedEventCount) + Double(completedEventCount)) * 100) / 100
-//        print(achievement)
+        //        let incompletedEventCount = countOfEvent(isCompleted: false)
+        //        let completedEventCount = countOfEvent(isCompleted: true)
+        //        let achievement = incompletedEventCount + completedEventCount == 0 ? 0 : round(Double(completedEventCount) / (Double(incompletedEventCount) + Double(completedEventCount)) * 100) / 100
+        //        print(achievement)
     }
-//
+    //
     func getTodayDate() {
-//        let formatter = ISO8601DateFormatter()
-//        formatter.timeZone = .autoupdatingCurrent
-//        formatter.formatOptions = [.withFullDate]
-//        print(formatter.string(from: Date()))
+        //        let formatter = ISO8601DateFormatter()
+        //        formatter.timeZone = .autoupdatingCurrent
+        //        formatter.formatOptions = [.withFullDate]
+        //        print(formatter.string(from: Date()))
     }
 }

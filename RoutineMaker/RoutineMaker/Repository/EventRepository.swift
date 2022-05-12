@@ -70,24 +70,24 @@ class EventRepositoryImpl: EventRepository {
 // MARK: - MockEventRepository
 class MockEventRepository: EventRepository {
     var eventList: [Event] = []
-
+    
     func postEvent(event: Event, completion: () -> Void) {
         eventList.append(event)
         completion()
     }
-
+    
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
         guard let index = eventList.firstIndex(where: { $0.id == id }) else { return }
-
+        
         eventList[index].isCompleted = isCompleted
         completion()
     }
-
+    
     func deleteEvent(byID id: String, completion: () -> Void) {
         eventList.removeAll { $0.id == id }
         completion()
     }
-
+    
     func requestEvents(completion: @escaping () -> Void) {
         completion()
     }

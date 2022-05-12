@@ -13,22 +13,30 @@ protocol EventTableViewCellDelegate: AnyObject {
 }
 
 // MARK: - EventTableViewCell
-
 class EventTableViewCell: UITableViewCell {
-    
     weak var delegate: EventTableViewCellDelegate?
-        var viewModel: EventListCellViewModel? {
-            didSet {
-                EventNameLabel.text = viewModel?.nameLabelText
-                EventCompletionButton.isSelected = viewModel?.completionButtonIsSelected ?? false
-            }
+    var viewModel: EventListCellViewModel? {
+        didSet {
+            EventNameLabel.text = viewModel?.nameLabelText
+            EventCompletionButton.isSelected = viewModel?.completionButtonIsSelected ?? false
         }
+    }
     
     @IBOutlet weak var EventNameLabel: UILabel!
     @IBOutlet weak var EventCompletionButton: UIButton!
     
     @IBAction func tappedEventCompletionButton(_ sender: UIButton) {
-            guard let viewModel = viewModel else { return }
-            delegate?.eventCompletionButtonDidTap(viewModel: viewModel)
-        }
+        guard let viewModel = viewModel else { return }
+        delegate?.eventCompletionButtonDidTap(viewModel: viewModel)
+    }
+    
+    func makeCornersAtBottom() {
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        contentView.clipsToBounds = true
+    }
+    
+    func deleteCornersAtBottom() {
+        contentView.layer.cornerRadius = 0
+    }
 }

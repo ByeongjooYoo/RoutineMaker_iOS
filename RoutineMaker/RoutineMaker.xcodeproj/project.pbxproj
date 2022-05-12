@@ -12,8 +12,6 @@
 		F010E28027B4CF350079BD4B /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */; };
 		F010E28127B4CF350079BD4B /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */; };
 		F010E28527B4D92F0079BD4B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E28427B4D92F0079BD4B /* Event.swift */; };
-		F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010E28727B4FB5B0079BD4B /* EventTableViewHeadCell.swift */; };
-		F010E28A27B4FB5B0079BD4B /* EventTableViewHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F010E28827B4FB5B0079BD4B /* EventTableViewHeadCell.xib */; };
 		F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB127AFEECF00426E5A /* AppDelegate.swift */; };
 		F0115EB427AFEECF00426E5A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB327AFEECF00426E5A /* SceneDelegate.swift */; };
 		F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0115EB527AFEECF00426E5A /* MainViewController.swift */; };
@@ -27,6 +25,7 @@
 		F022D9A4280ACC0D00D623B3 /* AchievementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A3280ACC0C00D623B3 /* AchievementRepository.swift */; };
 		F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */; };
 		F022D9A8280AD66B00D623B3 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022D9A7280AD66B00D623B3 /* EventList.swift */; };
+		F0303466282CEB68000B7BAB /* EventHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0303465282CEB68000B7BAB /* EventHeaderFooterView.swift */; };
 		F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F088930C27E2246F006ACFCD /* AddEventViewModel.swift */; };
 		F09CE9502807DE0D006AA586 /* AchievementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */; };
 		F0A1B62028080B7200D0C77A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B61F28080B7200D0C77A /* MainViewModel.swift */; };
@@ -45,8 +44,6 @@
 		F010E27E27B4CF350079BD4B /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		F010E27F27B4CF350079BD4B /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 		F010E28427B4D92F0079BD4B /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		F010E28727B4FB5B0079BD4B /* EventTableViewHeadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewHeadCell.swift; sourceTree = "<group>"; };
-		F010E28827B4FB5B0079BD4B /* EventTableViewHeadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewHeadCell.xib; sourceTree = "<group>"; };
 		F0115EAE27AFEECF00426E5A /* RoutineMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoutineMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0115EB127AFEECF00426E5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0115EB327AFEECF00426E5A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +59,7 @@
 		F022D9A3280ACC0C00D623B3 /* AchievementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementRepository.swift; sourceTree = "<group>"; };
 		F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListUseCase.swift; sourceTree = "<group>"; };
 		F022D9A7280AD66B00D623B3 /* EventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
+		F0303465282CEB68000B7BAB /* EventHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHeaderFooterView.swift; sourceTree = "<group>"; };
 		F088930C27E2246F006ACFCD /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
 		F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewModel.swift; sourceTree = "<group>"; };
 		F0A1B61F28080B7200D0C77A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -125,10 +123,10 @@
 			children = (
 				F0115EB527AFEECF00426E5A /* MainViewController.swift */,
 				F0A1B61F28080B7200D0C77A /* MainViewModel.swift */,
+				F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */,
 				F010E27927B29E4D0079BD4B /* AddEvent */,
 				F010E28327B4CF810079BD4B /* EventCell */,
-				F010E28B27B4FB660079BD4B /* EventHeadCell */,
-				F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */,
+				F010E28B27B4FB660079BD4B /* EventHeaderFooter */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -178,13 +176,12 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
-		F010E28B27B4FB660079BD4B /* EventHeadCell */ = {
+		F010E28B27B4FB660079BD4B /* EventHeaderFooter */ = {
 			isa = PBXGroup;
 			children = (
-				F010E28727B4FB5B0079BD4B /* EventTableViewHeadCell.swift */,
-				F010E28827B4FB5B0079BD4B /* EventTableViewHeadCell.xib */,
+				F0303465282CEB68000B7BAB /* EventHeaderFooterView.swift */,
 			);
-			path = EventHeadCell;
+			path = EventHeaderFooter;
 			sourceTree = "<group>";
 		};
 		F0115EA527AFEECF00426E5A = {
@@ -312,7 +309,6 @@
 			files = (
 				F010E28127B4CF350079BD4B /* EventTableViewCell.xib in Resources */,
 				F0115EBE27AFEED000426E5A /* LaunchScreen.storyboard in Resources */,
-				F010E28A27B4FB5B0079BD4B /* EventTableViewHeadCell.xib in Resources */,
 				F0115EBB27AFEED000426E5A /* Assets.xcassets in Resources */,
 				F0115EB927AFEECF00426E5A /* Main.storyboard in Resources */,
 				F0C26EBF28215DCF00751D71 /* GoogleService-Info.plist in Resources */,
@@ -381,10 +377,10 @@
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,
 				F0BE23C1282BD9E80092C23B /* Array.swift in Sources */,
 				F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */,
+				F0303466282CEB68000B7BAB /* EventHeaderFooterView.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */,
 				F022D9A4280ACC0D00D623B3 /* AchievementRepository.swift in Sources */,
 				F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */,
-				F010E28927B4FB5B0079BD4B /* EventTableViewHeadCell.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
 				F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */,
 				F09CE9502807DE0D006AA586 /* AchievementViewModel.swift in Sources */,
