@@ -14,9 +14,7 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
     private let viewModel = AddEventViewModel()
-    
-    weak var delegate: AddEventViewDelegate?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         

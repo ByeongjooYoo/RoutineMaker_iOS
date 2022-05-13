@@ -85,7 +85,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard indexPath.row != 0, editingStyle == .delete else { return }
+        guard editingStyle == .delete else { return }
         
         let index = indexPath.row
         
