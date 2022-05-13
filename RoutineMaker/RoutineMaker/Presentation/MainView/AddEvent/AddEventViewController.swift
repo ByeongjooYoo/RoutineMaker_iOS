@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol AddEventViewDelegate: AnyObject {
-    func didAddEvent()
-}
-
 class AddEventViewController: UIViewController {
     @IBOutlet weak var eventInputStackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -88,11 +84,6 @@ extension AddEventViewController: UITextViewDelegate {
 }
 
 extension AddEventViewController: AddEventViewModelDelegate {
-    // 삭제
-    func didAddEvent() {
-        delegate?.didAddEvent()
-    }
-    
     func isAddButtonEnabledDidChange() {
         addBarButton.isEnabled = viewModel.isAddButtonEnabled
     }

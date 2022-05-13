@@ -21,7 +21,6 @@ import Foundation
 protocol AddEventViewModelDelegate: AnyObject {
     func isAddButtonEnabledDidChange()
     func dismiss()
-    func didAddEvent()
 }
 
 class AddEventViewModel {
@@ -55,7 +54,6 @@ class AddEventViewModel {
         guard let title = title, let description = description else { return }
         let event = Event(id: UUID().uuidString ,title: title, description: description, isCompleted: false)
         eventListUseCase.addEvent(event: event) {
-            delegate?.didAddEvent()
             delegate?.dismiss()
         }
     }

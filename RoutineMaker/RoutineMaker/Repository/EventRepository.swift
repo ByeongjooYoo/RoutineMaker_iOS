@@ -65,6 +65,14 @@ class EventRepositoryImpl: EventRepository {
             print(error.localizedDescription)
         }
     }
+    
+    func getEventList() {
+        
+    }
+    
+    func eventListCount() {
+        
+    }
 }
 
 // MARK: - MockEventRepository

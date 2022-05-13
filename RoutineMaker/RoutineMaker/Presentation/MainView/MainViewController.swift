@@ -19,14 +19,9 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         
+        viewModel.delegate = self
         viewModel.fetchEventList {
             self.eventTableView.reloadData()
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let addEventViewController = segue.destination as? AddEventViewController {
-            addEventViewController.delegate = self
         }
     }
 }
@@ -141,11 +136,9 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-extension MainViewController: AddEventViewDelegate {
+extension MainViewController: MainViewModelDelegate {
     func didAddEvent() {
-        viewModel.fetchEventList {
-            self.eventTableView.reloadData()
-        }
+        eventTableView.reloadData()
     }
 }
 

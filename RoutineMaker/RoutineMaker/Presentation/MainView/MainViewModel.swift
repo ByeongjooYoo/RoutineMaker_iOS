@@ -7,11 +7,21 @@
 
 import Foundation
 
+protocol MainViewModelDelegate: AnyObject {
+    func didAddEvent()
+}
+
 class MainViewModel {
     private let eventListUseCase: EventListUseCase = DIContainer.instance.get(type: EventListUseCase.self)
     
+    weak var delegate: MainViewModelDelegate?
+    
     private var incompletedEventListCellViewModels: [EventListCellViewModel]?
     private var completedEventListCellViewModels: [EventListCellViewModel]?
+    
+    init() {
+        eventListUseCase.setDelegate(delegate: self)
+    }
     
     // View가 로드 될떄 호출되어 eventlist 데이터를 전달하는 역할
     func fetchEventList(completion: @escaping () -> Void) {
@@ -56,6 +66,15 @@ class MainViewModel {
     private func deleteEvent(byEventID eventID: String, completion: @escaping () -> Void) {
         eventListUseCase.deleteEvent(byID: eventID) {
             self.getEventList(completion: completion)
+        }
+    }
+}
+
+// MARK: - Delegate
+extension MainViewModel: EventListUseCaseDelegate {
+    func didAddEvent() {
+        fetchEventList {
+            self.delegate?.didAddEvent()
         }
     }
 }

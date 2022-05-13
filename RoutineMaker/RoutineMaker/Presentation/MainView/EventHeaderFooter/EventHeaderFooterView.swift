@@ -17,6 +17,10 @@ class EventHeaderFooterView: UITableViewHeaderFooterView {
     
     func setLayout(titleText: String) {
         contentView.addSubview(titleLabel)
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 15
+        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         titleLabel.text = titleText
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 18),
@@ -24,11 +28,5 @@ class EventHeaderFooterView: UITableViewHeaderFooterView {
             titleLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-    }
-    
-    override func draw(_ rect: CGRect) {
-        contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 15
-        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 }
