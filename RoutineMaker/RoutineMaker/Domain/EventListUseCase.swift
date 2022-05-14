@@ -7,10 +7,13 @@
 
 import Foundation
 protocol EventListUseCaseDelegate: AnyObject {
+    //네이밍 수정
     func didAddEvent()
 }
 
 protocol EventListUseCase {
+    var delegate: EventListUseCaseDelegate? { get set }
+    
     func setDelegate(delegate: EventListUseCaseDelegate)
     func countOfEvent(to isCompleted: Bool) -> Int
     func getEventList(completion: (EventList) -> Void)

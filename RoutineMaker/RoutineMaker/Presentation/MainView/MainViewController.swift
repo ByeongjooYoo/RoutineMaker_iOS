@@ -19,10 +19,9 @@ class MainViewController: UIViewController {
         setupNavigationController()
         setupTableView()
         
-        viewModel.delegate = self
-        viewModel.fetchEventList {
-            self.eventTableView.reloadData()
-        }
+        bindViewModel()
+        
+        viewModel.fetchEventList()
     }
 }
 
@@ -40,6 +39,18 @@ private extension MainViewController {
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
         eventTableView.register(EventHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "EventHeaderFooterView")
+    }
+    
+    func bindViewModel() {
+        viewModel.$incompletedEventListCellViewModels.didUpdate = { [weak self] _ in
+            print("DidUpdate: incompletedEventList")
+            self?.eventTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }
+        
+        viewModel.$completedEventListCellViewModels.didUpdate = { [weak self] _ in
+            print("DidUpdate: completedEventList")
+            self?.eventTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+        }
     }
 }
 
@@ -67,12 +78,14 @@ extension MainViewController: UITableViewDataSource {
         let cellIndex = indexPath.row
         switch indexPath.section {
         case 0:
-            let incompletedEventCount = viewModel.getIncompletedEventCount() - 1
             cell.viewModel = viewModel.getIncompletedEventListCellViewModels()[safe: cellIndex]
+            // 리펙토링
+            let incompletedEventCount = viewModel.getIncompletedEventCount() - 1
             cellIndex == incompletedEventCount ? cell.makeCornersAtBottom() : cell.deleteCornersAtBottom()
         case 1:
-            let completedEventCount = viewModel.getCompletedEventCount() - 1
             cell.viewModel = viewModel.getCompletedEventListCellViewModels()[safe: cellIndex]
+            // 리펙토링
+            let completedEventCount = viewModel.getCompletedEventCount() - 1
             cellIndex == completedEventCount ? cell.makeCornersAtBottom() : cell.deleteCornersAtBottom()
         default:
             break
@@ -91,9 +104,9 @@ extension MainViewController: UITableViewDataSource {
         
         switch indexPath.section {
         case 0:
-            viewModel.deleteIncompletedEventButtonDidClick(index: index) { self.eventTableView.reloadData() }
+            viewModel.deleteIncompletedEventButtonDidClick(index: index)
         case 1:
-            viewModel.deleteCompletedEventButtonDidClick(index: index) { self.eventTableView.reloadData() }
+            viewModel.deleteCompletedEventButtonDidClick(index: index)
         default:
             break
         }
@@ -136,17 +149,9 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-extension MainViewController: MainViewModelDelegate {
-    func didAddEvent() {
-        eventTableView.reloadData()
-    }
-}
-
 // MARK: MainViewController + EventTableViewCellDelegate
 extension MainViewController: EventTableViewCellDelegate {
     func eventCompletionButtonDidTap(viewModel: EventListCellViewModel) {
-        self.viewModel.eventCompletionButtonDidTap(viewModel: viewModel) {
-            self.eventTableView.reloadData()
-        }
+        self.viewModel.eventCompletionButtonDidTap(viewModel: viewModel)
     }
 }
