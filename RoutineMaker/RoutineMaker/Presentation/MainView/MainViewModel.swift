@@ -19,7 +19,7 @@ class MainViewModel {
     private(set) var completedEventListCellViewModels: [EventListCellViewModel]?
     
     init() {
-        eventListUseCase.setDelegate(delegate: self)
+        eventListUseCase.addDelegate(delegate: self)
     }
     
     // View가 로드 될떄 호출되어 eventlist 데이터를 전달하는 역할

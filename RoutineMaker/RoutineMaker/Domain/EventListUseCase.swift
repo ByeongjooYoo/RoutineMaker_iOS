@@ -6,15 +6,15 @@
 //
 
 import Foundation
+
+@objc
 protocol EventListUseCaseDelegate: AnyObject {
     //네이밍 수정
     func didAddEvent()
 }
 
 protocol EventListUseCase {
-    var delegate: EventListUseCaseDelegate? { get set }
-    
-    func setDelegate(delegate: EventListUseCaseDelegate)
+    func addDelegate(delegate: EventListUseCaseDelegate)
     func countOfEvent(to isCompleted: Bool) -> Int
     func getEventList(completion: (EventList) -> Void)
     func addEvent(event: Event, completion: () -> Void)
@@ -27,10 +27,10 @@ class EventListUseCaseImpl: EventListUseCase {
     @Dependency
     private var eventRepository: EventRepository
     
-    weak var delegate: EventListUseCaseDelegate?
+    private var delegates: [WeakRef<EventListUseCaseDelegate>] = []
     
-    func setDelegate(delegate: EventListUseCaseDelegate) {
-        self.delegate = delegate
+    func addDelegate(delegate: EventListUseCaseDelegate) {
+        delegates.append(WeakRef(value: delegate))
     }
     
     func countOfEvent(to isCompleted: Bool) -> Int {
@@ -47,7 +47,7 @@ class EventListUseCaseImpl: EventListUseCase {
     
     func addEvent(event: Event, completion: () -> Void) {
         eventRepository.postEvent(event: event) {
-            delegate?.didAddEvent()
+            delegates.forEach { $0.value?.didAddEvent() }
             completion()
         }
     }
