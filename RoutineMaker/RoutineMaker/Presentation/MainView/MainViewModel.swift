@@ -8,11 +8,9 @@
 import Foundation
 
 class MainViewModel {
-    
     @Dependency
     private var eventListUseCase: EventListUseCase
-    
-    
+
     @ViewModelState
     private(set) var incompletedEventListCellViewModels: [EventListCellViewModel]?
     @ViewModelState

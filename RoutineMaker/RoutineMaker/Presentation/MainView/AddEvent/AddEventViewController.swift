@@ -23,6 +23,11 @@ class AddEventViewController: UIViewController {
         setLayout()
         placeholderSetting(descriptionTextView)
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.viewDidDisappear()
+    }
     
     //빈화면을 클릭 시 키보드가 내려가게 해주는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

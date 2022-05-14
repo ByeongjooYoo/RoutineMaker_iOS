@@ -24,6 +24,9 @@ protocol AddEventViewModelDelegate: AnyObject {
 }
 
 class AddEventViewModel {
+    @Dependency
+    private var eventListUseCase: EventListUseCase
+
     var title: String? {
         didSet {
             updateIsAddButtonEnabled()
@@ -42,10 +45,12 @@ class AddEventViewModel {
         }
     }
     
-    private let eventListUseCase: EventListUseCase = DIContainer.instance.get(type: EventListUseCase.self)
-    
     weak var delegate: AddEventViewModelDelegate?
-    
+
+    init() {
+        eventListUseCase.addDelegate(delegate: self)
+    }
+
     func cancelButtonDidClick() {
         delegate?.dismiss()
     }
@@ -68,5 +73,17 @@ class AddEventViewModel {
     
     private func updateIsAddButtonEnabled() {
         isAddButtonEnabled = !(title?.isEmpty ?? true) && !(description?.isEmpty ?? true)
+    }
+
+    func viewDidDisappear() {
+        eventListUseCase.removeDelegate(delegate: self)
+    }
+}
+
+// MARK: - AddEventViewModel + EventListUseCaseDelegate
+
+extension AddEventViewModel: EventListUseCaseDelegate {
+    func didAddEvent() {
+        print("AddEventViewModel.didAddEvent")
     }
 }
