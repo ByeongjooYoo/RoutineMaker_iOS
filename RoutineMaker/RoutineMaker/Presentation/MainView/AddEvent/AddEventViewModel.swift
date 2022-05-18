@@ -83,7 +83,9 @@ class AddEventViewModel {
 // MARK: - AddEventViewModel + EventListUseCaseDelegate
 
 extension AddEventViewModel: EventListUseCaseDelegate {
-    func evnetDidAdd() {
+    func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) { }
+    
+    func eventDidAdd() {
         print("AddEventViewModel.didAddEvent")
     }
 }

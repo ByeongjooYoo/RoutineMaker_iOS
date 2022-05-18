@@ -12,11 +12,24 @@ protocol AchievementUseCase {
 }
 
 class AchievementUseCaseImpl: AchievementUseCase {
+    @Dependency
+    private var eventListUseCase: EventListUseCase
     
+    init() {
+        eventListUseCase.addDelegate(delegate: self)
+    }
     
     func calculateAchievement(incompletedEventCount: Int, completedEventCount: Int){
         let achievement = incompletedEventCount + completedEventCount == 0 ? 0 : round(Double(completedEventCount) / (Double(incompletedEventCount) + Double(completedEventCount)) * 100) / 100
         print(achievement)
+    }
+}
+
+extension AchievementUseCaseImpl : EventListUseCaseDelegate {
+    func eventDidAdd() { }
+    
+    func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) {
+        calculateAchievement(incompletedEventCount: incompletedEventCount, completedEventCount: completedEventCount)
     }
 }
 

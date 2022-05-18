@@ -63,7 +63,9 @@ class MainViewModel {
 
 // MARK: - Delegate
 extension MainViewModel: EventListUseCaseDelegate {
-    func evnetDidAdd() {
+    func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) { }
+    
+    func eventDidAdd() {
         getEventList()
     }
 }
