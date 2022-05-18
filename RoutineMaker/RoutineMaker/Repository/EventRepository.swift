@@ -18,7 +18,7 @@ protocol EventRepository {
 
 //Event 데이터를 가지고 있도록 수정
 class EventRepositoryImpl: EventRepository {
-    let reference: DatabaseReference = Database.database().reference()
+    private let reference: DatabaseReference = Database.database().reference()
     var eventList: [Event] = []
     
     func postEvent(event: Event, completion: () -> Void) {
