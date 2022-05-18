@@ -35,6 +35,7 @@
 		F0BE23C3282BDA7D0092C23B /* EventListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */; };
 		F0BE23C6282BDBDF0092C23B /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C5282BDBDF0092C23B /* DIContainer.swift */; };
 		F0C26EBF28215DCF00751D71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C26EBE28215DCF00751D71 /* GoogleService-Info.plist */; };
+		F0F032DF2834BF8400462BF6 /* AchievementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */; };
 		F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCellViewModel.swift; sourceTree = "<group>"; };
 		F0BE23C5282BDBDF0092C23B /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		F0C26EBE28215DCF00751D71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUseCase.swift; sourceTree = "<group>"; };
 		F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */,
+				F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				F010E28527B4D92F0079BD4B /* Event.swift in Sources */,
 				F022D9A8280AD66B00D623B3 /* EventList.swift in Sources */,
 				F088930D27E2246F006ACFCD /* AddEventViewModel.swift in Sources */,
+				F0F032DF2834BF8400462BF6 /* AchievementUseCase.swift in Sources */,
 				F0BE23C3282BDA7D0092C23B /* EventListCellViewModel.swift in Sources */,
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0BE23C6282BDBDF0092C23B /* DIContainer.swift in Sources */,

@@ -63,7 +63,7 @@ class MainViewModel {
 
 // MARK: - Delegate
 extension MainViewModel: EventListUseCaseDelegate {
-    func didAddEvent() {
+    func evnetDidAdd() {
         getEventList()
     }
 }

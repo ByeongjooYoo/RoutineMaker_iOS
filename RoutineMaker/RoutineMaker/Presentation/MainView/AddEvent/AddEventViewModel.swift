@@ -83,7 +83,7 @@ class AddEventViewModel {
 // MARK: - AddEventViewModel + EventListUseCaseDelegate
 
 extension AddEventViewModel: EventListUseCaseDelegate {
-    func didAddEvent() {
+    func evnetDidAdd() {
         print("AddEventViewModel.didAddEvent")
     }
 }

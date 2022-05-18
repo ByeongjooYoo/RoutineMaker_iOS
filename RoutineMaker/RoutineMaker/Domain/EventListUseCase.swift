@@ -8,14 +8,12 @@
 import Foundation
 
 @objc protocol EventListUseCaseDelegate: AnyObject {
-    //네이밍 수정
-    func didAddEvent()
+    func evnetDidAdd()
 }
 
 protocol EventListUseCase {
     func addDelegate(delegate: EventListUseCaseDelegate)
     func removeDelegate(delegate: EventListUseCaseDelegate)
-
     func countOfEvent(to isCompleted: Bool) -> Int
     func getEventList(completion: (EventList) -> Void)
     func addEvent(event: Event, completion: () -> Void)
@@ -28,7 +26,6 @@ class EventListUseCaseImpl: EventListUseCase {
     @Dependency
     private var eventRepository: EventRepository
     
-//    private var delegates = WeakRefArray<EventListUseCaseDelegate>()
     private var delegates = [EventListUseCaseDelegate]()
     
     func addDelegate(delegate: EventListUseCaseDelegate) {
@@ -37,7 +34,6 @@ class EventListUseCaseImpl: EventListUseCase {
 
     func removeDelegate(delegate: EventListUseCaseDelegate) {
         guard let index = delegates.firstIndex(where: { $0 === delegate }) else { return }
-        print(index)
         delegates.remove(at: index)
     }
     
@@ -55,8 +51,7 @@ class EventListUseCaseImpl: EventListUseCase {
     
     func addEvent(event: Event, completion: () -> Void) {
         eventRepository.postEvent(event: event) {
-//            delegates.values.forEach { $0.didAddEvent() }
-            delegates.forEach { $0.didAddEvent() }
+            delegates.forEach { $0.evnetDidAdd() }
             completion()
         }
     }
@@ -72,18 +67,4 @@ class EventListUseCaseImpl: EventListUseCase {
     func deleteEvent(byID id: String, completion: () -> Void) {
         eventRepository.deleteEvent(byID: id, completion: completion)
     }
-    
-//    func calculateAchievement() {
-//        let incompletedEventCount = countOfEvent(isCompleted: false)
-//        let completedEventCount = countOfEvent(isCompleted: true)
-//        let achievement = incompletedEventCount + completedEventCount == 0 ? 0 : round(Double(completedEventCount) / (Double(incompletedEventCount) + Double(completedEventCount)) * 100) / 100
-//        print(achievement)
-//    }
-//    
-//    func getTodayDate() {
-//        let formatter = ISO8601DateFormatter()
-//        formatter.timeZone = .autoupdatingCurrent
-//        formatter.formatOptions = [.withFullDate]
-//        print(formatter.string(from: Date()))
-//    }
 }

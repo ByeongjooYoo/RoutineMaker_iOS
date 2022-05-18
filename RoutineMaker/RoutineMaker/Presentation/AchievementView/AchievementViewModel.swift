@@ -24,6 +24,13 @@ import Firebase
  */
 
 class AchievementViewModel {
+    @Dependency
+    private var achievementUseCase: AchievementUseCase
+    
+    func getAchievement() {
+        achievementUseCase.calculateAchievement(incompletedEventCount: 4, completedEventCount: 0)
+    }
+    
     var ref: DatabaseReference!
     var dayAchievement: Float?
     

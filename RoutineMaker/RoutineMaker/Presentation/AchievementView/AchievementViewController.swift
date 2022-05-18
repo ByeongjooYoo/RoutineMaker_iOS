@@ -24,6 +24,7 @@ class AchievementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
+        viewModel.getAchievement()
     }
     
     override func viewWillAppear(_ animated: Bool) {
