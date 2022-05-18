@@ -7,20 +7,14 @@
 
 import UIKit
 
-protocol AddEventViewDelegate: AnyObject {
-    func didAddEvent()
-}
-
 class AddEventViewController: UIViewController {
     @IBOutlet weak var eventInputStackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    private let viewModel = AddEventViewModel(eventListUseCase: EventListUseCaseImpl(eventRepository: EventRepositoryImpl()))
-    
-    weak var delegate: AddEventViewDelegate?
-    
+    private let viewModel = AddEventViewModel()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +22,11 @@ class AddEventViewController: UIViewController {
         
         setLayout()
         placeholderSetting(descriptionTextView)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.viewDidDisappear()
     }
     
     //빈화면을 클릭 시 키보드가 내려가게 해주는 함수
@@ -88,11 +87,6 @@ extension AddEventViewController: UITextViewDelegate {
 }
 
 extension AddEventViewController: AddEventViewModelDelegate {
-    // 삭제
-    func didAddEvent() {
-        delegate?.didAddEvent()
-    }
-    
     func isAddButtonEnabledDidChange() {
         addBarButton.isEnabled = viewModel.isAddButtonEnabled
     }

@@ -10,27 +10,18 @@ import UIKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var eventTableView: UITableView!
-
-    private let viewModel = MainViewModel(
-        eventListUseCase: EventListUseCaseImpl(
-            eventRepository: EventRepositoryImpl()
-        )
-    )
+    
+    private let viewModel = MainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavigationController()
         setupTableView()
-        setupNotification()
-        viewModel.fetchEventList {
-            self.eventTableView.reloadData()
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let addEventViewController = segue.destination as? AddEventViewController {
-            addEventViewController.delegate = self
-        }
+        
+        bindViewModel()
+        
+        viewModel.fetchEventList()
     }
 }
 
@@ -47,23 +38,18 @@ private extension MainViewController {
         let eventTableViewCell = UINib(nibName: "EventTableViewCell", bundle: nil)
         eventTableView.register(eventTableViewCell, forCellReuseIdentifier: "EventTableViewCell")
         
-        let eventTableViewHeadCell = UINib(nibName: "EventTableViewHeadCell", bundle: nil)
-        eventTableView.register(eventTableViewHeadCell, forCellReuseIdentifier: "EventTableViewHeadCell")
+        eventTableView.register(EventHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "EventHeaderFooterView")
     }
     
-    func setupNotification() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didChangedEventCompletion(_:)),
-            name: Notification.Name("tappedEventCompletionButton"),
-            object: nil
-        )
-    }
-
-    @objc func didChangedEventCompletion(_ notification: Notification) {
-        let (isSelected, index) = notification.object as! (Bool, Int)
-        viewModel.didChangedEventState(isSelected, index) {
-            self.eventTableView.reloadData()
+    func bindViewModel() {
+        viewModel.$incompletedEventListCellViewModels.didUpdate = { [weak self] _ in
+            print("DidUpdate: incompletedEventList")
+            self?.eventTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }
+        
+        viewModel.$completedEventListCellViewModels.didUpdate = { [weak self] _ in
+            print("DidUpdate: completedEventList")
+            self?.eventTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
     }
 }
@@ -76,89 +62,96 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return viewModel.getIncompletedEventCount() + 1
+            return viewModel.getIncompletedEventCount()
         default:
-            return viewModel.getCompletedEventCount() + 1
+            return viewModel.getCompletedEventCount()
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            return loadEventTableViewHeadCell(tableView, cellForRowAt: indexPath)
-        default:
-            return loadEventTableViewCell(tableView, cellForRowAt: indexPath)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 60
-        default:
-            return 45
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            return
-        }
-        if editingStyle == .delete {
-            viewModel.deleteEventButtonDidClick(section: indexPath.section, index: indexPath.row - 1) {
-                self.eventTableView.reloadData()
-            }
-        }
-    }
-    
-    // TODO: 개선필요
-    func loadEventTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as? EventTableViewCell else {
             return UITableViewCell()
         }
+        
+        cell.delegate = self
+        
+        let cellIndex = indexPath.row
         switch indexPath.section {
         case 0:
-            guard let event = viewModel.getIncompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
-            cell.EventNameLabel.text = event.title
-            cell.setIndex(indexPath.row - 1)
-            cell.EventCompletionButton.isSelected = false
+            cell.viewModel = viewModel.getIncompletedEventListCellViewModels()[safe: cellIndex]
+            // 리펙토링
+            let incompletedEventCount = viewModel.getIncompletedEventCount() - 1
+            cellIndex == incompletedEventCount ? cell.makeCornersAtBottom() : cell.deleteCornersAtBottom()
+        case 1:
+            cell.viewModel = viewModel.getCompletedEventListCellViewModels()[safe: cellIndex]
+            // 리펙토링
+            let completedEventCount = viewModel.getCompletedEventCount() - 1
+            cellIndex == completedEventCount ? cell.makeCornersAtBottom() : cell.deleteCornersAtBottom()
         default:
-            guard let event = viewModel.getCompletedEvent(by: indexPath.row - 1) else { return UITableViewCell() }
-            cell.EventNameLabel.text = event.title
-            cell.setIndex(indexPath.row - 1)
-            cell.EventCompletionButton.isSelected = true
+            break
         }
         return cell
     }
     
-    func loadEventTableViewHeadCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewHeadCell", for: indexPath) as? EventTableViewHeadCell else {
-            return UITableViewCell()
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 45
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        
+        let index = indexPath.row
+        
         switch indexPath.section {
         case 0:
-            cell.titleLabel.text = "해야할 일"
+            viewModel.deleteIncompletedEventButtonDidClick(index: index)
+        case 1:
+            viewModel.deleteCompletedEventButtonDidClick(index: index)
         default:
-            cell.titleLabel.text = "완료"
+            break
         }
-        return cell
+    }
+    
+    // MARK: sectionHeaderFooter
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "EventHeaderFooterView") as? EventHeaderFooterView else {
+            return UITableViewHeaderFooterView()
+        }
+        var title: String?
+        switch section {
+        case 0:
+            title = "해야할 일"
+        case 1:
+            title = "완료"
+        default:
+            break
+        }
+        header.setLayout(titleText: title ?? "")
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
 }
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if indexPath.row == 0 {
-            return UITableViewCell.EditingStyle.none
-        } else {
-            return UITableViewCell.EditingStyle.delete
-        }
+        return UITableViewCell.EditingStyle.delete
     }
 }
 
-extension MainViewController: AddEventViewDelegate {
-    func didAddEvent() {
-        viewModel.fetchEventList {
-            self.eventTableView.reloadData()
-        }
+// MARK: MainViewController + EventTableViewCellDelegate
+extension MainViewController: EventTableViewCellDelegate {
+    func eventCompletionButtonDidTap(viewModel: EventListCellViewModel) {
+        self.viewModel.eventCompletionButtonDidTap(viewModel: viewModel)
     }
 }

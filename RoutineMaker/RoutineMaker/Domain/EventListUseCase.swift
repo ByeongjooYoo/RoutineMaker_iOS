@@ -7,25 +7,37 @@
 
 import Foundation
 
+@objc protocol EventListUseCaseDelegate: AnyObject {
+    func evnetDidAdd()
+}
+
 protocol EventListUseCase {
-    func countOfEvent(isCompleted: Bool) -> Int
+    func addDelegate(delegate: EventListUseCaseDelegate)
+    func removeDelegate(delegate: EventListUseCaseDelegate)
+    func countOfEvent(to isCompleted: Bool) -> Int
     func getEventList(completion: (EventList) -> Void)
     func addEvent(event: Event, completion: () -> Void)
     func fetchEventList(completion: @escaping () -> Void)
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
     func deleteEvent(byID id: String, completion: () -> Void)
-    
-    func calculateAchievement()
 }
 
 class EventListUseCaseImpl: EventListUseCase {
-    private let eventRepository: EventRepository
+    @Dependency
+    private var eventRepository: EventRepository
     
-    init(eventRepository: EventRepository) {
-        self.eventRepository = eventRepository
+    private var delegates = [EventListUseCaseDelegate]()
+    
+    func addDelegate(delegate: EventListUseCaseDelegate) {
+        delegates.append(delegate)
+    }
+
+    func removeDelegate(delegate: EventListUseCaseDelegate) {
+        guard let index = delegates.firstIndex(where: { $0 === delegate }) else { return }
+        delegates.remove(at: index)
     }
     
-    func countOfEvent(isCompleted: Bool) -> Int {
+    func countOfEvent(to isCompleted: Bool) -> Int {
         let eventList = eventRepository.eventList
         return isCompleted ? eventList.filter { $0.isCompleted == true }.count : eventList.filter { $0.isCompleted == false }.count
     }
@@ -38,36 +50,21 @@ class EventListUseCaseImpl: EventListUseCase {
     }
     
     func addEvent(event: Event, completion: () -> Void) {
-        eventRepository.postEvent(event: event, completion: completion)
+        eventRepository.postEvent(event: event) {
+            delegates.forEach { $0.evnetDidAdd() }
+            completion()
+        }
     }
     
     func fetchEventList(completion: @escaping () -> Void) {
         eventRepository.requestEvents(completion: completion)
-        calculateAchievement()
-        getTodayDate()
     }
     
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
         eventRepository.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: completion)
-        calculateAchievement()
     }
     
     func deleteEvent(byID id: String, completion: () -> Void) {
         eventRepository.deleteEvent(byID: id, completion: completion)
-        calculateAchievement()
-    }
-    
-    func calculateAchievement() {
-//        let incompletedEventCount = countOfEvent(isCompleted: false)
-//        let completedEventCount = countOfEvent(isCompleted: true)
-//        let achievement = incompletedEventCount + completedEventCount == 0 ? 0 : round(Double(completedEventCount) / (Double(incompletedEventCount) + Double(completedEventCount)) * 100) / 100
-//        print(achievement)
-    }
-//
-    func getTodayDate() {
-//        let formatter = ISO8601DateFormatter()
-//        formatter.timeZone = .autoupdatingCurrent
-//        formatter.formatOptions = [.withFullDate]
-//        print(formatter.string(from: Date()))
     }
 }

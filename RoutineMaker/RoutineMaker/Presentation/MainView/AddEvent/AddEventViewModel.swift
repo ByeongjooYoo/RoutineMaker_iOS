@@ -21,10 +21,12 @@ import Foundation
 protocol AddEventViewModelDelegate: AnyObject {
     func isAddButtonEnabledDidChange()
     func dismiss()
-    func didAddEvent()
 }
 
 class AddEventViewModel {
+    @Dependency
+    private var eventListUseCase: EventListUseCase
+
     var title: String? {
         didSet {
             updateIsAddButtonEnabled()
@@ -43,14 +45,12 @@ class AddEventViewModel {
         }
     }
     
-    private let eventListUseCase: EventListUseCase
-    
     weak var delegate: AddEventViewModelDelegate?
-    
-    init(eventListUseCase: EventListUseCase) {
-        self.eventListUseCase = eventListUseCase
+
+    init() {
+        eventListUseCase.addDelegate(delegate: self)
     }
-    
+
     func cancelButtonDidClick() {
         delegate?.dismiss()
     }
@@ -59,7 +59,6 @@ class AddEventViewModel {
         guard let title = title, let description = description else { return }
         let event = Event(id: UUID().uuidString ,title: title, description: description, isCompleted: false)
         eventListUseCase.addEvent(event: event) {
-            delegate?.didAddEvent()
             delegate?.dismiss()
         }
     }
@@ -74,5 +73,17 @@ class AddEventViewModel {
     
     private func updateIsAddButtonEnabled() {
         isAddButtonEnabled = !(title?.isEmpty ?? true) && !(description?.isEmpty ?? true)
+    }
+
+    func viewDidDisappear() {
+        eventListUseCase.removeDelegate(delegate: self)
+    }
+}
+
+// MARK: - AddEventViewModel + EventListUseCaseDelegate
+
+extension AddEventViewModel: EventListUseCaseDelegate {
+    func evnetDidAdd() {
+        print("AddEventViewModel.didAddEvent")
     }
 }

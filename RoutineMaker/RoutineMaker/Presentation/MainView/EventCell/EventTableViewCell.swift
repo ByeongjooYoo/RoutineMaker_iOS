@@ -7,17 +7,36 @@
 
 import UIKit
 
+// MARK: - EventTableViewCellDelegate
+protocol EventTableViewCellDelegate: AnyObject {
+    func eventCompletionButtonDidTap(viewModel: EventListCellViewModel)
+}
+
+// MARK: - EventTableViewCell
 class EventTableViewCell: UITableViewCell {
-    var index: Int?
+    weak var delegate: EventTableViewCellDelegate?
+    var viewModel: EventListCellViewModel? {
+        didSet {
+            EventNameLabel.text = viewModel?.nameLabelText
+            EventCompletionButton.isSelected = viewModel?.completionButtonIsSelected ?? false
+        }
+    }
+    
     @IBOutlet weak var EventNameLabel: UILabel!
     @IBOutlet weak var EventCompletionButton: UIButton!
     
-    func setIndex(_ index: Int) {
-        self.index = index
+    @IBAction func tappedEventCompletionButton(_ sender: UIButton) {
+        guard let viewModel = viewModel else { return }
+        delegate?.eventCompletionButtonDidTap(viewModel: viewModel)
     }
     
-    @IBAction func tappedEventCompletionButton(_ sender: UIButton) {
-//        sender.isSelected.toggle()
-        NotificationCenter.default.post(name: Notification.Name("tappedEventCompletionButton"), object: (sender.isSelected, index!))
+    func makeCornersAtBottom() {
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        contentView.clipsToBounds = true
+    }
+    
+    func deleteCornersAtBottom() {
+        contentView.layer.cornerRadius = 0
     }
 }

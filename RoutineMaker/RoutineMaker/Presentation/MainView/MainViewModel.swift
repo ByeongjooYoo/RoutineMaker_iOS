@@ -8,87 +8,79 @@
 import Foundation
 
 class MainViewModel {
-    private let eventListUseCase: EventListUseCase
+    @Dependency
+    private var eventListUseCase: EventListUseCase
+
+    @ViewModelState
+    private(set) var incompletedEventListCellViewModels: [EventListCellViewModel]?
+    @ViewModelState
+    private(set) var completedEventListCellViewModels: [EventListCellViewModel]?
     
-    init(eventListUseCase: EventListUseCase) {
-        self.eventListUseCase = eventListUseCase
+    init() {
+        eventListUseCase.addDelegate(delegate: self)
+    }
+    
+    // View가 로드 될떄 호출되어 eventlist 데이터를 전달하는 역할
+    func fetchEventList() {
+        eventListUseCase.fetchEventList {
+            self.getEventList()
+        }
     }
     
     func getIncompletedEventCount() -> Int {
-        return eventListUseCase.countOfEvent(isCompleted: false)
+        incompletedEventListCellViewModels?.count ?? 0
     }
     
     func getCompletedEventCount() -> Int {
-        return eventListUseCase.countOfEvent(isCompleted: true)
+        completedEventListCellViewModels?.count ?? 0
     }
     
-    func getIncompletedEvent(by index: Int) -> Event? {
-        var event: Event?
-        eventListUseCase.getEventList { eventList in
-            event = eventList.incompleted[index]
-        }
-        return event
+    func getIncompletedEventListCellViewModels() -> [EventListCellViewModel] {
+        incompletedEventListCellViewModels ?? []
     }
     
-    func getCompletedEvent(by index: Int) -> Event? {
-        var event: Event?
-        eventListUseCase.getEventList { eventList in
-            event = eventList.completed[index]
-        }
-        return event
+    func getCompletedEventListCellViewModels() -> [EventListCellViewModel] {
+        completedEventListCellViewModels ?? []
     }
+    
+    func eventCompletionButtonDidTap(viewModel: EventListCellViewModel) {
+        let newIsCompleted = !viewModel.completionButtonIsSelected
+        eventListUseCase.updateIsCompletedOfEvent(to: newIsCompleted, byID: viewModel.eventID) {
+            self.getEventList()
+        }
+    }
+    
+    func deleteIncompletedEventButtonDidClick(index: Int) {
+        guard let viewModel = incompletedEventListCellViewModels?[safe: index] else { return }
+        deleteEvent(byEventID: viewModel.eventID)
+    }
+    
+    func deleteCompletedEventButtonDidClick(index: Int) {
+        guard let viewModel = completedEventListCellViewModels?[safe: index] else { return }
+        deleteEvent(byEventID: viewModel.eventID)
+    }
+}
 
-    func didChangedEventState(_ done: Bool, _ index: Int, completion: @escaping () -> Void) {
-        guard let event = done ? getCompletedEvent(by: index) : getIncompletedEvent(by: index) else { return }
-        let eventID = event.id
-        eventListUseCase.updateIsCompletedOfEvent(to: !event.isCompleted, byID: eventID, completion: completion)
+// MARK: - Delegate
+extension MainViewModel: EventListUseCaseDelegate {
+    func evnetDidAdd() {
+        getEventList()
+    }
+}
+
+// MARK: - Private Methods
+private extension MainViewModel {
+    /// UseCase에서 현재 로드된 Event 목록을 받아와서 EventListCellViewModel을 채워넣는다.
+    func getEventList() {
+        eventListUseCase.getEventList { incompleted, completed in
+            self.incompletedEventListCellViewModels = incompleted.map(\.toEventListCellViewModel)
+            self.completedEventListCellViewModels = completed.map(\.toEventListCellViewModel)
+        }
     }
     
-    func deleteEventButtonDidClick(section: Int, index: Int, completion: @escaping () -> Void) {
-        guard let event = section == 1 ? getCompletedEvent(by: index) : getIncompletedEvent(by: index) else { return }
-        let eventID = event.id
-        eventListUseCase.deleteEvent(byID: eventID, completion: completion)
+    func deleteEvent(byEventID eventID: String) {
+        eventListUseCase.deleteEvent(byID: eventID) {
+            self.getEventList()
+        }
     }
-    
-    //View가 로드 될떄 호출되어 eventlist 데이터를 전달하는 역할
-    func fetchEventList(completion: @escaping () -> Void) {
-        eventListUseCase.fetchEventList(completion: completion)
-    }
-    
-    func fetchAchievement(completion: @escaping () -> Void) {
-//        ref = Database.database().reference()
-//        ref.child("user1").child("AchievementList").child(convertDateFormat(0, "YYYY_MM_dd_EEEE", .day)).observeSingleEvent(of: .value, with: { [self] snapshot in
-//            if snapshot.value is NSNull {
-//                isRunToday = false
-//                fetchEventList { completion() }
-//                dayAchievement = DayAchievement(dayAchivement: 0.0, date: convertDateFormat(0, "YYYY_MM_dd_EEEE", .day))
-//                return
-//            } else {
-//                fetchEventList { completion() }
-//            }
-//
-//            guard let value = snapshot.value else {
-//                return
-//            }
-//            do {
-//                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-//                let loadData = try JSONDecoder().decode(DayAchievement.self, from: jsonData)
-//                dayAchievement = loadData
-//            }  catch let error {
-//                print("Error JSON parsing: \(error.localizedDescription)")
-//            }
-//            completion()
-//        }) { error in
-//            print(error.localizedDescription)
-//        }
-    }
-    
-//    func convertDateFormat(_ day: Int, _ format: String, _ component: Calendar.Component) -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = format
-//        dateFormatter.locale = Locale(identifier: "ko_KR")
-//        let date = Calendar.current.date(byAdding: component, value: -(day), to: Date())
-//        let result = dateFormatter.string(from: date ?? Date())
-//        return result
-//    }
 }
