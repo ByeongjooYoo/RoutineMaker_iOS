@@ -9,11 +9,10 @@ import Foundation
 
 protocol AchievementUseCase {
     func calculateAchievement(incompletedEventCount: Int, completedEventCount: Int) -> Double
-    func getDayAchievement() -> DayAchievement
+    func getDayAchievement(completion: @escaping (DayAchievement) -> Void)
 }
 
 class AchievementUseCaseImpl: AchievementUseCase {
-    var dayAchievement: DayAchievement = DayAchievement(dayAchivement: 0.0, date: Date())
     
     @Dependency
     private var eventListUseCase: EventListUseCase
@@ -30,8 +29,17 @@ class AchievementUseCaseImpl: AchievementUseCase {
         return achievement
     }
     
-    func getDayAchievement() -> DayAchievement {
-        achievementRepository.dayAchievement
+    func getDayAchievement(completion: @escaping (DayAchievement) -> Void) {
+        achievementRepository.requestAchievement(by: getTodayDate(date: Date())) { dayAchievement in
+            completion(dayAchievement)
+        }
+    }
+    
+    func getTodayDate(date: Date) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.formatOptions = [.withFullDate]
+        return formatter.string(from: date)
     }
 }
 
@@ -40,13 +48,6 @@ extension AchievementUseCaseImpl : EventListUseCaseDelegate {
     
     func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) {
         let newAchievement = calculateAchievement(incompletedEventCount: incompletedEventCount, completedEventCount: completedEventCount)
-        achievementRepository.postAchievement(dayAchievement: DayAchievement(dayAchivement: newAchievement, date: Date()))
+        achievementRepository.postAchievement(dayAchievement: DayAchievement(dayAchivement: newAchievement, date: getTodayDate(date: Date())))
     }
 }
-
-//    func getTodayDate() {
-//        let formatter = ISO8601DateFormatter()
-//        formatter.timeZone = .autoupdatingCurrent
-//        formatter.formatOptions = [.withFullDate]
-//        print(formatter.string(from: Date()))
-//    }

@@ -9,23 +9,25 @@ import Foundation
 import Firebase
 
 protocol AchievementRepository {
-    var dayAchievement: DayAchievement { get }
+//    var dayAchievement: DayAchievement { get }
     func postAchievement(dayAchievement: DayAchievement)
     func updateAchievement(dayAchievement: DayAchievement)
-    func requestAchievement(completion: () -> Void)
+    func requestAchievement(by date: String, completion: @escaping (DayAchievement) -> Void)
 }
 
 class AchievementRepositoryImpl: AchievementRepository {
     private let reference: DatabaseReference = Database.database().reference()
-
-    var dayAchievement: DayAchievement = DayAchievement(dayAchivement: 0 , date: Date())
+    
+    @Dependency
+    private var eventRepository: EventRepository
+//    var dayAchievement: DayAchievement?
+    init() {
+        eventRepository.setDelegate(delegate: self)
+    }
+    
     
     func postAchievement(dayAchievement: DayAchievement) {
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = .autoupdatingCurrent
-        formatter.formatOptions = [.withFullDate]
-        let date = formatter.string(from: dayAchievement.date)
-        reference.child("user1").child("DayAchievementList").child(date).setValue(dayAchievement.dayAchivement)
+        reference.child("user1").child("DayAchievementList").child(dayAchievement.date).setValue(dayAchievement.toDictionary)
     }
     
 //    func getTodayDate() {
@@ -39,25 +41,55 @@ class AchievementRepositoryImpl: AchievementRepository {
         
     }
     
-    func requestAchievement(completion: () -> Void) {
-        
+    func requestAchievement(by date: String, completion: @escaping (DayAchievement) -> Void) {
+        reference.child("user1").child("DayAchievementList").child(date).observeSingleEvent(of: .value, with: { snapshot in
+            guard let value = snapshot.value else {
+                print("Firebase Data Empty")
+                return
+            }
+            do {
+                if value is NSNull {
+                    print("RequestAchievement: Null!")
+                } else {
+                    let jsonData = try JSONSerialization.data(withJSONObject: value)
+                    let achievement = try JSONDecoder().decode(DayAchievement.self, from: jsonData)
+                    print("RequestAchievement\(achievement)")
+                    completion(achievement)
+                }
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getTodayDate() -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.formatOptions = [.withFullDate]
+        return formatter.string(from: Date())
     }
 }
 
-class MockAchievementRepository: AchievementRepository {
-    var dayAchievement: DayAchievement = DayAchievement(dayAchivement: 0 , date: Date())
-
-    func postAchievement(dayAchievement: DayAchievement) {
-        self.dayAchievement = dayAchievement
-    }
-
-    func updateAchievement(dayAchievement: DayAchievement) {
-        self.dayAchievement = dayAchievement
-    }
-
-    func requestAchievement(completion: () -> Void) {
-        completion()
+extension AchievementRepositoryImpl: EventRepositoryDelegate {
+    func isLaunchAppToday(completion: @escaping (Bool) -> Void) {
+        reference.child("user1").child("DayAchievementList").child(getTodayDate()).observeSingleEvent(of: .value, with: { snapshot in
+            guard let value = snapshot.value else {
+                print("Firebase Data Empty")
+                return
+            }
+            do {
+                if value is NSNull {
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
 }
-
-

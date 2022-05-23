@@ -51,8 +51,12 @@ class AchievementViewModel {
     }
     
     func fetchDayAchievement(completion: @escaping (Float) -> Void) {
-        let achievement = Float(achievementUseCase.getDayAchievement().dayAchivement)
-        completion(achievement)
+        var achievement: Float?
+        achievementUseCase.getDayAchievement { dayAchievement in
+            achievement = Float(dayAchievement.dayAchivement )
+            completion(achievement ?? 0.0)
+        }
+        
     }
     
     func fetchWeekAchievement(completion: @escaping ([Double]) -> Void) {

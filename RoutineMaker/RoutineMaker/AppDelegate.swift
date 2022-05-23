@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DIContainer.instance.register(value: EventRepositoryImpl(), type: EventRepository.self)
         DIContainer.instance.register(value: EventListUseCaseImpl(), type: EventListUseCase.self)
-        DIContainer.instance.register(value: MockAchievementRepository(), type: AchievementRepository.self)
+        DIContainer.instance.register(value: AchievementRepositoryImpl(), type: AchievementRepository.self)
         DIContainer.instance.register(value: AchievementUseCaseImpl(), type: AchievementUseCase.self)
         
         return true
