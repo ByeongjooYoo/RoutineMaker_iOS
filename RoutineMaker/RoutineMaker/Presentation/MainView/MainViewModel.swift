@@ -63,6 +63,8 @@ class MainViewModel {
 
 // MARK: - Delegate
 extension MainViewModel: EventListUseCaseDelegate {
+    func checkLauchApp(completion: @escaping (Bool) -> Void) { }
+    
     func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) { }
     
     func eventDidAdd() {

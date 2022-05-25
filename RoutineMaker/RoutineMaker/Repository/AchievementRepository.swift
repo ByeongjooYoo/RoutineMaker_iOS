@@ -13,6 +13,7 @@ protocol AchievementRepository {
     func postAchievement(dayAchievement: DayAchievement)
     func updateAchievement(dayAchievement: DayAchievement)
     func requestAchievement(by date: String, completion: @escaping (DayAchievement) -> Void)
+    func checkDayAchievement(by date: String, completion: @escaping (Bool) -> Void)
 }
 
 class AchievementRepositoryImpl: AchievementRepository {
@@ -47,6 +48,19 @@ class AchievementRepositoryImpl: AchievementRepository {
             }
         }) { error in
             print(error.localizedDescription)
+        }
+    }
+    
+    func checkDayAchievement(by date: String, completion: @escaping (Bool) -> Void) {
+        reference.child("user1").child("DayAchievementList").child(date).getData { error, snapshot in
+            guard let value = snapshot.value else { return }
+            if value is NSNull {
+                print("AchievementRepository: DayAchievement Data is Null!!")
+                completion(false)
+            } else {
+                print("AchievementRepository: Firebase has DayAchievement data")
+                completion(true)
+            }
         }
     }
     

@@ -44,6 +44,12 @@ class AchievementUseCaseImpl: AchievementUseCase {
 }
 
 extension AchievementUseCaseImpl : EventListUseCaseDelegate {
+    func checkLauchApp(completion: @escaping (Bool) -> Void) {
+        achievementRepository.checkDayAchievement(by: getTodayDate(date: Date())) { isLaunch in
+            completion(isLaunch)
+        }
+    }
+    
     func eventDidAdd() { }
     
     func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) {

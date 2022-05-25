@@ -47,10 +47,6 @@ class AddEventViewModel {
     
     weak var delegate: AddEventViewModelDelegate?
 
-    init() {
-        eventListUseCase.addDelegate(delegate: self)
-    }
-
     func cancelButtonDidClick() {
         delegate?.dismiss()
     }
@@ -73,19 +69,5 @@ class AddEventViewModel {
     
     private func updateIsAddButtonEnabled() {
         isAddButtonEnabled = !(title?.isEmpty ?? true) && !(description?.isEmpty ?? true)
-    }
-
-    func viewDidDisappear() {
-        eventListUseCase.removeDelegate(delegate: self)
-    }
-}
-
-// MARK: - AddEventViewModel + EventListUseCaseDelegate
-
-extension AddEventViewModel: EventListUseCaseDelegate {
-    func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int) { }
-    
-    func eventDidAdd() {
-        print("AddEventViewModel.didAddEvent")
     }
 }

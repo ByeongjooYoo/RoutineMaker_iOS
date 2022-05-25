@@ -10,6 +10,7 @@ import Foundation
 @objc protocol EventListUseCaseDelegate: AnyObject {
     func eventDidAdd()
     func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int)
+    func checkLauchApp(completion: @escaping (Bool) -> Void)
 }
 
 protocol EventListUseCase {
@@ -61,6 +62,11 @@ class EventListUseCaseImpl: EventListUseCase {
     }
     
     func fetchEventList(completion: @escaping () -> Void) {
+        delegates.forEach {
+            $0.checkLauchApp { isLanch in
+                print("EventListUseCaseImpl: \(isLanch)")
+            }
+        }
         eventRepository.requestEvents(completion: completion)
     }
     
