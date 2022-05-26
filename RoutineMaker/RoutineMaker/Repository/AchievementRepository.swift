@@ -6,28 +6,68 @@
 //
 
 import Foundation
+import Firebase
 
 protocol AchievementRepository {
-    var dayAchievement: DayAchievement { get }
-    func postAchievement()
-    func updateAchievement()
-    func requestAchievement()
+//    var dayAchievement: DayAchievement { get }
+    func postAchievement(dayAchievement: DayAchievement)
+    func updateAchievement(dayAchievement: DayAchievement)
+    func requestAchievement(by date: String, completion: @escaping (DayAchievement) -> Void)
+    func checkDayAchievement(by date: String, completion: @escaping (Bool) -> Void)
 }
 
 class AchievementRepositoryImpl: AchievementRepository {
-    var dayAchievement: DayAchievement = DayAchievement(dayAchivement: 0 , date: Date())
+    private let reference: DatabaseReference = Database.database().reference()
+//    var dayAchievement: DayAchievement?
     
-    func postAchievement() {
+    func postAchievement(dayAchievement: DayAchievement) {
+        reference.child("user1").child("DayAchievementList").child(dayAchievement.date).setValue(dayAchievement.toDictionary)
+    }
+    
+    func updateAchievement(dayAchievement: DayAchievement) {
         
     }
     
-    func updateAchievement() {
-        
+    func requestAchievement(by date: String, completion: @escaping (DayAchievement) -> Void) {
+        reference.child("user1").child("DayAchievementList").child(date).observeSingleEvent(of: .value, with: { snapshot in
+            guard let value = snapshot.value else {
+                print("Firebase Data Empty")
+                return
+            }
+            do {
+                if value is NSNull {
+                    print("RequestAchievement: Null!")
+                } else {
+                    let jsonData = try JSONSerialization.data(withJSONObject: value)
+                    let achievement = try JSONDecoder().decode(DayAchievement.self, from: jsonData)
+                    print("RequestAchievement\(achievement)")
+                    completion(achievement)
+                }
+            }  catch let error {
+                print("Error JSON parsing: \(error.localizedDescription)")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
     
-    func requestAchievement() {
-        
+    func checkDayAchievement(by date: String, completion: @escaping (Bool) -> Void) {
+        reference.child("user1").child("DayAchievementList").child(date).getData { error, snapshot in
+            guard let value = snapshot.value else { return }
+            if value is NSNull {
+                print("AchievementRepository: DayAchievement Data is Null!!")
+                completion(false)
+            } else {
+                print("AchievementRepository: Firebase has DayAchievement data")
+                completion(true)
+            }
+        }
     }
     
-    
+    func getTodayDate() -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.formatOptions = [.withFullDate]
+        return formatter.string(from: Date())
+    }
 }

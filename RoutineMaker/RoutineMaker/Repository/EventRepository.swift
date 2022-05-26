@@ -14,11 +14,12 @@ protocol EventRepository {
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
     func deleteEvent(byID id: String, completion: () -> Void)
     func requestEvents(completion: @escaping () -> Void)
+    func resetIsCompletedOfEvent(completion: @escaping () -> Void)
 }
 
 //Event 데이터를 가지고 있도록 수정
 class EventRepositoryImpl: EventRepository {
-    let reference: DatabaseReference = Database.database().reference()
+    private let reference: DatabaseReference = Database.database().reference()
     var eventList: [Event] = []
     
     func postEvent(event: Event, completion: () -> Void) {
@@ -66,6 +67,16 @@ class EventRepositoryImpl: EventRepository {
         }
     }
     
+    func resetIsCompletedOfEvent(completion: @escaping () -> Void) {
+        for index in 0 ..< eventList.count {
+            if eventList[index].isCompleted {
+                eventList[index].isCompleted = false
+                reference.child("user1").child("EventList").child(eventList[index].id).child("isCompleted").setValue(false)
+            }
+        }
+        completion()
+    }
+    
     func getEventList() {
         
     }
@@ -73,30 +84,32 @@ class EventRepositoryImpl: EventRepository {
     func eventListCount() {
         
     }
+    
+    
 }
 
-// MARK: - MockEventRepository
-class MockEventRepository: EventRepository {
-    var eventList: [Event] = []
-    
-    func postEvent(event: Event, completion: () -> Void) {
-        eventList.append(event)
-        completion()
-    }
-    
-    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
-        guard let index = eventList.firstIndex(where: { $0.id == id }) else { return }
-        
-        eventList[index].isCompleted = isCompleted
-        completion()
-    }
-    
-    func deleteEvent(byID id: String, completion: () -> Void) {
-        eventList.removeAll { $0.id == id }
-        completion()
-    }
-    
-    func requestEvents(completion: @escaping () -> Void) {
-        completion()
-    }
-}
+//// MARK: - MockEventRepository
+//class MockEventRepository: EventRepository {
+//    var eventList: [Event] = []
+//    
+//    func postEvent(event: Event, completion: () -> Void) {
+//        eventList.append(event)
+//        completion()
+//    }
+//    
+//    func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
+//        guard let index = eventList.firstIndex(where: { $0.id == id }) else { return }
+//        
+//        eventList[index].isCompleted = isCompleted
+//        completion()
+//    }
+//    
+//    func deleteEvent(byID id: String, completion: () -> Void) {
+//        eventList.removeAll { $0.id == id }
+//        completion()
+//    }
+//    
+//    func requestEvents(completion: @escaping () -> Void) {
+//        completion()
+//    }
+//}

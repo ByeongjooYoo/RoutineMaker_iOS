@@ -9,7 +9,7 @@ import Foundation
 
 struct DayAchievement: Codable {
     var dayAchivement: Double
-    var date: Date
+    var date: String
 }
 
 extension DayAchievement {

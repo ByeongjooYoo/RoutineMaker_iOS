@@ -8,7 +8,9 @@
 import Foundation
 
 @objc protocol EventListUseCaseDelegate: AnyObject {
-    func evnetDidAdd()
+    func eventDidAdd()
+    func eventDidUpdate(incompletedEventCount: Int, completedEventCount: Int)
+    func checkLauchApp(completion: @escaping (Bool) -> Void)
 }
 
 protocol EventListUseCase {
@@ -51,20 +53,45 @@ class EventListUseCaseImpl: EventListUseCase {
     
     func addEvent(event: Event, completion: () -> Void) {
         eventRepository.postEvent(event: event) {
-            delegates.forEach { $0.evnetDidAdd() }
+            delegates.forEach {
+                $0.eventDidAdd()
+                $0.eventDidUpdate(incompletedEventCount: countOfEvent(to: false), completedEventCount: countOfEvent(to: true))
+            }
             completion()
         }
     }
     
     func fetchEventList(completion: @escaping () -> Void) {
-        eventRepository.requestEvents(completion: completion)
+        eventRepository.requestEvents {
+            self.delegates.forEach {
+                $0.checkLauchApp { isLanch in
+                    if !isLanch {
+                        self.eventRepository.resetIsCompletedOfEvent {
+                            completion()
+                        }
+                    } else {
+                        completion()
+                    }
+                }
+            }
+        }
     }
     
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {
-        eventRepository.updateIsCompletedOfEvent(to: isCompleted, byID: id, completion: completion)
+        eventRepository.updateIsCompletedOfEvent(to: isCompleted, byID: id) {
+            delegates.forEach {
+                $0.eventDidUpdate(incompletedEventCount: countOfEvent(to: false), completedEventCount: countOfEvent(to: true))
+            }
+            completion()
+        }
     }
     
     func deleteEvent(byID id: String, completion: () -> Void) {
-        eventRepository.deleteEvent(byID: id, completion: completion)
+        eventRepository.deleteEvent(byID: id) {
+            delegates.forEach {
+                $0.eventDidUpdate(incompletedEventCount: countOfEvent(to: false), completedEventCount: countOfEvent(to: true))
+            }
+            completion()
+        }
     }
 }
