@@ -62,14 +62,20 @@ class EventListUseCaseImpl: EventListUseCase {
     }
     
     func fetchEventList(completion: @escaping () -> Void) {
-        delegates.forEach {
-            $0.checkLauchApp { isLanch in
-//                if !isLanch {
-//                    eventRepository.
-//                }
+        eventRepository.requestEvents {
+            self.delegates.forEach {
+                $0.checkLauchApp { isLanch in
+                    if !isLanch {
+                        print("EventListUseCaseImpl: checkLauchApp \(isLanch)")
+                        self.eventRepository.resetIsCompletedOfEvent {
+                            completion()
+                        }
+                    } else {
+                        completion()
+                    }
+                }
             }
         }
-        eventRepository.requestEvents(completion: completion)
     }
     
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void) {

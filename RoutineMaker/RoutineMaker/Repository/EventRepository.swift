@@ -14,6 +14,7 @@ protocol EventRepository {
     func updateIsCompletedOfEvent(to isCompleted: Bool, byID id: String, completion: () -> Void)
     func deleteEvent(byID id: String, completion: () -> Void)
     func requestEvents(completion: @escaping () -> Void)
+    func resetIsCompletedOfEvent(completion: @escaping () -> Void)
 }
 
 //Event 데이터를 가지고 있도록 수정
@@ -66,16 +67,21 @@ class EventRepositoryImpl: EventRepository {
         }
     }
     
-    func resetIsCompletedOfEvent() {
+    func resetIsCompletedOfEvent(completion: @escaping () -> Void) {
         eventList.forEach {
             if $0.isCompleted {
                 let event = $0
                 if let index = eventList.firstIndex(where: { $0 == event }) {
                     eventList[index].isCompleted = false
                 }
-                reference.child("user1").child("EventList").child($0.id).child("isCompleted").setValue($0.isCompleted)
+                reference.child("user1").child("EventList").child($0.id).child("isCompleted").setValue(false)
             }
         }
+        print("EventRepositoryImpl: resetIsCompletedOfEvent")
+        eventList.forEach {
+            print($0)
+        }
+        completion()
     }
     
     func getEventList() {
