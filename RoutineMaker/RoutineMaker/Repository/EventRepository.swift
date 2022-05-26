@@ -68,18 +68,11 @@ class EventRepositoryImpl: EventRepository {
     }
     
     func resetIsCompletedOfEvent(completion: @escaping () -> Void) {
-        eventList.forEach {
-            if $0.isCompleted {
-                let event = $0
-                if let index = eventList.firstIndex(where: { $0 == event }) {
-                    eventList[index].isCompleted = false
-                }
-                reference.child("user1").child("EventList").child($0.id).child("isCompleted").setValue(false)
+        for index in 0 ..< eventList.count {
+            if eventList[index].isCompleted {
+                eventList[index].isCompleted = false
+                reference.child("user1").child("EventList").child(eventList[index].id).child("isCompleted").setValue(false)
             }
-        }
-        print("EventRepositoryImpl: resetIsCompletedOfEvent")
-        eventList.forEach {
-            print($0)
         }
         completion()
     }

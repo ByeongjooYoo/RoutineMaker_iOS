@@ -66,7 +66,6 @@ class EventListUseCaseImpl: EventListUseCase {
             self.delegates.forEach {
                 $0.checkLauchApp { isLanch in
                     if !isLanch {
-                        print("EventListUseCaseImpl: checkLauchApp \(isLanch)")
                         self.eventRepository.resetIsCompletedOfEvent {
                             completion()
                         }
