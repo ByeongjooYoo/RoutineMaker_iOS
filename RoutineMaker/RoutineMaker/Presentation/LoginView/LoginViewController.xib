@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="RoutineMaker" customModuleProvider="target">
+            <connections>
+                <outlet property="appleLoginButton" destination="AJw-IJ-sEg" id="NBw-7f-1Mt"/>
+                <outlet property="emailLoginButton" destination="42M-go-sjA" id="bk4-tW-8aD"/>
+                <outlet property="emailTextField" destination="gk8-ME-fmB" id="c1G-zP-lro"/>
+                <outlet property="findPasswordButton" destination="jY2-7i-PS1" id="qfG-vK-rot"/>
+                <outlet property="googleLoginButton" destination="Ej1-nR-27b" id="1Ij-h3-2DH"/>
+                <outlet property="passwordTextField" destination="o8m-rP-7t5" id="EK9-Ty-OxI"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인 하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTG-MI-ubz">
+                    <rect key="frame" x="50" y="144" width="127.5" height="33.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cFD-5c-W2l">
+                    <rect key="frame" x="50" y="207.5" width="314" height="100"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-nR-27b">
+                            <rect key="frame" x="0.0" y="0.0" width="314" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="Ovu-hZ-tHI"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Google 계정으로 로그인" image="logo_google">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJw-IJ-sEg">
+                            <rect key="frame" x="0.0" y="60" width="314" height="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Apple로 로그인하기" image="logo_apple_black">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="AJw-IJ-sEg" secondAttribute="trailing" id="Yph-EA-ks1"/>
+                        <constraint firstItem="AJw-IJ-sEg" firstAttribute="height" secondItem="Ej1-nR-27b" secondAttribute="height" id="dry-jv-rmG"/>
+                        <constraint firstItem="Ej1-nR-27b" firstAttribute="leading" secondItem="cFD-5c-W2l" secondAttribute="leading" id="hP4-eb-LHS"/>
+                        <constraint firstItem="AJw-IJ-sEg" firstAttribute="leading" secondItem="cFD-5c-W2l" secondAttribute="leading" id="oDz-kz-me0"/>
+                        <constraint firstAttribute="trailing" secondItem="Ej1-nR-27b" secondAttribute="trailing" id="uOv-KZ-8zN"/>
+                    </constraints>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="j4o-qy-ncM">
+                    <rect key="frame" x="50" y="327.5" width="314" height="20.5"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epD-tC-EOX">
+                            <rect key="frame" x="0.0" y="10" width="132.5" height="1"/>
+                            <color key="backgroundColor" systemColor="systemGray4Color"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="5aS-ZN-nUW"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="또는" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zY-tu-aFY">
+                            <rect key="frame" x="142.5" y="0.0" width="29.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKH-1U-q1f">
+                            <rect key="frame" x="182" y="10" width="132" height="1"/>
+                            <color key="backgroundColor" systemColor="systemGray4Color"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="jLz-rp-IeI"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="1zY-tu-aFY" firstAttribute="leading" secondItem="epD-tC-EOX" secondAttribute="trailing" constant="10" id="FLi-8Z-2Q6"/>
+                        <constraint firstAttribute="trailing" secondItem="GKH-1U-q1f" secondAttribute="trailing" id="OW9-kR-liR"/>
+                        <constraint firstItem="epD-tC-EOX" firstAttribute="leading" secondItem="j4o-qy-ncM" secondAttribute="leading" id="g3H-19-htN"/>
+                        <constraint firstItem="1zY-tu-aFY" firstAttribute="centerX" secondItem="j4o-qy-ncM" secondAttribute="centerX" id="hiV-bk-mEg"/>
+                        <constraint firstItem="1zY-tu-aFY" firstAttribute="centerY" secondItem="j4o-qy-ncM" secondAttribute="centerY" id="ucQ-mZ-Mw1"/>
+                        <constraint firstItem="GKH-1U-q1f" firstAttribute="leading" secondItem="1zY-tu-aFY" secondAttribute="trailing" constant="10" id="xbr-s1-rhC"/>
+                    </constraints>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-fx-OF6">
+                    <rect key="frame" x="50" y="368" width="314" height="240"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이메일 주소" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gk8-ME-fmB">
+                            <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="5of-sv-RwC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o8m-rP-7t5">
+                            <rect key="frame" x="0.0" y="70" width="314" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="pQi-Ug-qvp"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42M-go-sjA">
+                            <rect key="frame" x="0.0" y="140" width="314" height="40"/>
+                            <color key="backgroundColor" systemColor="labelColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="F8T-YL-mBg"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="로그인하기">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jY2-7i-PS1">
+                            <rect key="frame" x="0.0" y="200" width="314" height="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="비밀번호를 잊으셨나요?">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="gk8-ME-fmB" firstAttribute="leading" secondItem="JFM-fx-OF6" secondAttribute="leading" id="6fW-Ad-ZnU"/>
+                        <constraint firstAttribute="trailing" secondItem="gk8-ME-fmB" secondAttribute="trailing" id="eB9-Lm-ge0"/>
+                        <constraint firstItem="jY2-7i-PS1" firstAttribute="height" secondItem="42M-go-sjA" secondAttribute="height" id="lOe-mX-TDL"/>
+                    </constraints>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="t32-Xb-DOy">
+                    <rect key="frame" x="50" y="633" width="149.5" height="28"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="계정이 없으신가요?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaF-Uh-L90">
+                            <rect key="frame" x="0.0" y="0.0" width="99.5" height="28"/>
+                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cg-om-tE4">
+                            <rect key="frame" x="104.5" y="0.0" width="45" height="28"/>
+                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="가입하기">
+                                <color key="titleColor" systemColor="linkColor"/>
+                            </state>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="t32-Xb-DOy" firstAttribute="leading" secondItem="JFM-fx-OF6" secondAttribute="leading" id="3Ey-Gk-mTZ"/>
+                <constraint firstItem="JFM-fx-OF6" firstAttribute="top" secondItem="j4o-qy-ncM" secondAttribute="bottom" constant="20" id="IQy-Ys-W6k"/>
+                <constraint firstItem="JFM-fx-OF6" firstAttribute="leading" secondItem="j4o-qy-ncM" secondAttribute="leading" id="KJc-mZ-GrT"/>
+                <constraint firstItem="JFM-fx-OF6" firstAttribute="trailing" secondItem="j4o-qy-ncM" secondAttribute="trailing" id="LAQ-4k-RbX"/>
+                <constraint firstItem="t32-Xb-DOy" firstAttribute="top" secondItem="JFM-fx-OF6" secondAttribute="bottom" constant="25" id="Vv8-li-dkf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cFD-5c-W2l" secondAttribute="trailing" constant="50" id="X0S-2a-pZJ"/>
+                <constraint firstItem="j4o-qy-ncM" firstAttribute="leading" secondItem="cFD-5c-W2l" secondAttribute="leading" id="XD8-sv-U4X"/>
+                <constraint firstItem="j4o-qy-ncM" firstAttribute="trailing" secondItem="cFD-5c-W2l" secondAttribute="trailing" id="g9l-Ot-6Fr"/>
+                <constraint firstItem="j4o-qy-ncM" firstAttribute="top" secondItem="cFD-5c-W2l" secondAttribute="bottom" constant="20" id="gDo-ke-GSr"/>
+                <constraint firstItem="cFD-5c-W2l" firstAttribute="top" secondItem="PTG-MI-ubz" secondAttribute="bottom" constant="30" id="l0e-dZ-dZX"/>
+                <constraint firstItem="PTG-MI-ubz" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="sOW-dB-xV3"/>
+                <constraint firstItem="cFD-5c-W2l" firstAttribute="leading" secondItem="PTG-MI-ubz" secondAttribute="leading" id="yvx-HI-lqG"/>
+                <constraint firstItem="PTG-MI-ubz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="zcN-Y5-l4N"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="104"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="logo_apple_black" width="26.666666030883789" height="26.666666030883789"/>
+        <image name="logo_google" width="33.333332061767578" height="33.333332061767578"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
