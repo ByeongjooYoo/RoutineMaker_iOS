@@ -11,6 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateAccountViewController" customModule="RoutineMaker" customModuleProvider="target">
             <connections>
+                <outlet property="createButton" destination="zUD-C8-M5F" id="iQp-Vg-0Ro"/>
+                <outlet property="emailErrorLabel" destination="E5D-cJ-jpn" id="QL4-Ss-ib5"/>
+                <outlet property="emailTextField" destination="Qjm-qz-KU7" id="yWU-fW-yML"/>
+                <outlet property="passwordErrorLabel" destination="bkm-iX-6Sm" id="YhM-hJ-GyD"/>
+                <outlet property="passwordTextField" destination="18y-pi-5Fb" id="TJT-3J-VUh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,7 +31,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rvV-R2-XW7">
-                    <rect key="frame" x="50" y="170" width="314" height="70.5"/>
+                    <rect key="frame" x="50" y="170" width="314" height="70"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이메일 주소" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qjm-qz-KU7">
                             <rect key="frame" x="0.0" y="0.0" width="314" height="45"/>
@@ -36,8 +41,11 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5D-cJ-jpn">
-                            <rect key="frame" x="0.0" y="50" width="314" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5D-cJ-jpn">
+                            <rect key="frame" x="0.0" y="50" width="314" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="wlQ-Wc-YgA"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" systemColor="systemPinkColor"/>
                             <nil key="highlightedColor"/>
@@ -49,25 +57,33 @@
                     </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bz9-Pf-wva">
-                    <rect key="frame" x="50" y="260.5" width="314" height="70.5"/>
+                    <rect key="frame" x="50" y="260" width="314" height="70"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="18y-pi-5Fb">
                             <rect key="frame" x="0.0" y="0.0" width="314" height="45"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkm-iX-6Sm">
-                            <rect key="frame" x="0.0" y="50" width="314" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkm-iX-6Sm">
+                            <rect key="frame" x="0.0" y="50" width="314" height="20"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" systemColor="systemPinkColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUD-C8-M5F">
-                    <rect key="frame" x="50" y="351" width="314" height="31"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUD-C8-M5F">
+                    <rect key="frame" x="50" y="350" width="314" height="40"/>
+                    <color key="backgroundColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Utp-Ua-8gi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="이메일 계정 생성하기"/>
+                    <connections>
+                        <action selector="tappedCreateButton:" destination="-1" eventType="touchUpInside" id="3lL-QV-YhP"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -83,6 +99,7 @@
                 <constraint firstItem="zUD-C8-M5F" firstAttribute="top" secondItem="bz9-Pf-wva" secondAttribute="bottom" constant="20" id="Xbp-k1-C7A"/>
                 <constraint firstItem="zUD-C8-M5F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="dNd-xQ-T80"/>
                 <constraint firstItem="rvV-R2-XW7" firstAttribute="top" secondItem="MHU-af-XKV" secondAttribute="bottom" constant="17.5" id="dfh-gr-Gcz"/>
+                <constraint firstItem="bkm-iX-6Sm" firstAttribute="height" secondItem="E5D-cJ-jpn" secondAttribute="height" id="fQ0-qc-U2W"/>
                 <constraint firstItem="bz9-Pf-wva" firstAttribute="top" secondItem="rvV-R2-XW7" secondAttribute="bottom" constant="20" id="jSX-n4-oaZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zUD-C8-M5F" secondAttribute="trailing" constant="50" id="rtT-xi-Jh7"/>
             </constraints>
@@ -90,6 +107,9 @@
         </view>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

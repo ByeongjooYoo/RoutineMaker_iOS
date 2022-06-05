@@ -157,6 +157,9 @@
                             <state key="normal" title="가입하기">
                                 <color key="titleColor" systemColor="linkColor"/>
                             </state>
+                            <connections>
+                                <action selector="tappedCreateAccountButton:" destination="-1" eventType="touchUpInside" id="lPI-pQ-B83"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>

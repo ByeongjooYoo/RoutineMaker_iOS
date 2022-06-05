@@ -22,6 +22,12 @@ class LoginViewController: UIViewController {
         setButtonsLayout()
         self.hideKeyboardWhenTappedAround()
     }
+    
+    @IBAction func tappedCreateAccountButton(_ sender: UIButton) {
+        let createAccountViewController = CreateAccountViewController(nibName: "CreateAccountViewController", bundle: Bundle(for: CreateAccountViewController.self))
+        createAccountViewController.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(createAccountViewController, animated: true)
+    }
 }
 
 extension LoginViewController {
