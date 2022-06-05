@@ -71,6 +71,7 @@ class EventRepositoryImpl: EventRepository {
         for index in 0 ..< eventList.count {
             if eventList[index].isCompleted {
                 eventList[index].isCompleted = false
+                // TODO: updateIsCompletedOfEvent를 사용하여 중복코드 제거 가능
                 reference.child("user1").child("EventList").child(eventList[index].id).child("isCompleted").setValue(false)
             }
         }

@@ -5,6 +5,12 @@
 //  Created by ByeongJu Yu on 2022/06/03.
 //
 
+// TODO: Google 소셜 로그인
+// TODO: Apple 로그인
+// TODO: 이메일 로그인
+// TODO: TextField 값 검증
+// TODO: 로그인 성공 시 MainView로 전환 및 계정정보 넘기기(?)
+
 import UIKit
 
 class LoginViewController: UIViewController {
