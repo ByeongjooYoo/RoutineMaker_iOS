@@ -14,20 +14,30 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    @IBOutlet weak var googleLoginButton: UIButton!
-    @IBOutlet weak var appleLoginButton: UIButton!
+    @IBOutlet weak var googleLoginButton: HighlightButton!
+    @IBOutlet weak var appleLoginButton: HighlightButton!
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    @IBOutlet weak var emailLoginButton: UIButton!
-    @IBOutlet weak var findPasswordButton: UIButton!
+    @IBOutlet weak var emailLoginButton: HighlightButton!
+    @IBOutlet weak var findPasswordButton: HighlightButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setViewLayout()
         setButtonsLayout()
         self.hideKeyboardWhenTappedAround()
     }
+    
+    @IBAction func tappedemailLoginButton(_ sender: HighlightButton) {
+        print("ButtonTest")
+    }
+    
+    @IBAction func tappedFindPasswordButton(_ sender: HighlightButton) {
+        print("ButtonTest")
+    }
+    
     
     @IBAction func tappedCreateAccountButton(_ sender: UIButton) {
         let createAccountViewController = CreateAccountViewController(nibName: "CreateAccountViewController", bundle: Bundle(for: CreateAccountViewController.self))
@@ -37,6 +47,10 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController {
+    func setViewLayout() {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     func setButtonsLayout() {
         let cornerRadius: CGFloat = 20
         
@@ -50,6 +64,7 @@ extension LoginViewController {
         appleLoginButton.tintColor = UIColor.black
         
         emailLoginButton.layer.cornerRadius = cornerRadius
+        emailLoginButton.isEnabled = true
         
         findPasswordButton.layer.cornerRadius = cornerRadius
         findPasswordButton.layer.borderWidth = 1

@@ -37,7 +37,10 @@
 		F0BE23C1282BD9E80092C23B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C0282BD9E80092C23B /* Array.swift */; };
 		F0BE23C3282BDA7D0092C23B /* EventListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */; };
 		F0BE23C6282BDBDF0092C23B /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C5282BDBDF0092C23B /* DIContainer.swift */; };
-		F0C26EBF28215DCF00751D71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C26EBE28215DCF00751D71 /* GoogleService-Info.plist */; };
+		F0CFC300284DC5FE008B30D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0CFC2FF284DC5FE008B30D6 /* GoogleService-Info.plist */; };
+		F0CFC302284DCFCC008B30D6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CFC301284DCFCC008B30D6 /* LoginViewModel.swift */; };
+		F0CFC304284DCFDC008B30D6 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CFC303284DCFDC008B30D6 /* CreateAccountViewModel.swift */; };
+		F0CFC309284DE04C008B30D6 /* HighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CFC308284DE04C008B30D6 /* HighlightButton.swift */; };
 		F0F032DF2834BF8400462BF6 /* AchievementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */; };
 		F0FBBD98284B8B77000D27BE /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBBD96284B8B77000D27BE /* CreateAccountViewController.swift */; };
 		F0FBBD99284B8B77000D27BE /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0FBBD97284B8B77000D27BE /* CreateAccountViewController.xib */; };
@@ -79,7 +82,10 @@
 		F0BE23C0282BD9E80092C23B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCellViewModel.swift; sourceTree = "<group>"; };
 		F0BE23C5282BDBDF0092C23B /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
-		F0C26EBE28215DCF00751D71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F0CFC2FF284DC5FE008B30D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F0CFC301284DCFCC008B30D6 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		F0CFC303284DCFDC008B30D6 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
+		F0CFC308284DE04C008B30D6 /* HighlightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
 		F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUseCase.swift; sourceTree = "<group>"; };
 		F0FBBD96284B8B77000D27BE /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		F0FBBD97284B8B77000D27BE /* CreateAccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAccountViewController.xib; sourceTree = "<group>"; };
@@ -229,13 +235,14 @@
 				F022D99E280ACAC500D623B3 /* Domain */,
 				F022D99F280ACADA00D623B3 /* Repository */,
 				F010E27627B29DBB0079BD4B /* Extension */,
+				F0CFC307284DDFEC008B30D6 /* SubClass */,
 				F0115EB127AFEECF00426E5A /* AppDelegate.swift */,
 				F0115EB327AFEECF00426E5A /* SceneDelegate.swift */,
 				F0115EB727AFEECF00426E5A /* Main.storyboard */,
 				F0115EBA27AFEED000426E5A /* Assets.xcassets */,
 				F0115EBC27AFEED000426E5A /* LaunchScreen.storyboard */,
 				F0115EBF27AFEED000426E5A /* Info.plist */,
-				F0C26EBE28215DCF00751D71 /* GoogleService-Info.plist */,
+				F0CFC2FF284DC5FE008B30D6 /* GoogleService-Info.plist */,
 			);
 			path = RoutineMaker;
 			sourceTree = "<group>";
@@ -264,6 +271,7 @@
 				F0FBBD95284B883D000D27BE /* CreateAccount */,
 				F07A92E42849DCB400BD750F /* LoginViewController.swift */,
 				F07A92E52849DCB400BD750F /* LoginViewController.xib */,
+				F0CFC301284DCFCC008B30D6 /* LoginViewModel.swift */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -278,11 +286,20 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		F0CFC307284DDFEC008B30D6 /* SubClass */ = {
+			isa = PBXGroup;
+			children = (
+				F0CFC308284DE04C008B30D6 /* HighlightButton.swift */,
+			);
+			path = SubClass;
+			sourceTree = "<group>";
+		};
 		F0FBBD95284B883D000D27BE /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
 				F0FBBD96284B8B77000D27BE /* CreateAccountViewController.swift */,
 				F0FBBD97284B8B77000D27BE /* CreateAccountViewController.xib */,
+				F0CFC303284DCFDC008B30D6 /* CreateAccountViewModel.swift */,
 			);
 			path = CreateAccount;
 			sourceTree = "<group>";
@@ -352,8 +369,8 @@
 				F07A92E72849DCB400BD750F /* LoginViewController.xib in Resources */,
 				F0115EBB27AFEED000426E5A /* Assets.xcassets in Resources */,
 				F0115EB927AFEECF00426E5A /* Main.storyboard in Resources */,
-				F0C26EBF28215DCF00751D71 /* GoogleService-Info.plist in Resources */,
 				F0FBBD99284B8B77000D27BE /* CreateAccountViewController.xib in Resources */,
+				F0CFC300284DC5FE008B30D6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +433,7 @@
 				F0115EC827AFFE3400426E5A /* SettingViewController.swift in Sources */,
 				F0BE23C6282BDBDF0092C23B /* DIContainer.swift in Sources */,
 				F0A1B62028080B7200D0C77A /* MainViewModel.swift in Sources */,
+				F0CFC309284DE04C008B30D6 /* HighlightButton.swift in Sources */,
 				F0115ECA27B0D9C100426E5A /* AddEventViewController.swift in Sources */,
 				F000A54227B0E5ED000C880F /* UITextField.swift in Sources */,
 				F0BE23C1282BD9E80092C23B /* Array.swift in Sources */,
@@ -426,7 +444,9 @@
 				F0303466282CEB68000B7BAB /* EventHeaderFooterView.swift in Sources */,
 				F09A4DCE282FD2AB0019F8E0 /* ViewModel.swift in Sources */,
 				F0115EC627AFFE2300426E5A /* AchievementViewController.swift in Sources */,
+				F0CFC302284DCFCC008B30D6 /* LoginViewModel.swift in Sources */,
 				F022D9A4280ACC0D00D623B3 /* AchievementRepository.swift in Sources */,
+				F0CFC304284DCFDC008B30D6 /* CreateAccountViewModel.swift in Sources */,
 				F07A92E92849DF4E00BD750F /* UIViewController.swift in Sources */,
 				F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,

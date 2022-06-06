@@ -11,11 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="RoutineMaker" customModuleProvider="target">
             <connections>
-                <outlet property="appleLoginButton" destination="AJw-IJ-sEg" id="NBw-7f-1Mt"/>
-                <outlet property="emailLoginButton" destination="42M-go-sjA" id="bk4-tW-8aD"/>
-                <outlet property="emailTextField" destination="gk8-ME-fmB" id="c1G-zP-lro"/>
-                <outlet property="findPasswordButton" destination="jY2-7i-PS1" id="qfG-vK-rot"/>
-                <outlet property="googleLoginButton" destination="Ej1-nR-27b" id="1Ij-h3-2DH"/>
+                <outlet property="appleLoginButton" destination="AJw-IJ-sEg" id="sY4-Uu-y0u"/>
+                <outlet property="emailLoginButton" destination="42M-go-sjA" id="Lx1-wO-TrR"/>
+                <outlet property="emailTextField" destination="gk8-ME-fmB" id="SlG-Qh-DQX"/>
+                <outlet property="findPasswordButton" destination="jY2-7i-PS1" id="BUY-SC-2cP"/>
+                <outlet property="googleLoginButton" destination="Ej1-nR-27b" id="voW-GT-hWW"/>
                 <outlet property="passwordTextField" destination="o8m-rP-7t5" id="EK9-Ty-OxI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -34,7 +34,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cFD-5c-W2l">
                     <rect key="frame" x="50" y="207.5" width="314" height="100"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-nR-27b">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-nR-27b" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="314" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="Ovu-hZ-tHI"/>
@@ -44,14 +44,30 @@
                             <state key="normal" title="Google 계정으로 로그인" image="logo_google">
                                 <color key="titleColor" systemColor="labelColor"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJw-IJ-sEg">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJw-IJ-sEg" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="60" width="314" height="40"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="Apple로 로그인하기" image="logo_apple_black">
                                 <color key="titleColor" systemColor="labelColor"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </button>
                     </subviews>
                     <constraints>
@@ -98,7 +114,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-fx-OF6">
                     <rect key="frame" x="50" y="368" width="314" height="240"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이메일 주소" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gk8-ME-fmB">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이메일 주소" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gk8-ME-fmB">
                             <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="5of-sv-RwC"/>
@@ -106,7 +122,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                         </textField>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o8m-rP-7t5">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o8m-rP-7t5">
                             <rect key="frame" x="0.0" y="70" width="314" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="pQi-Ug-qvp"/>
@@ -114,9 +130,9 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42M-go-sjA">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42M-go-sjA" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="140" width="314" height="40"/>
-                            <color key="backgroundColor" systemColor="labelColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="F8T-YL-mBg"/>
                             </constraints>
@@ -125,14 +141,39 @@
                             <state key="normal" title="로그인하기">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                    <color key="value" systemColor="labelColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="tappedemailLoginButton:" destination="-1" eventType="touchUpInside" id="DY3-c3-uEL"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jY2-7i-PS1">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY2-7i-PS1" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="200" width="314" height="40"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="비밀번호를 잊으셨나요?">
                                 <color key="titleColor" systemColor="labelColor"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="tappedFindPasswordButton:" destination="-1" eventType="touchUpInside" id="dwG-2J-kvr"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -156,6 +197,9 @@
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="가입하기">
                                 <color key="titleColor" systemColor="linkColor"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
                                 <action selector="tappedCreateAccountButton:" destination="-1" eventType="touchUpInside" id="lPI-pQ-B83"/>
@@ -184,6 +228,20 @@
             <point key="canvasLocation" x="139" y="104"/>
         </view>
     </objects>
+    <designables>
+        <designable name="42M-go-sjA">
+            <size key="intrinsicContentSize" width="65" height="30"/>
+        </designable>
+        <designable name="AJw-IJ-sEg">
+            <size key="intrinsicContentSize" width="151.5" height="26.5"/>
+        </designable>
+        <designable name="Ej1-nR-27b">
+            <size key="intrinsicContentSize" width="183.5" height="33.5"/>
+        </designable>
+        <designable name="jY2-7i-PS1">
+            <size key="intrinsicContentSize" width="142" height="30"/>
+        </designable>
+    </designables>
     <resources>
         <image name="logo_apple_black" width="26.666666030883789" height="26.666666030883789"/>
         <image name="logo_google" width="33.333332061767578" height="33.333332061767578"/>
