@@ -33,6 +33,7 @@
 		F09A4DCE282FD2AB0019F8E0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09A4DCD282FD2AB0019F8E0 /* ViewModel.swift */; };
 		F09A4DD0282FE4870019F8E0 /* WeakRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09A4DCF282FE4870019F8E0 /* WeakRef.swift */; };
 		F09CE9502807DE0D006AA586 /* AchievementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */; };
+		F09F7357284F4E8500310CC4 /* CreateAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09F7356284F4E8500310CC4 /* CreateAccountUseCase.swift */; };
 		F0A1B62028080B7200D0C77A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B61F28080B7200D0C77A /* MainViewModel.swift */; };
 		F0BE23C1282BD9E80092C23B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C0282BD9E80092C23B /* Array.swift */; };
 		F0BE23C3282BDA7D0092C23B /* EventListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */; };
@@ -78,6 +79,7 @@
 		F09A4DCD282FD2AB0019F8E0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F09A4DCF282FE4870019F8E0 /* WeakRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRef.swift; sourceTree = "<group>"; };
 		F09CE94F2807DE0D006AA586 /* AchievementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewModel.swift; sourceTree = "<group>"; };
+		F09F7356284F4E8500310CC4 /* CreateAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountUseCase.swift; sourceTree = "<group>"; };
 		F0A1B61F28080B7200D0C77A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		F0BE23C0282BD9E80092C23B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		F0BE23C2282BDA7D0092C23B /* EventListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCellViewModel.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 			children = (
 				F022D9A5280ACD3800D623B3 /* EventListUseCase.swift */,
 				F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */,
+				F09F7356284F4E8500310CC4 /* CreateAccountUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				F0CFC304284DCFDC008B30D6 /* CreateAccountViewModel.swift in Sources */,
 				F07A92E92849DF4E00BD750F /* UIViewController.swift in Sources */,
 				F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */,
+				F09F7357284F4E8500310CC4 /* CreateAccountUseCase.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,
 				F0115EB227AFEECF00426E5A /* AppDelegate.swift in Sources */,
 				F09CE9502807DE0D006AA586 /* AchievementViewModel.swift in Sources */,

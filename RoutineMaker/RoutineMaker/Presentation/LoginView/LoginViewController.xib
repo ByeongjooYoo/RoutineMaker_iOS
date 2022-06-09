@@ -156,7 +156,7 @@
                                 <action selector="tappedemailLoginButton:" destination="-1" eventType="touchUpInside" id="DY3-c3-uEL"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY2-7i-PS1" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jY2-7i-PS1" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="200" width="314" height="40"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
