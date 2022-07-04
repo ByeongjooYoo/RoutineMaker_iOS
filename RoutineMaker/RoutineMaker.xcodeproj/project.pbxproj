@@ -43,6 +43,7 @@
 		F0CFC304284DCFDC008B30D6 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CFC303284DCFDC008B30D6 /* CreateAccountViewModel.swift */; };
 		F0CFC309284DE04C008B30D6 /* HighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CFC308284DE04C008B30D6 /* HighlightButton.swift */; };
 		F0F032DF2834BF8400462BF6 /* AchievementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */; };
+		F0F841B02872D356009268B4 /* CreateAccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F841AF2872D356009268B4 /* CreateAccountRepository.swift */; };
 		F0FBBD98284B8B77000D27BE /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FBBD96284B8B77000D27BE /* CreateAccountViewController.swift */; };
 		F0FBBD99284B8B77000D27BE /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0FBBD97284B8B77000D27BE /* CreateAccountViewController.xib */; };
 		F0FFC7C427D5D9000059CFC2 /* DayAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */; };
@@ -89,6 +90,7 @@
 		F0CFC303284DCFDC008B30D6 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		F0CFC308284DE04C008B30D6 /* HighlightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
 		F0F032DE2834BF8400462BF6 /* AchievementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUseCase.swift; sourceTree = "<group>"; };
+		F0F841AF2872D356009268B4 /* CreateAccountRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRepository.swift; sourceTree = "<group>"; };
 		F0FBBD96284B8B77000D27BE /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		F0FBBD97284B8B77000D27BE /* CreateAccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAccountViewController.xib; sourceTree = "<group>"; };
 		F0FFC7C327D5D9000059CFC2 /* DayAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAchievement.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			children = (
 				F022D9A1280ACBD900D623B3 /* EventRepository.swift */,
 				F022D9A3280ACC0C00D623B3 /* AchievementRepository.swift */,
+				F0F841AF2872D356009268B4 /* CreateAccountRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				F022D9A4280ACC0D00D623B3 /* AchievementRepository.swift in Sources */,
 				F0CFC304284DCFDC008B30D6 /* CreateAccountViewModel.swift in Sources */,
 				F07A92E92849DF4E00BD750F /* UIViewController.swift in Sources */,
+				F0F841B02872D356009268B4 /* CreateAccountRepository.swift in Sources */,
 				F022D9A6280ACD3800D623B3 /* EventListUseCase.swift in Sources */,
 				F09F7357284F4E8500310CC4 /* CreateAccountUseCase.swift in Sources */,
 				F0115EB627AFEECF00426E5A /* MainViewController.swift in Sources */,

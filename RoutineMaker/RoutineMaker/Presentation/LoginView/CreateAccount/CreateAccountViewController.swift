@@ -58,8 +58,10 @@ extension CreateAccountViewController: UITextFieldDelegate {
             
             if isValidEmail ?? false {
                 emailTextField.layer.borderColor = UIColor.lightGray.cgColor
+                emailErrorLabel.text = ""
             } else {
                 emailTextField.layer.borderColor = UIColor.red.cgColor
+                emailErrorLabel.text = "유효하지 않은 이메일 형식입니다."
             }
         case passwordTextField:
             print("shouldChangeCharactersIn passwordTextField: \(text)")
@@ -68,14 +70,13 @@ extension CreateAccountViewController: UITextFieldDelegate {
                 passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
             } else {
                 passwordTextField.layer.borderColor = UIColor.red.cgColor
+                passwordErrorLabel.text = "비밀번호를 6자 이상 입력하세요."
             }
         default:
-            
             break
         }
         return true
     }
-    
 }
 
 private extension CreateAccountViewController {
@@ -84,12 +85,12 @@ private extension CreateAccountViewController {
     }
     
     func setTextFieldLayout() {
-        emailTextField.layer.borderWidth = 0.5
+        emailTextField.layer.borderWidth = 0.7
         emailTextField.layer.borderColor = UIColor.lightGray.cgColor
         emailTextField.addLeftPadding(10)
         emailTextField.layer.cornerRadius = 8
         
-        passwordTextField.layer.borderWidth = 0.5
+        passwordTextField.layer.borderWidth = 0.7
         passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
         passwordTextField.addLeftPadding(10)
         passwordTextField.layer.cornerRadius = 8
