@@ -20,9 +20,13 @@ class CreateAccountViewModel {
     
     
     //TODO: 회원가입 로직 구현
-    func createAccountButtonDidClicked(by email: String, by paswword: String) {
-        createAccountUseCase.createEmailAccount(by: email, by: paswword) {
-            //TODO: 로그인 페이지로 이동
+    func createAccountButtonDidClicked(by email: String, by paswword: String, completion: @escaping (String?) -> Void) {
+        createAccountUseCase.createEmailAccount(by: email, by: paswword) { errorMessage in
+            if let errorMessage = errorMessage {
+                completion(errorMessage)
+            } else {
+                completion(nil)
+            }
         }
     }
 }

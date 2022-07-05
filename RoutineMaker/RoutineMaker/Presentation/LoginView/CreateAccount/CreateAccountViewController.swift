@@ -39,7 +39,12 @@ class CreateAccountViewController: UIViewController {
     }
     
     @IBAction func tappedCreateButton(_ sender: HighlightButton) {
-        navigationController?.popViewController(animated: true)
+        print("tappedCreateButton")
+        let email = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        viewModel.createAccountButtonDidClicked(by: email, by: password) { error in
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 
@@ -75,6 +80,9 @@ extension CreateAccountViewController: UITextFieldDelegate {
         default:
             break
         }
+        if (isValidEmail != nil) && (isValidPassword != nil) {
+            self.createButton.isEnabled = true
+        }
         return true
     }
 }
@@ -100,6 +108,6 @@ private extension CreateAccountViewController {
         let cornerRadius: CGFloat = 20
         
         createButton.layer.cornerRadius = cornerRadius
-        createButton.isEnabled = false
+        createButton.isEnabled = true
     }
 }

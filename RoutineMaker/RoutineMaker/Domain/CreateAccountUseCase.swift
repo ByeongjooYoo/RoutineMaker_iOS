@@ -9,17 +9,25 @@ import Foundation
 
 protocol CreateAccountUseCase {
     func checkEmailFormat(by email: String) -> Bool
-    func createEmailAccount(by email: String, by password: String, completion: () -> Void)
+    func createEmailAccount(by email: String, by password: String, completion: @escaping (String?) -> Void)
 }
 
 class CreateAccountUseCaseImpl: CreateAccountUseCase {
+    var createAccountRepository = CreateAccountRepositoryImpl()
+    
     func checkEmailFormat(by email: String) -> Bool {
         let pattern: String = "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$"
         
         return email.range(of: pattern, options: .regularExpression) != nil
     }
     
-    func createEmailAccount(by email: String, by password: String, completion: () -> Void) {
-        
+    func createEmailAccount(by email: String, by password: String, completion: @escaping (String?) -> Void) {
+        createAccountRepository.createEmailAccount(by: email, by: password) { error in
+            if let error = error {
+                completion(error.localizedDescription)
+            } else {
+                completion(nil)
+            }
+        }
     }
 }
