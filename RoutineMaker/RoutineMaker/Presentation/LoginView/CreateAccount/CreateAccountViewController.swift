@@ -29,14 +29,22 @@ class CreateAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
+        viewModel.delegate = self
         
         setViewLayout()
         setTextFieldLayout()
         setButtonLayout()
         self.hideKeyboardWhenTappedAround()
     }
+    
+    @IBAction func emailTextFieldDidChanged(_ sender: UITextField) {
+        viewModel.emailDidChange(to: emailTextField.text)
+    }
+    
+    @IBAction func passwordTextFieldDidChaned(_ sender: UITextField) {
+        viewModel.passwordDidChange(to: passwordTextField.text)
+    }
+
     
     @IBAction func tappedCreateButton(_ sender: HighlightButton) {
         print("tappedCreateButton")
@@ -45,45 +53,6 @@ class CreateAccountViewController: UIViewController {
         viewModel.createAccountButtonDidClicked(by: email, by: password) { error in
             self.navigationController?.popViewController(animated: true)
         }
-    }
-}
-
-extension CreateAccountViewController: UITextFieldDelegate {
-    
-    // TODO: 입력된 email 검증하는 함수
-    // TODO: 입력된 password 검증하는 함수
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let text = (textField.text ?? "") + string
-        var isValidEmail: Bool?
-        var isValidPassword: Bool?
-        switch textField {
-        case emailTextField:
-            print("shouldChangeCharactersIn emailTextField: \(text)")
-            isValidEmail = viewModel.emailFormatValidationCheck(by: text)
-            
-            if isValidEmail ?? false {
-                emailTextField.layer.borderColor = UIColor.lightGray.cgColor
-                emailErrorLabel.text = ""
-            } else {
-                emailTextField.layer.borderColor = UIColor.red.cgColor
-                emailErrorLabel.text = "유효하지 않은 이메일 형식입니다."
-            }
-        case passwordTextField:
-            print("shouldChangeCharactersIn passwordTextField: \(text)")
-            isValidPassword = viewModel.passwordFormatValidationCheck(by: text)
-            if isValidPassword ?? false {
-                passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
-            } else {
-                passwordTextField.layer.borderColor = UIColor.red.cgColor
-                passwordErrorLabel.text = "비밀번호를 6자 이상 입력하세요."
-            }
-        default:
-            break
-        }
-        if (isValidEmail != nil) && (isValidPassword != nil) {
-            self.createButton.isEnabled = true
-        }
-        return true
     }
 }
 
@@ -108,6 +77,37 @@ private extension CreateAccountViewController {
         let cornerRadius: CGFloat = 20
         
         createButton.layer.cornerRadius = cornerRadius
+        createButton.isEnabled = false
+    }
+    
+    func setValidTextFieldLayout(at textField: UITextField, at errorLabel: UILabel, with isValid: Bool, with errorMessage: String) {
+        if isValid {
+            textField.layer.borderColor = UIColor.lightGray.cgColor
+        } else {
+            textField.layer.borderColor = UIColor.red.cgColor
+        }
+        errorLabel.text = errorMessage
+    }
+}
+
+extension CreateAccountViewController: CreateAccountViewModelDelegate {
+    func isCreateButtonEnabledDidChange() {
         createButton.isEnabled = true
+    }
+    
+    func emailDidChange(with isVaild: Bool) {
+        if isVaild {
+            setValidTextFieldLayout(at: emailTextField, at: emailErrorLabel, with: isVaild, with: "")
+        } else {
+            setValidTextFieldLayout(at: emailTextField, at: emailErrorLabel, with: isVaild, with: "유효하지 않은 이메일 형식입니다.")
+        }
+    }
+    
+    func passwordDidChange(with isVaild: Bool) {
+        if isVaild {
+            setValidTextFieldLayout(at: passwordTextField, at: passwordErrorLabel, with: isVaild, with: "")
+        } else {
+            setValidTextFieldLayout(at: passwordTextField, at: passwordErrorLabel, with: isVaild, with: "비밀번호를 6자 이상 입력하세요.")
+        }
     }
 }

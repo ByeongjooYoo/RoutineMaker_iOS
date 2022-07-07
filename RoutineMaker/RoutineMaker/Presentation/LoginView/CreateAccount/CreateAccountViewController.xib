@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -21,28 +21,31 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="계정을 생성하세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHU-af-XKV">
-                    <rect key="frame" x="50" y="119" width="200" height="33.5"/>
+                    <rect key="frame" x="50" y="119.00000000000001" width="200" height="33.666666666666671"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rvV-R2-XW7">
-                    <rect key="frame" x="50" y="170" width="314" height="75"/>
+                    <rect key="frame" x="50" y="170.33333333333334" width="290" height="75"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일 주소" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qjm-qz-KU7">
-                            <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="L3E-jh-nQK"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            <connections>
+                                <action selector="emailTextFieldDidChanged:" destination="-1" eventType="editingChanged" id="OpO-cd-vKf"/>
+                            </connections>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5D-cJ-jpn">
-                            <rect key="frame" x="0.0" y="55" width="314" height="20"/>
+                            <rect key="frame" x="0.0" y="55" width="290" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="wlQ-Wc-YgA"/>
                             </constraints>
@@ -57,15 +60,18 @@
                     </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bz9-Pf-wva">
-                    <rect key="frame" x="50" y="265" width="314" height="75"/>
+                    <rect key="frame" x="50" y="265.33333333333331" width="290" height="75"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="18y-pi-5Fb">
-                            <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                            <connections>
+                                <action selector="passwordTextFieldDidChaned:" destination="-1" eventType="editingChanged" id="EEH-cg-Txr"/>
+                            </connections>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkm-iX-6Sm">
-                            <rect key="frame" x="0.0" y="55" width="314" height="20"/>
+                            <rect key="frame" x="0.0" y="55" width="290" height="20"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" systemColor="systemPinkColor"/>
                             <nil key="highlightedColor"/>
@@ -73,7 +79,7 @@
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUD-C8-M5F" customClass="HighlightButton" customModule="RoutineMaker" customModuleProvider="target">
-                    <rect key="frame" x="50" y="360" width="314" height="40"/>
+                    <rect key="frame" x="50" y="360.33333333333331" width="290" height="40"/>
                     <color key="backgroundColor" systemColor="labelColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="Utp-Ua-8gi"/>
